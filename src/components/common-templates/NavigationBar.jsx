@@ -13,7 +13,7 @@ function classNames(...classes) {
 
 export default function NavigationBar() {
   return (
-    <Disclosure as="nav" className="bg-cement absolute w-[95%] top-10 rounded-xl border-2 border-2">
+    <Disclosure as="nav" className="bg-cement sticky w-[98%] top-10 rounded-xl border-2 border-2 z-[100]">
       <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
         <div className="relative flex h-20 items-center justify-between">
           <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">

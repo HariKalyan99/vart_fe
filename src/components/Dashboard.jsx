@@ -15,18 +15,18 @@ const Dashboard = () => {
     <>
       <div className="w-full h-auto min-h-[100vh] flex bg_wallpaper3 relative flex justify-center items-center flex-col">
         <NavigationBar />
-        <span className="font-bold text-[2rem] mt-[12rem]">Animal data</span>
+        <span className="font-bold text-[2rem] mt-[8rem]">Animal data</span>
         <div className="mt-[4rem] container-fuild w-full p-4 flex flex-wrap justify-center items-center gap-4">
           {[1, 2, 3, 4, 5, 6, 7, 8, 9].map((_, ind) => (
             <div
               key={ind}
               className="w-[450px] h-[600px] border border-4 bg-chestnut rounded-xl shadow-2xl relative"
             >
-              <img
+              {/* <img
                 src={a}
                 alt="animal_photo"
                 className="w-[20rem] h-[20rem] object-cover opacity-30 absolute bottom-0 right-0"
-              />
+              /> */}
               <div className="w-full h-full border relative z-[10] flex justify-evenly items-start flex-col px-2">
                 <div className="flex justify-center gap-2 items-center">
                   <GiAnimalSkull size={25} />
