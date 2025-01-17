@@ -1,0 +1,40 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+.desk_bg {
+  box-shadow: 1px 1px 10px rgb(0, 0, 0);
+}
+/* https://i.pinimg.com/originals/97/61/05/976105b8842d6271bb0797cbf2ed6160.jpg */
+/* https://wallpapercave.com/wp/wp9315285.jpg */
+/* background-image: url("https://4kwallpapers.com/images/wallpapers/scenery-pink-lakeside-sunset-lake-landscape-scenic-panorama-5120x2880-144.png"); */
+.bg_wallpaper {
+  background-image: url("./assets/signup.gif");
+  background-position: 10%;
+  background-repeat: no-repeat;
+  background-size: cover;
+
+}
+
+.bg_wallpaper2 {
+  background-image: url("./assets/signin.gif");
+  background-position: 100%;
+  background-repeat: no-repeat;
+  background-size: cover;
+
+}
+
+
+.bg_wallpaper3 {
+  background-image: url("./assets/dash.gif");
+  background-position: 100%;
+  background-repeat: no-repeat;
+  background-size: cover;
+
+}
