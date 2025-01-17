@@ -1,6 +1,6 @@
 import { Disclosure, DisclosureButton, DisclosurePanel, Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react'
 import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline'
-import logo from '../../assets/logo.gif'
+import logo from '../../assets/Z.png'
 
 const navigation = [
   { name: 'Dashboard', href: '#', current: true },
@@ -13,9 +13,9 @@ function classNames(...classes) {
 
 export default function NavigationBar() {
   return (
-    <Disclosure as="nav" className="bg-cement sticky w-[98%] top-10 rounded-xl border-2 border-2 z-[100]">
+    <Disclosure as="nav" className="bg_wallpaper3 sticky w-[98%] top-10 rounded-[3rem] border-2 border-2 z-[100]">
       <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
-        <div className="relative flex h-20 items-center justify-between">
+        <div className="relative flex h-16 items-center justify-between">
           <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
             {/* Mobile menu button*/}
             <DisclosureButton className="group relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
@@ -41,7 +41,7 @@ export default function NavigationBar() {
                     href={item.href}
                     aria-current={item.current ? 'page' : undefined}
                     className={classNames(
-                      item.current ? 'bg-saffron text-white border' : 'text-gray-300 hover:bg-saffron hover:text-white',
+                      item.current ? 'bg-chestnut text-white border' : 'text-white hover:bg-chestnut hover:text-white border',
                       'rounded-md px-3 py-2 text-sm font-medium',
                     )}
                   >
@@ -57,7 +57,7 @@ export default function NavigationBar() {
             {/* Profile dropdown */}
             <Menu as="div" className="relative ml-3">
               <div>
-                <MenuButton className="relative flex rounded-full bg-raddishpinkdark text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800 justify-center items-center">
+                <MenuButton className="relative flex rounded-full bg-raddishpinklight text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800 justify-center items-center">
                   <span className="absolute -inset-1.5" />
                   <span className="sr-only">Open user menu</span>
                   <span className='px-4 font-bold text-black hidden sm:block'>LION</span>
@@ -104,7 +104,7 @@ export default function NavigationBar() {
               aria-current={item.current ? 'page' : undefined}
               className={classNames(
                 item.current ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white',
-                'block rounded-md px-3 py-2 text-base font-medium',
+                'block rounded-md px-3 py-2 text-base font-medium '
               )}
             >
               {item.name}

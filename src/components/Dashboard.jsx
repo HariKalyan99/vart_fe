@@ -13,31 +13,43 @@ import { FaRoute } from "react-icons/fa";
 const Dashboard = () => {
   return (
     <>
-      <div className="w-full h-auto min-h-[100vh] flex bg_wallpaper3 relative flex justify-center items-center flex-col">
+      {/* <img
+        src={a}
+        alt="animal_photo"
+        className="w-[200px] h-[200px] object-cover bottom-0 right-0 fixed z-[1]"
+      />
+      <img
+        src={a}
+        alt="animal_photo"
+        className="w-[200px] h-[200px] object-cover bottom-0 left-0 fixed z-[1] transform scale-x-[-1]"
+      /> */}
+      <div className="w-full h-auto min-h-[100vh] flex bg-chestnut relative flex justify-center items-center flex-col">
         <NavigationBar />
-        <span className="font-bold text-[2rem] mt-[8rem]">Animal data</span>
+        <span className="font-bold text-[2rem] mt-[4rem] underline">
+          Dashboard
+        </span>
         <div className="mt-[4rem] container-fuild w-full p-4 flex flex-wrap justify-center items-center gap-4">
           {[1, 2, 3, 4, 5, 6, 7, 8, 9].map((_, ind) => (
             <div
               key={ind}
-              className="w-[450px] h-[600px] border border-4 bg-chestnut rounded-xl shadow-2xl relative"
+              className="w-[450px] h-[600px] border-nostalgicblue border-4 bg-raddishpinklight rounded-xl shadow-2xl relative overflow-hidden"
             >
-              {/* <img
-                src={a}
+              <img
+                src="https://static.vecteezy.com/system/resources/previews/013/074/425/non_2x/flat-exotic-animal-background-free-vector.jpg"
                 alt="animal_photo"
-                className="w-[20rem] h-[20rem] object-cover opacity-30 absolute bottom-0 right-0"
-              /> */}
-              <div className="w-full h-full border relative z-[10] flex justify-evenly items-start flex-col px-2">
+                className="w-full h-[45%] object-cover "
+              />
+              <div className="w-full h-[55%] border relative z-[10] flex justify-evenly items-start flex-col px-2">
                 <div className="flex justify-center gap-2 items-center">
                   <GiAnimalSkull size={25} />
-                  <span className="text-2xl font-semibold text-white">
+                  <span className="text-2xl font-semibold text-black">
                     Lion
                   </span>
                 </div>
                 <div className="flex justify-center gap-2 items-center">
                   <SiAnimalplanet size={25} />
 
-                  <span className="text-2xl font-semibold text-white text-wrap">
+                  <span className="text-2xl font-semibold text-black text-wrap">
                     king of jungle
                   </span>
                 </div>
@@ -64,7 +76,7 @@ const Dashboard = () => {
                   </span>
                 </div>
 
-                <div className="flex justify-center gap-2 items-center">
+                {/* <div className="flex justify-center gap-2 items-center">
                   <FaBirthdayCake size={25} />
 
                   <span className="text-xl font-semibold text-wrap">
@@ -103,7 +115,7 @@ const Dashboard = () => {
                       20th fe, 2025
                     </span>
                   </span>
-                </div>
+                </div> */}
               </div>
             </div>
           ))}
