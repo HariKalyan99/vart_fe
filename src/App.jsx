@@ -14,8 +14,8 @@ function App() {
       {/* <OpeningPage />
       <SignupPage />
       <LoginPage /> */}
-      <ForgotPwdPage />
-      {/* <Dashboard /> */}
+      {/* <ForgotPwdPage /> */}
+      <Dashboard />
       {/* <CreateNew /> */}
       {/* <CardDetails /> */}
    </div>
