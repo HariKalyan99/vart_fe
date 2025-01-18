@@ -1,19 +1,32 @@
-import { Disclosure, DisclosureButton, DisclosurePanel, Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react'
-import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline'
-import logo from '../../assets/Z.png'
+import {
+  Disclosure,
+  DisclosureButton,
+  DisclosurePanel,
+  Menu,
+  MenuButton,
+  MenuItem,
+  MenuItems,
+} from "@headlessui/react";
+import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
+import logo from "../../assets/Z.png";
 
 const navigation = [
-  { name: 'Dashboard', href: '#', current: true },
-  { name: 'Register Animal', href: '#', current: false },
-]
+  { name: "Dashboard", href: "#", current: true },
+  { name: "Register Animal", href: "#", current: false },
+];
 
 function classNames(...classes) {
-  return classes.filter(Boolean).join(' ')
+  return classes.filter(Boolean).join(" ");
 }
 
-export default function NavigationBar() {
+export default function NavigationBar({ create, details, dash }) {
   return (
-    <Disclosure as="nav" className="bg_wallpaper3 sticky w-[98%] top-10 rounded-[3rem] border-2 border-2 z-[100]">
+    <Disclosure
+      as="nav"
+      className={`${create && "bg-chestnut"} ${details && "bg-chestnut"} ${
+        dash && "bg-saffron"
+      } sticky w-full top-2 rounded-[3rem] border-2 border-2 z-[100]`}
+    >
       <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
         <div className="relative flex h-16 items-center justify-between">
           <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
@@ -21,8 +34,14 @@ export default function NavigationBar() {
             <DisclosureButton className="group relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
               <span className="absolute -inset-0.5" />
               <span className="sr-only">Open main menu</span>
-              <Bars3Icon aria-hidden="true" className="block size-6 group-data-[open]:hidden" />
-              <XMarkIcon aria-hidden="true" className="hidden size-6 group-data-[open]:block" />
+              <Bars3Icon
+                aria-hidden="true"
+                className="block size-6 group-data-[open]:hidden"
+              />
+              <XMarkIcon
+                aria-hidden="true"
+                className="hidden size-6 group-data-[open]:block"
+              />
             </DisclosureButton>
           </div>
           <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
@@ -39,10 +58,18 @@ export default function NavigationBar() {
                   <a
                     key={item.name}
                     href={item.href}
-                    aria-current={item.current ? 'page' : undefined}
+                    aria-current={item.current ? "page" : undefined}
                     className={classNames(
-                      item.current ? 'bg-chestnut text-white border' : 'text-white hover:bg-chestnut hover:text-white border',
-                      'rounded-md px-3 py-2 text-sm font-medium',
+                      item.current
+                        ? `${create && "bg-saffron"} ${
+                            details && "bg-saffron"
+                          } ${dash && "bg-chestnut"} text-white border`
+                        : `text-white hover:${create && "bg-saffron"} hover:${
+                            details && "bg-saffron"
+                          } hover:${
+                            dash && "bg-chestnut"
+                          } hover:text-white border`,
+                      "rounded-md px-3 py-2 text-sm font-medium"
                     )}
                   >
                     {item.name}
@@ -52,15 +79,15 @@ export default function NavigationBar() {
             </div>
           </div>
           <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
-            
-
             {/* Profile dropdown */}
             <Menu as="div" className="relative ml-3">
               <div>
                 <MenuButton className="relative flex rounded-full bg-raddishpinklight text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800 justify-center items-center">
                   <span className="absolute -inset-1.5" />
                   <span className="sr-only">Open user menu</span>
-                  <span className='px-4 font-bold text-black hidden sm:block'>LION</span>
+                  <span className="px-4 font-bold text-black hidden sm:block">
+                    LION
+                  </span>
                   <img
                     alt="animal_profile"
                     src="https://lh3.googleusercontent.com/a/ACg8ocKm3oC5QW2m6DG08YEa7_vAMZPT1c_yOCrjINtnwu_LegwYcmk=s288-c-no"
@@ -101,10 +128,12 @@ export default function NavigationBar() {
               key={item.name}
               as="a"
               href={item.href}
-              aria-current={item.current ? 'page' : undefined}
+              aria-current={item.current ? "page" : undefined}
               className={classNames(
-                item.current ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white',
-                'block rounded-md px-3 py-2 text-base font-medium '
+                item.current
+                  ? "bg-gray-900 text-white"
+                  : "text-gray-300 hover:bg-gray-700 hover:text-white",
+                "block rounded-md px-3 py-2 text-base font-medium "
               )}
             >
               {item.name}
@@ -113,5 +142,5 @@ export default function NavigationBar() {
         </div>
       </DisclosurePanel>
     </Disclosure>
-  )
+  );
 }

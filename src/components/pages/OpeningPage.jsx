@@ -1,5 +1,5 @@
 import React from "react";
-import photo from '../assets/home.gif'
+import photo from '../../assets/home.gif'
 
 
 const OpeningPage = () => {

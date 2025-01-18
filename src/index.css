@@ -23,6 +23,14 @@
 }
 
 .bg_wallpaper2 {
+  background-image: url("./assets/home.gif");
+  background-position: 100%;
+  background-repeat: no-repeat;
+  background-size: cover;
+
+}
+
+.bg_wallpaper4 {
   background-image: url("./assets/signin.gif");
   background-position: 100%;
   background-repeat: no-repeat;
@@ -30,10 +38,19 @@
 
 }
 
-
-.bg_wallpaper3 {
-  background-image: url("./assets/dash.gif");
+.bg_wallpaper5 {
+  background-image: url("./assets/create.gif");
+  background-position: 100%;
   background-repeat: no-repeat;
   background-size: cover;
 
+}
+
+
+
+.bg_wallpaper3 {
+  background-image: url("./assets/logo.gif");
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
 }

@@ -2,7 +2,7 @@ import React from 'react'
 
 const LoginPage = () => {
   return (
-    <div className='w-full h-[100vh] flex justify-center items-center bg_wallpaper2'>
+    <div className='w-full h-[100vh] flex justify-center items-center bg_wallpaper4'>
        <div className='h-[400px] w-[500px] border-2 rounded-xl bg-primary2 border-white shadow-2xl'>
         <form className='w-full h-full flex justify-evenly items-center flex-col'>
             <span className='text-2xl font-bold'>Login</span>
