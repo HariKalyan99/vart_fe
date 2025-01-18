@@ -1,55 +1,111 @@
+import { Box, Typography, Paper } from "@mui/material";
 import { CalendarDaysIcon, HandRaisedIcon } from "@heroicons/react/24/outline";
 
-export default function FooterBar({create, details}) {
+export default function FooterBar({ create, details }) {
   return (
-    <div className={`relative isolate overflow-hidden ${create && "bg-chestnut"} ${!create && !details && "bg-saffron"} ${details && "bg-chestnut"} py-12 mt-[4rem]`}>
-      <div className="mx-auto max-w-7xl px-6 lg:px-8">
-        <div className="mx-auto grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 lg:max-w-none lg:grid-cols-2">
-          <div className="max-w-xl lg:max-w-lg">
-            <h2 className="text-4xl font-semibold tracking-tight text-white">
+    <Box
+      className={`relative isolate overflow-hidden ${create && "bg-chestnut"} ${
+        !create && !details && "bg-saffron"
+      } ${details && "bg-chestnut"}`}
+      py={12}
+      mt="4rem"
+    >
+      <Box className="mx-auto max-w-7xl px-6 lg:px-8">
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: { xs: "column", lg: "row" },
+            justifyContent: "space-between",
+            gap: 4,
+          }}
+        >
+          <Box sx={{ maxWidth: { lg: "50%" } }}>
+            <Typography
+              variant="h4"
+              component="h2"
+              color="white"
+              fontWeight="bold"
+            >
               Subscribe to our newsletter
-            </h2>
-            <p className="mt-4 text-lg text-white">
+            </Typography>
+            <Typography variant="body1" color="white" mt={4}>
               Nostrud amet eu ullamco nisi aute in ad minim nostrud adipisicing
               velit quis. Duis tempor incididunt dolore.
-            </p>
-           
-           
-          </div>
-          <dl className="grid grid-cols-1 gap-x-8 gap-y-10 sm:grid-cols-2 lg:pt-2">
-            <div className="flex flex-col items-start">
-              <div className="rounded-md bg-white/5 p-2 ring-1 ring-white/10">
+            </Typography>
+          </Box>
+
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              gap: 4,
+              maxWidth: { lg: "50%" },
+            }}
+          >
+            {/* <Paper
+              sx={{
+                p: 2,
+                backgroundColor: "rgba(0,0,0, 0.05)",
+                display: "flex",
+                alignItems: "center",
+              }}
+            >
+              <Box
+                sx={{
+                  borderRadius: "8px",
+                  p: 1,
+                  backgroundColor: "rgba(255, 255, 255, 0.1)",
+                }}
+              >
                 <CalendarDaysIcon
-                  aria-hidden="true"
-                  className="size-6 text-white"
+                  className="text-white"
+                  style={{ fontSize: 24 }}
                 />
-              </div>
-              <dt className="mt-4 text-base font-semibold text-white">
-                Weekly articles
-              </dt>
-              <dd className="mt-2 text-base/7 text-white">
-                Non laboris consequat cupidatat laborum magna. Eiusmod non irure
-                cupidatat duis commodo amet.
-              </dd>
-            </div>
-            <div className="flex flex-col items-start">
-              <div className="rounded-md bg-white/5 p-2 ring-1 ring-white/10">
+              </Box>
+              <Box sx={{ ml: 2 }}>
+                <Typography variant="h6" color="white">
+                  Weekly articles
+                </Typography>
+                <Typography variant="body2" color="white">
+                  Non laboris consequat cupidatat laborum magna. Eiusmod non
+                  irure cupidatat duis commodo amet.
+                </Typography>
+              </Box>
+            </Paper>
+
+            <Paper
+              sx={{
+                p: 2,
+                backgroundColor: "rgba(255, 255, 255, 0.05)",
+                display: "flex",
+                alignItems: "center",
+              }}
+            >
+              <Box
+                sx={{
+                  borderRadius: "8px",
+                  p: 1,
+                  backgroundColor: "rgba(255, 255, 255, 0.1)",
+                }}
+              >
                 <HandRaisedIcon
-                  aria-hidden="true"
-                  className="size-6 text-white"
+                  className="text-white"
+                  style={{ fontSize: 24 }}
                 />
-              </div>
-              <dt className="mt-4 text-base font-semibold text-white">
-                No spam
-              </dt>
-              <dd className="mt-2 text-base/7 text-white">
-                Officia excepteur ullamco ut sint duis proident non adipisicing.
-                Voluptate incididunt anim.
-              </dd>
-            </div>
-          </dl>
-        </div>
-      </div>
-    </div>
+              </Box>
+              <Box sx={{ ml: 2 }}>
+                <Typography variant="h6" color="white">
+                  No spam
+                </Typography>
+                <Typography variant="body2" color="white">
+                  Officia excepteur ullamco ut sint duis proident non
+                  adipisicing. Voluptate incididunt anim.
+                </Typography>
+              </Box>
+            </Paper> */}
+          </Box>
+        </Box>
+      </Box>
+    </Box>
   );
 }

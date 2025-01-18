@@ -7,7 +7,7 @@ import {
   MenuItem,
   MenuItems,
 } from "@headlessui/react";
-import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
+import { Bars3Icon,  XMarkIcon } from "@heroicons/react/24/outline";
 import logo from "../../assets/Z.png";
 
 const navigation = [
@@ -64,10 +64,8 @@ export default function NavigationBar({ create, details, dash }) {
                         ? `${create && "bg-saffron"} ${
                             details && "bg-saffron"
                           } ${dash && "bg-chestnut"} text-white border`
-                        : `text-white hover:${create && "bg-saffron"} hover:${
-                            details && "bg-saffron"
-                          } hover:${
-                            dash && "bg-chestnut"
+                        : `text-white ${create && "hover:bg-saffron"} ${details && "hover:bg-saffron"} ${
+                            dash && "hover:bg-chestnut"
                           } hover:text-white border`,
                       "rounded-md px-3 py-2 text-sm font-medium"
                     )}
@@ -90,7 +88,7 @@ export default function NavigationBar({ create, details, dash }) {
                   </span>
                   <img
                     alt="animal_profile"
-                    src="https://lh3.googleusercontent.com/a/ACg8ocKm3oC5QW2m6DG08YEa7_vAMZPT1c_yOCrjINtnwu_LegwYcmk=s288-c-no"
+                    src="https://us.123rf.com/450wm/kucingliarz/kucingliarz2404/kucingliarz240400577/228714838-vector-illustration-of-a-cute-panda-bear-with-abstract-geometric-background.jpg?ver=6"
                     className="size-12 rounded-full"
                   />
                 </MenuButton>

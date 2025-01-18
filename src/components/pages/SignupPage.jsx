@@ -10,9 +10,9 @@ const SignupPage = () => {
             <input type="email" className='w-[80%] h-[40px] bg-transparent outline-none border-b placeholder-[black] fs-2' placeholder='Enter your email'/>
             <input type="password" className='w-[80%] h-[40px] bg-transparent outline-none border-b placeholder-[black] fs-2' placeholder='Enter your password'/>
             <input type="password" className='w-[80%] h-[40px] bg-transparent outline-none border-b placeholder-[black] fs-2' placeholder='Confirm your password'/>
-            <input type="phonenumber" className='w-[80%] h-[40px] bg-transparent outline-none border-b placeholder-[black] fs-2' placeholder='Enter your phone (optional)?'/>
-            <select name="roles" id="roles" className='w-[80%] h-[40px] bg-transparent outline-none border-b placeholder-[black] fs-2' >
-                <option value="Desired role" disabled>Desired role (optional)?</option>
+            <input type="phonenumber" className='w-[80%] h-[40px] bg-transparent outline-none border-b placeholder-[black] fs-2' placeholder='Enter your phone? (optional)'/>
+            <select name="roles" id="roles" className='w-[80%] h-[40px] bg-transparent outline-none border-b placeholder-[black] fs-2'>
+                <option value="Desired role" selected disabled>Desired role? (optional)</option>
                 <option value="kingofjungle">KING OF JUNGLE</option>
                 <option value="queenofjungle">QUEEN OF JUNGLE</option>
             </select>

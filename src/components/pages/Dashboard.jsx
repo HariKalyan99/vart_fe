@@ -29,7 +29,7 @@ const Dashboard = () => {
         <span className="text-left w-full container text-[2rem] text-nostalgicblue">
           Registered animals
         </span>
-        <div className="mt-[1rem] container w-full p-4 flex flex-wrap justify-center items-center gap-4">
+        <div className="mt-[1rem] container w-full p-4 flex flex-wrap justify-center items-center gap-6">
           {[1, 2, 3, 4, 5, 6, 7, 8, 9].map((_, ind) => (
             <Card key={ind} ind={ind} />
           ))}

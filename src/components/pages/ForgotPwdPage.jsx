@@ -42,7 +42,7 @@ const ForgotPwdPage = () => {
               Reset
             </button>
             <p>
-              Skip to login?{" "}
+              Don't reset password? skip to{" "}
               <span className="text-base font-bold underline hover:cursor-pointer hover:text-chestnut">
                 Login
               </span>
