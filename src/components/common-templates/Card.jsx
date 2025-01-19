@@ -201,6 +201,7 @@ import { Card, CardContent, Typography, Box, Button } from "@mui/material";
 import LightTooltip from "../utils/MUITooltip";
 import EditCard from "../EditCard";
 import MUIModal from "../utils/MUIModal";
+import { Link } from "react-router-dom";
 
 const AnimalCard = ({ ind, copy }) => {
   const [open, setOpen] = useState(false);
@@ -314,11 +315,13 @@ const AnimalCard = ({ ind, copy }) => {
                 <RiDeleteBin6Line size={30} className="text-black" />
               </IconButton>
             </LightTooltip>
+              <Link to={`/details/${ind}`}>
             <LightTooltip title="Read more" placement="top">
               <IconButton sx={{ color: "white" }}>
                 <CiRead size={30} className="text-black" />
               </IconButton>
             </LightTooltip>
+              </Link>
           </Box>
           {copy ? (
             <Box className="flex justify-between w-full bg-chestnut text-white p-2 absolute bottom-0 right-0">

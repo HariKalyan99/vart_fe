@@ -78,9 +78,10 @@ import React, { useState } from "react";
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
+import { Link } from "react-router-dom";
 
 const ForgotPwdPage = () => {
-  const [mailSent, setMailSent] = useState(true);
+  const [mailSent, setMailSent] = useState(false);
 
   return (
     <Box
@@ -91,7 +92,7 @@ const ForgotPwdPage = () => {
       <Box
         className={`${
           mailSent ? "h-[400px]" : "h-[200px]"
-        } w-[500px] border-2 rounded-xl bg-primary2 border-white shadow-2xl flex justify-center items-center`}
+        } w-[500px] border-2 rounded-xl bg-primary2 border-nostalgicblue shadow-2xl flex justify-center items-center`}
       >
         {mailSent ? (
           <form className="w-full h-full flex justify-evenly items-center flex-col">
@@ -118,14 +119,18 @@ const ForgotPwdPage = () => {
               color="black"
             />
            
+            <Link to={"/login"}>
             <Button variant="contained" type='submit' sx={{backgroundColor: "#70645C"}} className='hover:bg-black'>
             Reset
           </Button>
+            </Link>
             <p>
               Don't reset password? skip to{" "}
+              <Link to={"/login"}>
               <span className="text-base font-bold underline hover:cursor-pointer hover:text-chestnut">
                 Login
               </span>
+              </Link>
             </p>
           </form>
         ) : (
@@ -139,7 +144,7 @@ const ForgotPwdPage = () => {
               color="black"
             />
             
-            <Button variant="contained" type='submit' sx={{backgroundColor: "#70645C"}} className='hover:bg-black'>
+            <Button variant="contained" type='submit' sx={{backgroundColor: "#70645C"}} className='hover:bg-black' onClick={() => setMailSent((prev) => !prev)}>
             Send email
           </Button>
           </form>

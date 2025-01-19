@@ -31,6 +31,7 @@ import { Box, Button, FormControl, Input, InputLabel } from "@mui/material";
 import MUIModal from "./utils/MUIModal";
 import EditCard from "./EditCard";
 import { MdOutlineSecurity } from "react-icons/md";
+import { Link } from "react-router-dom";
 
 const ProfileCard = ({}) => {
   const [open, setOpen] = useState(false);
@@ -164,11 +165,13 @@ const ProfileCard = ({}) => {
                 <RiDeleteBin6Line size={30} className="text-black" />
               </IconButton>
             </LightTooltip>
+            <Link to={`/details/${1}`}>
             <LightTooltip title="Read more" placement="top">
               <IconButton sx={{ color: "white" }}>
                 <CiRead size={30} className="text-black" />
               </IconButton>
             </LightTooltip>
+            </Link>
           </Box>
           <div className="flex justify-between w-full bg-chestnut text-white p-2">
             <span className="text-[0.8rem] font-bold">

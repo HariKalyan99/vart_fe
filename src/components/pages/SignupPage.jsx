@@ -1,31 +1,3 @@
-// import { Box } from '@mui/material'
-// import React from 'react'
-
-// const SignupPage = () => {
-//   return (
-//     <Box className='w-full h-[100vh] flex justify-center items-center bg_wallpaper'>
-//        <Box className='h-[600px] w-[500px] border-2 rounded-xl bg-primary2 border-white shadow-2xl'>
-//         <form className='w-full h-full flex justify-evenly items-center flex-col'>
-//             <span className='text-2xl font-bold'>Register</span>
-//             <input type="text" className='w-[80%] h-[40px] bg-transparent outline-none border-b placeholder-[black] fs-2' placeholder='Enter your name'/>
-//             <input type="email" className='w-[80%] h-[40px] bg-transparent outline-none border-b placeholder-[black] fs-2' placeholder='Enter your email'/>
-//             <input type="password" className='w-[80%] h-[40px] bg-transparent outline-none border-b placeholder-[black] fs-2' placeholder='Enter your password'/>
-//             <input type="password" className='w-[80%] h-[40px] bg-transparent outline-none border-b placeholder-[black] fs-2' placeholder='Confirm your password'/>
-//             <input type="phonenumber" className='w-[80%] h-[40px] bg-transparent outline-none border-b placeholder-[black] fs-2' placeholder='Enter your phone? (optional)'/>
-//             <select name="roles" id="roles" className='w-[80%] h-[40px] bg-transparent outline-none border-b placeholder-[black] fs-2'>
-//                 <option value="Desired role" selected disabled>Desired role? (optional)</option>
-//                 <option value="kingofjungle">KING OF JUNGLE</option>
-//                 <option value="queenofjungle">QUEEN OF JUNGLE</option>
-//             </select>
-//             <p>Already have an account! <span className='text-base font-bold underline hover:cursor-pointer hover:text-chestnut'>Login</span></p>
-//         </form>
-//         </Box>
-//     </Box>
-//   )
-// }
-
-// export default SignupPage
-
 import * as React from "react";
 import Box from "@mui/material/Box";
 import IconButton from "@mui/material/IconButton";
@@ -39,11 +11,13 @@ import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 import Button from "@mui/material/Button";
+import { Link, useNavigate } from "react-router-dom";
 
 const SignupPage = () => {
   const [showPassword, setShowPassword] = React.useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = React.useState(false);
   const [role, setRole] = React.useState("");
+  const navigate = useNavigate();
 
   const handleClickShowPassword = () => setShowPassword((prev) => !prev);
   const handleClickShowConfirmPassword = () =>
@@ -52,7 +26,7 @@ const SignupPage = () => {
 
   return (
     <Box className="w-full h-[100vh] flex justify-center items-center bg_wallpaper">
-      <Box className="h-[600px] w-[500px] border-2 rounded-xl bg-primary2 border-white shadow-2xl">
+      <Box className="h-[600px] w-[500px] border-2 rounded-xl bg-primary2 border-nostalgicblue shadow-2xl">
         <form className="w-full h-full flex justify-evenly items-center flex-col">
           <span className="text-2xl font-bold mb-4">Register</span>
 
@@ -144,11 +118,12 @@ const SignupPage = () => {
 
           <p className="text-center">
             Already have an account?{" "}
-            <span className="text-base font-bold underline hover:cursor-pointer hover:text-chestnut">
+            <span className="text-base font-bold underline hover:cursor-pointer hover:text-chestnut" onClick={() => navigate("/login")}>
               Login
             </span>
           </p>
 
+          <Link to={"/login"}>
           <Button
             variant="contained"
             type="submit"
@@ -157,6 +132,7 @@ const SignupPage = () => {
           >
             Register
           </Button>
+          </Link>
         </form>
       </Box>
     </Box>

@@ -9,11 +9,12 @@ import {
 } from "@headlessui/react";
 import { Bars3Icon,  XMarkIcon } from "@heroicons/react/24/outline";
 import logo from "../../assets/Z.png";
-import { Box } from "@mui/material";
+import { Box, Button } from "@mui/material";
+import { Link } from "react-router-dom";
 
 const navigation = [
-  { name: "Dashboard", href: "#", current: true },
-  { name: "Register Animal", href: "#", current: false },
+  { name: "Dashboard", to: "/dashboard", current: true },
+  { name: "Register new", to: "/create", current: false },
 ];
 
 function classNames(...classes) {
@@ -56,9 +57,9 @@ export default function NavigationBar({ create, details, dash }) {
             <Box className="hidden sm:ml-6 sm:block">
               <Box className="flex space-x-4">
                 {navigation.map((item) => (
-                  <a
+                  <Link
                     key={item.name}
-                    href={item.href}
+                    to={item.to}
                     aria-current={item.current ? "page" : undefined}
                     className={classNames(
                       item.current
@@ -72,7 +73,7 @@ export default function NavigationBar({ create, details, dash }) {
                     )}
                   >
                     {item.name}
-                  </a>
+                  </Link>
                 ))}
               </Box>
             </Box>
@@ -99,20 +100,20 @@ export default function NavigationBar({ create, details, dash }) {
                 className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black/5 transition focus:outline-none data-[closed]:scale-95 data-[closed]:transform data-[closed]:opacity-0 data-[enter]:duration-100 data-[leave]:duration-75 data-[enter]:ease-out data-[leave]:ease-in"
               >
                 <MenuItem>
-                  <a
-                    href="#"
+                  <Link
+                    to={`/profile/${1}`}
                     className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100 data-[focus]:outline-none"
                   >
                     Your Profile
-                  </a>
+                  </Link>
                 </MenuItem>
                 <MenuItem>
-                  <a
-                    href="#"
+                  <Link
+                    to={"/login"}
                     className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100 data-[focus]:outline-none"
                   >
                     Logout
-                  </a>
+                  </Link>
                 </MenuItem>
               </MenuItems>
             </Menu>
@@ -126,7 +127,7 @@ export default function NavigationBar({ create, details, dash }) {
             <DisclosureButton
               key={item.name}
               as="a"
-              href={item.href}
+              href={item.to}
               aria-current={item.current ? "page" : undefined}
               className={classNames(
                 item.current
