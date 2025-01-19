@@ -5,20 +5,18 @@ import Dashboard from "./components/pages/Dashboard";
 import CreateNew from "./components/pages/CreateNew";
 import CardDetails from "./components/pages/CardDetails";
 import ForgotPwdPage from "./components/pages/ForgotPwdPage";
-import EditCard from "./components/EditCard";
 
 
 
 function App() {
   return (
    <div>
-      {/* <OpeningPage /> */}
-      {/* <SignupPage /> */}
-      {/* <LoginPage /> */}
-      {/* <ForgotPwdPage /> */}
+      <OpeningPage />
+      <SignupPage />
+      <LoginPage />
+      <ForgotPwdPage />
       <Dashboard />
-      {/* <EditCard /> */}
-      {/* <CardDetails /> */}
+      <CardDetails />
    </div>
   )
 }

@@ -271,17 +271,22 @@ const AnimalCard = ({ ind, copy }) => {
               </Typography>
             </Box>
 
-           {true && <Box className="flex justify-center gap-2 items-center">
-              <FaHandPointer size={25} />
-              <Typography variant="h6" className="font-semibold text-black">
-                <Box className="flex justify-center items-center">
-                <span className="italic">Requested for: </span>  
-              <IconButton sx={{ color: "white" }} onClick={handleRequestOpen}>
-                <GiQueenCrown className="text-nostalgicblue text-[2rem]" />
-              </IconButton>
-                </Box>
-              </Typography>
-            </Box>}
+            {false && (
+              <Box className="flex justify-center gap-2 items-center">
+                <FaHandPointer size={25} />
+                <Typography variant="h6" className="font-semibold text-black">
+                  <Box className="flex justify-center items-center">
+                    <span className="italic">Role change request: </span>
+                    <IconButton
+                      sx={{ color: "white" }}
+                      onClick={handleRequestOpen}
+                    >
+                      <GiQueenCrown className="text-nostalgicblue text-[2rem]" />
+                    </IconButton>
+                  </Box>
+                </Typography>
+              </Box>
+            )}
           </Box>
           <Box className="h-[40%] w-full flex gap-2 mt-4 items-start">
             <Box className="flex justify-center gap-2 items-center">
@@ -301,27 +306,17 @@ const AnimalCard = ({ ind, copy }) => {
           <Box className="flex justify-evenly items-center gap-6 bg-raddishpinklight w-full mb-4">
             <LightTooltip title="Edit" placement="top">
               <IconButton sx={{ color: "white" }}>
-                <FaEdit
-                  size={30}
-                  className="text-black"
-                  onClick={handleOpen}
-                />
+                <FaEdit size={30} className="text-black" onClick={handleOpen} />
               </IconButton>
             </LightTooltip>
             <LightTooltip title="Delete" placement="top">
               <IconButton sx={{ color: "white" }}>
-                <RiDeleteBin6Line
-                  size={30}
-                  className="text-black"
-                />
+                <RiDeleteBin6Line size={30} className="text-black" />
               </IconButton>
             </LightTooltip>
             <LightTooltip title="Read more" placement="top">
               <IconButton sx={{ color: "white" }}>
-                <CiRead
-                  size={30}
-                  className="text-black"
-                />
+                <CiRead size={30} className="text-black" />
               </IconButton>
             </LightTooltip>
           </Box>
@@ -355,7 +350,7 @@ const AnimalCard = ({ ind, copy }) => {
         aria-labelledby="modal-edit"
         aria-describedby="modal-edit-description"
       >
-        <EditCard setEditCard={setOpen} open={open} id="modal-edit" />
+        <EditCard handleClose={handleClose} open={open} id="modal-edit" />
       </MUIModal>
 
       <MUIModal
@@ -364,9 +359,10 @@ const AnimalCard = ({ ind, copy }) => {
         aria-labelledby="modal-title"
         aria-describedby="modal-request-description"
       >
-        
         <Box className="flex w-[200px] h-auto bg-white flex-col p-4 justify-center items-center absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 gap-2 rounded-xl">
-          <span className="inline-block text-center">Request for role change?</span>
+          <span className="inline-block text-center">
+            Animal has Requested for a role change?
+          </span>
           <Button
             variant="contained"
             type="button"
@@ -380,6 +376,7 @@ const AnimalCard = ({ ind, copy }) => {
             type="button"
             sx={{ backgroundColor: "#70645C" }}
             className="hover:bg-black mt-2"
+            onClick={handleRequestClose}
           >
             DISAGREE
           </Button>

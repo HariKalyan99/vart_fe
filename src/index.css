@@ -54,3 +54,11 @@
   background-size: contain;
   background-position: center;
 }
+
+.css-1usvvvc-MuiButtonBase-root-MuiFab-root-MuiSpeedDial-fab {
+  background-color: #DD8457 !important;
+}
+
+.css-1usvvvc-MuiButtonBase-root-MuiFab-root-MuiSpeedDial-fab:hover {
+  background-color: #000000 !important;
+}
