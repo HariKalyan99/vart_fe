@@ -9,6 +9,7 @@ import {
 } from "@headlessui/react";
 import { Bars3Icon,  XMarkIcon } from "@heroicons/react/24/outline";
 import logo from "../../assets/Z.png";
+import { Box } from "@mui/material";
 
 const navigation = [
   { name: "Dashboard", href: "#", current: true },
@@ -27,9 +28,9 @@ export default function NavigationBar({ create, details, dash }) {
         dash && "bg-saffron"
       } sticky w-full top-2 rounded-[3rem] border-2 border-2 z-[100]`}
     >
-      <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
-        <div className="relative flex h-16 items-center justify-between">
-          <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
+      <Box className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
+        <Box className="relative flex h-16 items-center justify-between">
+          <Box className="absolute inset-y-0 left-0 flex items-center sm:hidden">
             {/* Mobile menu button*/}
             <DisclosureButton className="group relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
               <span className="absolute -inset-0.5" />
@@ -43,17 +44,17 @@ export default function NavigationBar({ create, details, dash }) {
                 className="hidden size-6 group-data-[open]:block"
               />
             </DisclosureButton>
-          </div>
-          <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
-            <div className="flex shrink-0 items-center">
+          </Box>
+          <Box className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
+            <Box className="flex shrink-0 items-center">
               <img
                 alt="Your Company"
                 src={logo}
                 className="h-10 object-cover"
               />
-            </div>
-            <div className="hidden sm:ml-6 sm:block">
-              <div className="flex space-x-4">
+            </Box>
+            <Box className="hidden sm:ml-6 sm:block">
+              <Box className="flex space-x-4">
                 {navigation.map((item) => (
                   <a
                     key={item.name}
@@ -73,13 +74,13 @@ export default function NavigationBar({ create, details, dash }) {
                     {item.name}
                   </a>
                 ))}
-              </div>
-            </div>
-          </div>
-          <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
+              </Box>
+            </Box>
+          </Box>
+          <Box className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
             {/* Profile dropdown */}
-            <Menu as="div" className="relative ml-3">
-              <div>
+            <Menu as="Box" className="relative ml-3">
+              <Box>
                 <MenuButton className="relative flex rounded-full bg-raddishpinklight text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800 justify-center items-center">
                   <span className="absolute -inset-1.5" />
                   <span className="sr-only">Open user menu</span>
@@ -92,7 +93,7 @@ export default function NavigationBar({ create, details, dash }) {
                     className="size-12 rounded-full"
                   />
                 </MenuButton>
-              </div>
+              </Box>
               <MenuItems
                 transition
                 className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black/5 transition focus:outline-none data-[closed]:scale-95 data-[closed]:transform data-[closed]:opacity-0 data-[enter]:duration-100 data-[leave]:duration-75 data-[enter]:ease-out data-[leave]:ease-in"
@@ -115,12 +116,12 @@ export default function NavigationBar({ create, details, dash }) {
                 </MenuItem>
               </MenuItems>
             </Menu>
-          </div>
-        </div>
-      </div>
+          </Box>
+        </Box>
+      </Box>
 
       <DisclosurePanel className="sm:hidden">
-        <div className="space-y-1 px-2 pb-3 pt-2">
+        <Box className="space-y-1 px-2 pb-3 pt-2">
           {navigation.map((item) => (
             <DisclosureButton
               key={item.name}
@@ -137,7 +138,7 @@ export default function NavigationBar({ create, details, dash }) {
               {item.name}
             </DisclosureButton>
           ))}
-        </div>
+        </Box>
       </DisclosurePanel>
     </Disclosure>
   );

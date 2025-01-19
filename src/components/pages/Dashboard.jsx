@@ -3,19 +3,35 @@ import hero from "../../assets/logo.gif";
 import NavigationBar from "../common-templates/NavigationBar";
 import Card from "../common-templates/Card";
 import FooterBar from "../common-templates/FooterBar";
+import { Box } from "@mui/material";
+import SpeedDial from '@mui/material/SpeedDial';
+import SpeedDialIcon from '@mui/material/SpeedDialIcon';
+import SpeedDialAction from '@mui/material/SpeedDialAction';
+import FileCopyIcon from '@mui/icons-material/FileCopyOutlined';
+import SaveIcon from '@mui/icons-material/Save';
+import PrintIcon from '@mui/icons-material/Print';
+import ShareIcon from '@mui/icons-material/Share';
+
+const actions = [
+  { icon: <FileCopyIcon />, name: 'Copy' },
+  { icon: <SaveIcon />, name: 'Save' },
+  { icon: <PrintIcon />, name: 'Print' },
+  { icon: <ShareIcon />, name: 'Share' },
+];
 
 const Dashboard = () => {
   return (
-    <div className="bg-chestnut">
+    <>
+    <Box className="bg-chestnut">
       <NavigationBar dash/>
-      <div className="w-full h-auto min-h-[100vh] flex bg-chestnut relative flex justify-center items-center flex-col">
-        <div className="w-full h-[45rem] flex justify-center items-center mt-4 container">
+      <Box className="w-full h-auto min-h-[100vh] flex bg-chestnut relative flex justify-center items-center flex-col">
+        <Box className="w-full h-[45rem] flex justify-center items-center mt-4 container">
           <img
             src={hero}
             alt="hero_img"
             className="w-[50%] h-[90%] object-contain"
           />
-          <div className="w-[50%] h-full flex justify-center items-start flex-col">
+          <Box className="w-[50%] h-full flex justify-center items-start flex-col">
             <span className="text-[4rem] font-bold text-nostalgicblue text-wrap">
               Welcome to Zootopia!
             </span>
@@ -23,20 +39,37 @@ const Dashboard = () => {
               All the wonderfull animals get registered to get access in our
               jungle..
             </span>
-          </div>
-        </div>
-        <div className="border w-full container" />
+          </Box>
+        </Box>
+        <Box className="border w-full container" />
         <span className="text-left w-full container text-[2rem] text-nostalgicblue">
           Registered animals
         </span>
-        <div className="mt-[1rem] container w-full p-4 flex flex-wrap justify-center items-center gap-6">
+        <Box className="mt-[1rem] container w-full p-4 flex flex-wrap justify-center items-center gap-6">
           {[1, 2, 3, 4, 5, 6, 7, 8, 9].map((_, ind) => (
             <Card key={ind} ind={ind} />
           ))}
-        </div>
-      </div>
+        </Box>
+      </Box>
       <FooterBar />
-    </div>
+    </Box>
+
+    <Box sx={{ height: 320, transform: 'translateZ(0px)', flexGrow: 1, position: "fixed", zIndex: "100", bottom: 0, right: 0 }}>
+      <SpeedDial
+        ariaLabel="SpeedDial basic example"
+        sx={{ position: 'absolute', bottom: 16, right: 16 }}
+        icon={<SpeedDialIcon />}
+      >
+        {actions.map((action) => (
+          <SpeedDialAction
+            key={action.name}
+            icon={action.icon}
+            tooltipTitle={action.name}
+          />
+        ))}
+      </SpeedDial>
+    </Box>
+    </>
   );
 };
 

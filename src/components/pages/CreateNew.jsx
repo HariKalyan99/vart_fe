@@ -1,20 +1,26 @@
 import React from "react";
 import NavigationBar from "../common-templates/NavigationBar";
 import FooterBar from "../common-templates/FooterBar";
+import { Box } from "@mui/material";
+
+import AnimalCard from "../common-templates/Card";
+import CreateCard from "../CreateCard";
 
 const CreateNew = () => {
   return (
     <>
-      <div className="bg-saffron w-full min-h-[100vh] h-auto flex justify-center flex-col">
+      <Box className="bg-saffron w-full min-h-[100vh] h-auto flex justify-center flex-col">
         <NavigationBar create />
-        <div className="w-full h-full mt-4 flex justify-center">
-          <div className="min-h-[80vh] container mt-[2rem] w-full flex justify-center items-center gap-4">
-            <div className="w-[50%] border h-[100%]"></div>
-            <div className="w-[50%] border h-[100%]"></div>
-          </div>
-        </div>
+        <Box className="w-full h-full mt-4 flex justify-center">
+          <Box className="min-h-[85vh] container mt-[2rem] w-full flex justify-center items-center gap-4">
+            <CreateCard />
+            <Box className="w-[50%] h-[100%] justify-center items-center flex">
+              <AnimalCard copy />
+            </Box>
+          </Box>
+        </Box>
         <FooterBar create />
-      </div>
+      </Box>
     </>
   );
 };

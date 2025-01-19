@@ -1,7 +1,7 @@
 import { styled } from "@mui/material";
 import Tooltip, { tooltipClasses } from "@mui/material/Tooltip";
 
-export const LightTooltip = styled(({ className, ...props }) => (
+const LightTooltip = styled(({ className, ...props }) => (
   <Tooltip {...props} classes={{ popper: className }} />
 ))(({ theme }) => ({
   [`& .${tooltipClasses.tooltip}`]: {
@@ -11,3 +11,5 @@ export const LightTooltip = styled(({ className, ...props }) => (
     fontSize: 12,
   },
 }));
+
+export default LightTooltip;

@@ -26,7 +26,7 @@
 // import { GiCrocJaws } from "react-icons/gi"; //amphi
 // import { GiNeedleJaws } from "react-icons/gi"; //carnivores
 // import { FaCrow } from "react-icons/fa"; //omni
-// import { LightTooltip } from "../utils/MUITooltip";
+// import { LightLightTooltip } from "../utils/MUILightTooltip";
 
 // const Card = ({ ind }) => {
 //   return (
@@ -35,27 +35,27 @@
 
 //       {ind % 2 === 0 ? (
 //         <div className="absolute top-4 left-4 ">
-//         <LightTooltip title="KING" placement="top">
+//         <LightLightTooltip title="KING" placement="top">
 //           <IconButton sx={{ color: "white" }}>
 //             <FaChessKing className=" text-nostalgicblue  text-[2rem]" />
 //           </IconButton>
-//         </LightTooltip>
+//         </LightLightTooltip>
 //         </div>
 //       ) : ind !== 3 ? (
 //         <div className="absolute top-4 left-4 ">
-//         <LightTooltip title="QUEEN" placement="top">
+//         <LightLightTooltip title="QUEEN" placement="top">
 //           <IconButton sx={{ color: "white" }}>
 //           <GiQueenCrown className=" text-nostalgicblue  text-[2rem]" />
 //           </IconButton>
-//         </LightTooltip>
+//         </LightLightTooltip>
 //         </div>
 //       ) : (
 //         <div className="absolute top-4 left-4 ">
-//         <LightTooltip title="KEEPER" placement="top">
+//         <LightLightTooltip title="KEEPER" placement="top">
 //           <IconButton sx={{ color: "white" }}>
 //           <GiPikeman className=" text-nostalgicblue  text-[2rem]" />
 //           </IconButton>
-//         </LightTooltip>
+//         </LightLightTooltip>
 //         </div>
 //       )}
 
@@ -112,30 +112,30 @@
 //         </div>
 
 //         <div className="flex justify-evenly items-center gap-6 bg-black w-full">
-//           <LightTooltip title="Edit" placement="top">
+//           <LightLightTooltip title="Edit" placement="top">
 //             <IconButton sx={{ color: "white" }}>
 //               <FaEdit
 //                 size={30}
 //                 className="hover:text-chestnut hover:cursor-pointer"
 //               />
 //             </IconButton>
-//           </LightTooltip>
-//           <LightTooltip title="Delete" placement="top">
+//           </LightLightTooltip>
+//           <LightLightTooltip title="Delete" placement="top">
 //             <IconButton sx={{ color: "white" }}>
 //               <RiDeleteBin6Line
 //                 size={30}
 //                 className="hover:text-chestnut hover:cursor-pointer"
 //               />
 //             </IconButton>
-//           </LightTooltip>
-//           <LightTooltip title="Read more" placement="top">
+//           </LightLightTooltip>
+//           <LightLightTooltip title="Read more" placement="top">
 //             <IconButton sx={{ color: "white" }}>
 //               <CiRead
 //                 size={30}
 //                 className="hover:text-chestnut hover:cursor-pointer"
 //               />
 //             </IconButton>
-//           </LightTooltip>
+//           </LightLightTooltip>
 //         </div>
 //         {/*
 //         <div className="flex justify-center gap-2 items-center">
@@ -168,7 +168,7 @@
 // };
 
 // export default Card;
-import React from "react";
+import React, { useState } from "react";
 import a from "../../assets/dash.gif";
 import { SiAnimalplanet } from "react-icons/si";
 import { GiAnimalSkull } from "react-icons/gi";
@@ -196,113 +196,196 @@ import { GiReptileTail } from "react-icons/gi"; //reptile
 import { GiCrocJaws } from "react-icons/gi"; //amphi
 import { GiNeedleJaws } from "react-icons/gi"; //carnivores
 import { FaCrow } from "react-icons/fa"; //omni
-import { LightTooltip } from "../utils/MUITooltip";
+import { FaHandPointer } from "react-icons/fa";
+import { Card, CardContent, Typography, Box, Button } from "@mui/material";
+import LightTooltip from "../utils/MUITooltip";
+import EditCard from "../EditCard";
+import MUIModal from "../utils/MUIModal";
 
-import { Card, CardContent, Tooltip, Typography, Box } from "@mui/material";
+const AnimalCard = ({ ind, copy }) => {
+  const [open, setOpen] = useState(false);
+  const [requestAgree, setRequestAgree] = useState(false);
 
-const AnimalCard = ({ ind }) => {
+  const handleRequestOpen = () => setRequestAgree(true);
+  const handleRequestClose = () => setRequestAgree(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
   return (
-    <Card className="w-[450px] h-[600px] border-4 border-nostalgicblue bg-raddishpinklight rounded-xl shadow-2xl relative p-2">
-      <img src={a} alt="animal_photo" className="w-full h-[40%] object-cover" />
-
-      <Box className="absolute top-4 left-4">
-        {ind % 2 === 0 ? (
-          <Tooltip title="KING" placement="top">
-            <IconButton sx={{ color: "white" }}>
-              <FaChessKing className="text-nostalgicblue text-[2rem]" />
-            </IconButton>
-          </Tooltip>
-        ) : ind !== 3 ? (
-          <Tooltip title="QUEEN" placement="top">
-            <IconButton sx={{ color: "white" }}>
-              <GiQueenCrown className="text-nostalgicblue text-[2rem]" />
-            </IconButton>
-          </Tooltip>
-        ) : (
-          <Tooltip title="KEEPER" placement="top">
-            <IconButton sx={{ color: "white" }}>
-              <GiPikeman className="text-nostalgicblue text-[2rem]" />
-            </IconButton>
-          </Tooltip>
-        )}
-      </Box>
-
-      <CardContent
-        className="w-full h-[55%] relative z-[10] flex justify-between gap-2 items-start flex-col mt-4 border-4 border-chestnut"
-        sx={{ padding: "0.5rem" }}
+    <>
+      <Card
+        className={`${
+          copy ? "w-full h-full" : "w-[450px] h-auto"
+        } border-4 border-nostalgicblue bg-raddishpinklight rounded-xl shadow-2xl relative p-2`}
       >
-        <Box className="w-full h-[40%] flex flex-col justify-between items-start">
-          <Box className="flex justify-center gap-2 items-center">
-            <TfiDrupal size={25} />
-            <Typography variant="h6" className="font-semibold text-black">
-              <span className="italic">Name:</span> Lion
-            </Typography>
-          </Box>
-          <Box className="flex justify-center gap-2 items-center">
-            <TbShieldStar size={25} />
-            <Typography variant="h6" className="font-semibold text-black">
-              <span className="italic">Role: </span> king of jungle
-            </Typography>
-          </Box>
-          <Box className="flex justify-center gap-2 items-center">
-            <PiPlantFill size={25} />
-            <Typography variant="h6" className="font-semibold text-black">
-              <span className="italic">Category: </span> Herbivores
-            </Typography>
-          </Box>
-        </Box>
-        <Box className="h-[40%] w-full flex gap-2 mt-4 items-start">
-          <Box className="flex justify-center gap-2 items-center">
-            <MdEmail size={25} />
-            <Typography variant="h6" className="font-semibold text-black">
-              hello@gmail.com
-            </Typography>
-          </Box>
+        <img
+          src={a}
+          alt="animal_photo"
+          className={`w-full h-[40%] object-cover ${copy && "opacity-50"}`}
+        />
 
-          <Box className="flex justify-center gap-2 items-center">
-            <IoMdPhonePortrait size={25} />
-            <Typography variant="h6" className="font-semibold text-black">
-              9889988998
-            </Typography>
-          </Box>
+        <Box className="absolute top-4 left-4">
+          {ind % 2 === 0 ? (
+            <LightTooltip title="KING" placement="top">
+              <IconButton sx={{ color: "white" }}>
+                <FaChessKing className="text-raddishpinklight text-[2rem]" />
+              </IconButton>
+            </LightTooltip>
+          ) : ind !== 3 ? (
+            <LightTooltip title="QUEEN" placement="top">
+              <IconButton sx={{ color: "white" }}>
+                <GiQueenCrown className="text-raddishpinklight text-[2rem]" />
+              </IconButton>
+            </LightTooltip>
+          ) : (
+            <LightTooltip title="KEEPER" placement="top">
+              <IconButton sx={{ color: "white" }}>
+                <GiPikeman className="text-raddishpinklight text-[2rem]" />
+              </IconButton>
+            </LightTooltip>
+          )}
         </Box>
-        <Box className="flex justify-evenly items-center gap-6 bg-black w-full mb-4">
-          <Tooltip title="Edit" placement="top">
-            <IconButton sx={{ color: "white" }}>
-              <FaEdit
-                size={30}
-                className="hover:text-nostalgicblue hover:cursor-pointer"
-              />
-            </IconButton>
-          </Tooltip>
-          <Tooltip title="Delete" placement="top">
-            <IconButton sx={{ color: "white" }}>
-              <RiDeleteBin6Line
-                size={30}
-                className="hover:text-nostalgicblue hover:cursor-pointer"
-              />
-            </IconButton>
-          </Tooltip>
-          <Tooltip title="Read more" placement="top">
-            <IconButton sx={{ color: "white" }}>
-              <CiRead
-                size={30}
-                className="hover:text-nostalgicblue hover:cursor-pointer"
-              />
-            </IconButton>
-          </Tooltip>
-        </Box>
-        <Box className="flex justify-between w-full bg-chestnut text-white p-2 absolute bottom-0 right-0">
-          <Typography variant="body2" className="font-bold">
-            Registered on: <span className="font-semibold">20th fe, 2025</span>
-          </Typography>
 
-          <Typography variant="body2" className="font-bold">
-            Edited on: <span className="font-semibold">20th fe, 2025</span>
-          </Typography>
+        <CardContent
+          className={`w-full h-[55%] relative z-[10] flex justify-between gap-2 items-start flex-col mt-4 border-4 border-chestnut ${
+            copy && "opacity-50"
+          }`}
+          sx={{ padding: "0.5rem" }}
+        >
+          <Box className="w-full h-[40%] flex flex-col justify-between items-start">
+            <Box className="flex justify-center gap-2 items-center">
+              <TfiDrupal size={25} />
+              <Typography variant="h6" className="font-semibold text-black">
+                <span className="italic">Name:</span> Lion
+              </Typography>
+            </Box>
+            <Box className="flex justify-center gap-2 items-center">
+              <TbShieldStar size={25} />
+              <Typography variant="h6" className="font-semibold text-black">
+                <span className="italic">Role: </span> king of jungle
+              </Typography>
+            </Box>
+            <Box className="flex justify-center gap-2 items-center">
+              <PiPlantFill size={25} />
+              <Typography variant="h6" className="font-semibold text-black">
+                <span className="italic">Category: </span> Herbivores
+              </Typography>
+            </Box>
+
+           {true && <Box className="flex justify-center gap-2 items-center">
+              <FaHandPointer size={25} />
+              <Typography variant="h6" className="font-semibold text-black">
+                <Box className="flex justify-center items-center">
+                <span className="italic">Requested for: </span>  
+              <IconButton sx={{ color: "white" }} onClick={handleRequestOpen}>
+                <GiQueenCrown className="text-nostalgicblue text-[2rem]" />
+              </IconButton>
+                </Box>
+              </Typography>
+            </Box>}
+          </Box>
+          <Box className="h-[40%] w-full flex gap-2 mt-4 items-start">
+            <Box className="flex justify-center gap-2 items-center">
+              <MdEmail size={25} />
+              <Typography variant="h6" className="font-semibold text-black">
+                hello@gmail.com
+              </Typography>
+            </Box>
+
+            <Box className="flex justify-center gap-2 items-center">
+              <IoMdPhonePortrait size={25} />
+              <Typography variant="h6" className="font-semibold text-black">
+                9889988998
+              </Typography>
+            </Box>
+          </Box>
+          <Box className="flex justify-evenly items-center gap-6 bg-raddishpinklight w-full mb-4">
+            <LightTooltip title="Edit" placement="top">
+              <IconButton sx={{ color: "white" }}>
+                <FaEdit
+                  size={30}
+                  className="text-black"
+                  onClick={handleOpen}
+                />
+              </IconButton>
+            </LightTooltip>
+            <LightTooltip title="Delete" placement="top">
+              <IconButton sx={{ color: "white" }}>
+                <RiDeleteBin6Line
+                  size={30}
+                  className="text-black"
+                />
+              </IconButton>
+            </LightTooltip>
+            <LightTooltip title="Read more" placement="top">
+              <IconButton sx={{ color: "white" }}>
+                <CiRead
+                  size={30}
+                  className="text-black"
+                />
+              </IconButton>
+            </LightTooltip>
+          </Box>
+          {copy ? (
+            <Box className="flex justify-between w-full bg-chestnut text-white p-2 absolute bottom-0 right-0">
+              <Typography variant="body2" className="font-bold">
+                Registered on: <span className="font-semibold">xx-xx-xxxx</span>
+              </Typography>
+
+              <Typography variant="body2" className="font-bold">
+                Edited on: <span className="font-semibold">xx-xx-xxxx</span>
+              </Typography>
+            </Box>
+          ) : (
+            <Box className="flex justify-between w-full bg-chestnut text-white p-2 absolute bottom-0 right-0">
+              <Typography variant="body2" className="font-bold">
+                Registered on:{" "}
+                <span className="font-semibold">20th fe, 2025</span>
+              </Typography>
+
+              <Typography variant="body2" className="font-bold">
+                Edited on: <span className="font-semibold">20th fe, 2025</span>
+              </Typography>
+            </Box>
+          )}
+        </CardContent>
+      </Card>
+      <MUIModal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="modal-edit"
+        aria-describedby="modal-edit-description"
+      >
+        <EditCard setEditCard={setOpen} open={open} id="modal-edit" />
+      </MUIModal>
+
+      <MUIModal
+        open={requestAgree}
+        onClose={handleRequestClose}
+        aria-labelledby="modal-title"
+        aria-describedby="modal-request-description"
+      >
+        
+        <Box className="flex w-[200px] h-auto bg-white flex-col p-4 justify-center items-center absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 gap-2 rounded-xl">
+          <span className="inline-block text-center">Request for role change?</span>
+          <Button
+            variant="contained"
+            type="button"
+            sx={{ backgroundColor: "#70645C" }}
+            className="hover:bg-black mt-2"
+          >
+            Agree
+          </Button>
+          <Button
+            variant="contained"
+            type="button"
+            sx={{ backgroundColor: "#70645C" }}
+            className="hover:bg-black mt-2"
+          >
+            DISAGREE
+          </Button>
         </Box>
-      </CardContent>
-    </Card>
+      </MUIModal>
+    </>
   );
 };
 
