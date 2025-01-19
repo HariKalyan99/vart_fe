@@ -16,6 +16,7 @@ function App() {
       <LoginPage />
       <ForgotPwdPage />
       <Dashboard />
+      <CreateNew />
       <CardDetails />
    </div>
   )
