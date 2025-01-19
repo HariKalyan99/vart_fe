@@ -24,7 +24,7 @@ import { Textarea } from "@headlessui/react";
 import { SiContributorcovenant } from "react-icons/si";
 import { MdCancelPresentation } from "react-icons/md";
 
-const EditCard = ({ handleClose, open }) => {
+const EditCard = ({ handleClose, open, profile }) => {
   const [role, setRole] = useState("");
   const [cat, setCat] = useState("");
   const handleRoleChange = (e) => setRole(e.target.value);
@@ -51,7 +51,7 @@ const EditCard = ({ handleClose, open }) => {
               <Box className="flex gap-2">
                 <TfiDrupal size={25} />
                 <TextField
-                  placeholder="Enter your name"
+                  placeholder="Enter name"
                   variant="standard"
                   color="black"
                   className="w-[80%]"
@@ -72,7 +72,7 @@ const EditCard = ({ handleClose, open }) => {
                     }}
                   >
                     <MenuItem value="" disabled>
-                      Select your Role
+                      Select Role
                     </MenuItem>
                     <MenuItem value="kingofjungle">KING OF JUNGLE</MenuItem>
                     <MenuItem value="queenofjungle">QUEEN OF JUNGLE</MenuItem>
@@ -93,7 +93,7 @@ const EditCard = ({ handleClose, open }) => {
                       "aria-label": "Desired category",
                     }}
                   >
-                    <MenuItem value="Select your Category" disabled>
+                    <MenuItem value="Select Category" disabled>
                       Select your Category
                     </MenuItem>
                     {[
@@ -114,7 +114,7 @@ const EditCard = ({ handleClose, open }) => {
               <Box className="flex gap-2">
                 <MdEmail size={25} />
                 <TextField
-                  placeholder="Enter your email"
+                  placeholder="Enter email"
                   variant="standard"
                   color="black"
                   className="w-[80%]"
@@ -124,7 +124,7 @@ const EditCard = ({ handleClose, open }) => {
               <Box className="flex gap-2">
                 <IoMdPhonePortrait size={25} />
                 <TextField
-                  placeholder="Enter your phone number"
+                  placeholder="Enter phone number"
                   variant="standard"
                   color="black"
                   className="w-[80%]"
@@ -147,7 +147,7 @@ const EditCard = ({ handleClose, open }) => {
                 <Textarea
                   type="text"
                   label="Outlined"
-                  placeholder="Enter your Address"
+                  placeholder="Enter Address"
                   color="black"
                   className="w-[80%] border p-2"
                   rows={4}
@@ -162,7 +162,7 @@ const EditCard = ({ handleClose, open }) => {
                 <Textarea
                   type="text"
                   label="Outlined"
-                  placeholder="What are your Contributions"
+                  placeholder="Add Contributions"
                   color="black"
                   className="w-[80%] border p-2"
                   rows={5}

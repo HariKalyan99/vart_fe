@@ -5,6 +5,7 @@ import Dashboard from "./components/pages/Dashboard";
 import CreateNew from "./components/pages/CreateNew";
 import CardDetails from "./components/pages/CardDetails";
 import ForgotPwdPage from "./components/pages/ForgotPwdPage";
+import ProfilePage from "./components/pages/ProfilePage";
 
 
 
@@ -18,6 +19,7 @@ function App() {
       <Dashboard />
       <CreateNew />
       <CardDetails />
+      <ProfilePage />
    </div>
   )
 }
