@@ -32,15 +32,23 @@ import MUIModal from "./utils/MUIModal";
 import EditCard from "./EditCard";
 import { MdOutlineSecurity } from "react-icons/md";
 import { Link } from "react-router-dom";
+import { BiShowAlt } from "react-icons/bi";
+import { TiCancelOutline } from "react-icons/ti";
 
 const ProfileCard = ({}) => {
   const [open, setOpen] = useState(false);
   const [changePassword, setchangePassword] = useState(false);
+  const [getShowPassword, setShowPassword] = useState(false);
+  const [pwd,setPwd] = useState(false)
 
+  const handlePwdOpen = () => setShowPassword(true);
+  const handlePwdClose = () => setShowPassword(false);
   const handleRequestOpen = () => setchangePassword(true);
   const handleRequestClose = () => setchangePassword(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+
+
   return (
     <>
       <div className="w-full h-auto border-nostalgicblue border-4 bg-raddishpinklight rounded-xl shadow-2xl relative overflow-hidden p-2 flex justify-center items-center flex-col">
@@ -121,8 +129,9 @@ const ProfileCard = ({}) => {
           </div>
           <div className="flex justify-center gap-2 items-center">
             <MdOutlineSecurity size={25} />
+            {pwd ? <span className="text-base">password</span> : <BiShowAlt className="inline hover:text-chestnut hover:cursor-pointer" size={25} onClick={handlePwdOpen}/>}
             <span
-              className="text-xl font-semibold text-black italic hover:text-chestnut hover:cursor-pointer hover:underline"
+              className="text-base font-semibold text-black italic hover:text-chestnut hover:cursor-pointer hover:underline"
               onClick={handleRequestOpen}
             >
               Change Password?
@@ -235,17 +244,65 @@ const ProfileCard = ({}) => {
               />
               
             </FormControl>
+            <Box className="flex gap-2">
             <Button
+                variant="contained"
+                type="button"
+                sx={{ backgroundColor: "#70645C" }}
+                className="hover:bg-black mt-2"
+              >
+                Change
+              </Button>
+              <Button
                 variant="contained"
                 type="button"
                 sx={{ backgroundColor: "#70645C" }}
                 className="hover:bg-black mt-2"
                 onClick={handleRequestClose}
               >
-                Change
+                <TiCancelOutline size={25}/>
               </Button>
+            </Box>
           </form>
         </Box>
+      </MUIModal>
+
+
+
+      <MUIModal
+        open={getShowPassword}
+        onClose={handlePwdClose}
+        aria-labelledby="modal-pwd"
+        aria-describedby="modal-pwd-description"
+      >
+        <Box className="flex w-[300px] h-auto bg-white flex-col p-4 justify-center items-center absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 gap-2 rounded-xl">
+        <FormControl
+              className="w-full mb-4"
+              variant="standard"
+              color="black"
+            >
+              <InputLabel htmlFor="email" color="black">
+                enter your mail?
+              </InputLabel>
+              <Input
+                id="email"
+                type={"email"}
+                placeholder="Confirm your mail"
+              />
+            </FormControl>
+            <Button
+                variant="contained"
+                type="button"
+                sx={{ backgroundColor: "#70645C" }}
+                className="hover:bg-black mt-2"
+                onClick={() => {
+                  setPwd((prev) => !prev);
+                  return handlePwdClose();
+                 }}
+              >
+                Confirm
+              </Button>
+            </Box>
       </MUIModal>
     </>
   );

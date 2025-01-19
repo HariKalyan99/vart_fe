@@ -9,7 +9,7 @@ import CreateCard from "../CreateCard";
 const CreateNew = () => {
   return (
     <>
-      <Box className="bg-saffron w-full min-h-[100vh] h-auto flex justify-center flex-col">
+      <Box className="bg-nostalgicblue w-full min-h-[100vh] h-auto flex justify-center flex-col">
         <NavigationBar create />
         <Box className="w-full h-full mt-4 flex justify-center">
           <Box className="min-h-[85vh] container mt-[2rem] w-full flex justify-center items-center gap-4">
