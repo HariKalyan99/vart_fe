@@ -2,6 +2,7 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { config } from "../../backend/config";
 import { handleError, showToast } from "../../helpers/helperFunction";
 import Cookies from "js-cookie";
+import axios from "axios";
 
 
 const backendConfig = config.backend;
@@ -23,20 +24,18 @@ const initialState = {
 export const getList = createAsyncThunk("induviduals/list", async () => {
     try {
       const token = Cookies.get("jwt");
-      console.log(token);
-      const { data } = await axios.get("/api/v1/animals/animalslist", {
+      const {data} = await axios.get("/api/v1/animals/animalslist", {
         headers: {
           "Content-Type": "application/json",
           appvalidationtoken: `${backendConfig.headercontract}`,
           Authorization: `Bearer ${token}`,
         },
       });
-      console.log(data);
-      if (data.status === "success") {
-        showToast(data.message);
-      } else {
-        showToast(data.message, "warning");
-      }
+      // if (data.status === "success") {
+      //   showToast(data.message);
+      // } else {
+      //   showToast(data.message, "warning");
+      // }
       return data;
     } catch (error) {
       handleError(error);
@@ -137,7 +136,7 @@ const crudSlice = createSlice({
           state.createInduvidualPending = true;
         })
         .addCase(createOne.fulfilled, (state, action) => {
-          state.createInduvidual = action.payload;
+          state.createInduvidual = action.payload,
           state.createInduvidualPending = false;
         })
         .addCase(createOne.rejected, (state) => {

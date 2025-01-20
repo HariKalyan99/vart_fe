@@ -22,15 +22,15 @@ export const showToast = (message, type = "success") => {
       pauseOnHover: true,
       draggable: true,
       progress: undefined,
-      theme: "dark",
+      theme: "light",
       transition: Slide,
     };
   
     if (type === "success") {
-      toast.success(message, toastOptions);
+      toast.success(`🐴${message}`, toastOptions);
     } else if (type === "error") {
-      toast.error(message, toastOptions);
+      toast.error(`${message}🙈🙉🙊`, toastOptions);
     } else if (type === "warning") {
-      toast.warning(message, toastOptions);
+      toast.warning(`🐤${message}`, toastOptions);
     }
   };

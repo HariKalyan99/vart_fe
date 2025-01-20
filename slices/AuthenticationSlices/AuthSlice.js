@@ -450,6 +450,7 @@ const initialState = {
   registrationPending: false,
   loginResponse: {},
   loginPending: false,
+  loginInduvidual: "",
   logoutResponse: {},
   logoutPending: false,
   forgotPasswordMail: {},
@@ -493,8 +494,7 @@ export const authLogin = createAsyncThunk(
         },
       });
       if (data.status === "success") {
-        // const listData = await dispatch(getList());
-        // console.log(listData)
+        await dispatch(getList());
         showToast(data.message);
       } else {
         showToast(data.message, "warning");
@@ -620,6 +620,7 @@ const authSlice = createSlice({
       })
       .addCase(authLogin.fulfilled, (state, action) => {
         state.loginResponse = action.payload;
+        state.loginInduvidual = action.payload.role;
         state.loginPending = false;
       })
       .addCase(authLogin.rejected, (state) => {

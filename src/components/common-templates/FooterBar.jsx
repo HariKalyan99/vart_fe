@@ -37,11 +37,12 @@ export default function FooterBar({ create, details }) {
           <Box
             sx={{
               display: "flex",
-              flexDirection: "column",
               gap: 4,
               maxWidth: { lg: "50%" },
             }}
           >
+            <span className="text-white text-base fot-bold">Contributors:</span>
+            <span className="inline-block"> 🐨🐯🦁🐮🐷🐽🐸🐵🙈🙉🙊🐒🐔🐧🐦🐤🐣🐥🦆🦅🦉🦇🐺🐗🐴🦄🐝🐛🦋🐌🐞🐜🦟🦗🕷🕸🦂🐢🐍🦎🦖🦕🐙🦑🦐🦞🦀🐡🐠🐟🐬🐳🐋🦈🐊🐅🐆🦓🦍🐘🦛🦏🐪🐫🦒🦘🐃🐂🐄🐎🐖🐏🐑🦙🐐🦌🐕🐩🐈🐓🦃🦚🦜🦢🕊🐇🦝🦡🐁🐀🐿🦔</span>
             {/* <Paper
               sx={{
                 p: 2,

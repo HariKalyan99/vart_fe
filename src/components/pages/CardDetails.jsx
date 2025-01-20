@@ -8,7 +8,7 @@ const CardDetails = () => {
   return (
     <>
     <Box className='bg-nostalgicblue w-full min-h-[100vh] h-auto flex justify-center flex-col'>
-        <NavigationBar details/>
+        <NavigationBar navStyle={"details"}/>
         <Box className='w-full h-full mt-4 flex justify-center'>
         <Box className='min-h-[80vh] container mt-[2rem] w-full flex justify-center items-center gap-4'>
           <Box className='w-[50%] border h-[100%]'>

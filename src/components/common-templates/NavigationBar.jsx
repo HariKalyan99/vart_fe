@@ -17,21 +17,34 @@ import {
 } from "../../../slices/AuthenticationSlices/AuthSlice";
 import { useEffect } from "react";
 
-const navigation = [
-  {
-    name: "navStyle === 'dash'board",
-    to: "/navStyle === 'dash'board",
-    current: true,
-  },
-  { name: "Register new", to: "/navStyle === 'create'", current: false },
-];
-
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
 export default function NavigationBar({ navStyle }) {
-  const { logoutResponse } = useSelector((state) => state.auth);
+  const { logoutResponse, loginInduvidual } = useSelector(
+    (state) => state.auth
+  );
+  let navigation;
+  if (loginInduvidual === "zookeeper") {
+    navigation = [
+      {
+        name: "Dashboard",
+        to: "/dashboard",
+        current: false,
+      },
+      { name: "Register new", to: "/create", current: false },
+    ];
+  } else {
+    navigation = [
+      {
+        name: "Dashboard",
+        to: "/dashboard",
+        current: false,
+      },
+    ];
+  }
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -53,10 +66,10 @@ export default function NavigationBar({ navStyle }) {
   return (
     <Disclosure
       as="nav"
-      className={`${navStyle === "navStyle === 'create'" && "bg-chestnut"} ${
-        navStyle === "navStyle === 'details'" && "bg-chestnut"
+      className={`${navStyle === "create" && "bg-chestnut"} ${
+        navStyle === "details" && "bg-chestnut"
       } ${
-        navStyle === "navStyle === 'dash'" && "bg-saffron"
+        navStyle === "dash" && "bg-saffron"
       } sticky w-full top-2 rounded-[3rem] border-2 border-2 z-[100]`}
     >
       <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">

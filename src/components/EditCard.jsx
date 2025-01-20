@@ -24,8 +24,14 @@ import { Textarea } from "@headlessui/react";
 import { SiContributorcovenant } from "react-icons/si";
 import { MdCancelPresentation } from "react-icons/md";
 
-const EditCard = ({ handleClose, open, profile }) => {
-  const [role, setRole] = useState("");
+const EditCard = ({ handleClose, open, profile, induvidual }) => {
+   const [getName, setName] = useState(induvidual.animalname);
+    const [getEmail, setEmail] = useState(induvidual.email);
+    const [getPhone, setPhone] = useState(induvidual.phoneNumber);
+    const [getDob, setDob] = useState(induvidual.dob);
+    const [getAddress, setAddress] = useState(induvidual.address);
+    const [getContributions, setContributions] = useState(induvidual.contributions);
+  const [role, setRole] = useState(induvidual.animalRole || "");
   const [cat, setCat] = useState("");
   const handleRoleChange = (e) => setRole(e.target.value);
 
@@ -42,11 +48,15 @@ const EditCard = ({ handleClose, open, profile }) => {
       setCat({ category: e.target.value, icon: <FaCrow size={25} /> });
     }
   };
+
+  const handleEditDetails = (e) => {
+    e.preventDefault();
+  }
   return (
     <Fade in={open}>
       <Card className="w-[40%] border-4 border-nostaligicblue h-[70%] flex gap-4 bg-raddishpinklight shadow-2xl relative p-2 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
         <CardContent className="w-full border-4 border-chestnut h-[auto]">
-          <form className="w-full h-full flex flex-col gap-2">
+          <form className="w-full h-full flex flex-col gap-2" onClick={handleEditDetails}>
             <Box className="w-full border h-full flex flex-col gap-2 p-2">
               <Box className="flex gap-2">
                 <TfiDrupal size={25} />
@@ -55,6 +65,8 @@ const EditCard = ({ handleClose, open, profile }) => {
                   variant="standard"
                   color="black"
                   className="w-[80%]"
+                  value={getName}
+                  onChange={(e) => setName(e.target.value)}
                 />
               </Box>
 
@@ -118,6 +130,8 @@ const EditCard = ({ handleClose, open, profile }) => {
                   variant="standard"
                   color="black"
                   className="w-[80%]"
+                  value={getEmail}
+                  onChange={(e) => setEmail(e.target.value)}
                 />
               </Box>
 
@@ -128,6 +142,8 @@ const EditCard = ({ handleClose, open, profile }) => {
                   variant="standard"
                   color="black"
                   className="w-[80%]"
+                  value={getPhone}
+                  onChange={(e) => setPhone(e.target.value)}
                 />
               </Box>
 
@@ -139,6 +155,8 @@ const EditCard = ({ handleClose, open, profile }) => {
                   variant="standard"
                   color="black"
                   className="w-[80%]"
+                  value={getDob}
+                  onChange={(e) => setDob(e.target.value)}
                 />
               </Box>
 
@@ -151,6 +169,8 @@ const EditCard = ({ handleClose, open, profile }) => {
                   color="black"
                   className="w-[80%] border p-2"
                   rows={4}
+                  value={getAddress}
+                  onChange={(e) => setAddress(e.target.value)}
                 />
               </Box>
             </Box>
@@ -166,6 +186,8 @@ const EditCard = ({ handleClose, open, profile }) => {
                   color="black"
                   className="w-[80%] border p-2"
                   rows={5}
+                  value={getContributions}
+                  onChange={(e) => setContributions(e.target.value)}
                 />
               </Box>
 
