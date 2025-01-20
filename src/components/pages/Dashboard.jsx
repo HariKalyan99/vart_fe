@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import hero from "../../assets/logo.gif";
 import NavigationBar from "../common-templates/NavigationBar";
 import Card from "../common-templates/Card";
@@ -16,6 +16,7 @@ import { GiPikeman } from "react-icons/gi";
 import { FaHandPointer } from "react-icons/fa";
 import LightTooltip from "../utils/MUITooltip";
 import { Box } from "@mui/material";
+import { useSelector } from "react-redux";
 
 const actions = [
   { icon: <FaChessKing size={25} />, name: "kingofjungle" },
@@ -24,6 +25,12 @@ const actions = [
 ];
 
 const Dashboard = () => {
+
+  const {listOfInduviduals} = useSelector((state) => state.crud);
+
+  useEffect(() => {
+    console.log(listOfInduviduals)
+  }, [listOfInduviduals])
   return (
     <>
       <Box className="bg-chestnut">
