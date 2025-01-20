@@ -11,6 +11,8 @@ import CardDetails from './components/pages/CardDetails.jsx'
 import OpeningPage from './components/pages/OpeningPage.jsx'
 import ProfilePage from './components/pages/ProfilePage.jsx'
 import ForgotPwdPage from './components/pages/ForgotPwdPage.jsx'
+import { Provider } from 'react-redux'
+import { zootopiaStore } from '../store/zootopiaStore.js'
 
 const router = createBrowserRouter([
   {path: "/", element: <App />, children: [
@@ -27,6 +29,8 @@ const router = createBrowserRouter([
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
+    <Provider store={zootopiaStore}>
     <RouterProvider router={router}/>
+    </Provider>
   </StrictMode>,
 )

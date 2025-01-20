@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useRef, useState } from "react";
 import Box from "@mui/material/Box";
 import IconButton from "@mui/material/IconButton";
 import InputLabel from "@mui/material/InputLabel";
@@ -12,22 +12,53 @@ import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 import Button from "@mui/material/Button";
 import { Link, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { authRegisterNew } from "../../../slices/AuthenticationSlices/AuthSlice";
 
 const SignupPage = () => {
-  const [showPassword, setShowPassword] = React.useState(false);
-  const [showConfirmPassword, setShowConfirmPassword] = React.useState(false);
-  const [role, setRole] = React.useState("");
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [getRole, setRole] = useState("");
+  const [getName, setName] = useState("");
+  const [getEmail, setEmail] = useState("");
+  const [getPassword, setPassword] = useState("");
+  const [getConfirmPassword, setConfirmPassword] = useState("");
+  const [getPhone, setPhone] = useState("");
+
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const {registrationResponse} = useSelector((state) => state.auth)
 
   const handleClickShowPassword = () => setShowPassword((prev) => !prev);
   const handleClickShowConfirmPassword = () =>
     setShowConfirmPassword((prev) => !prev);
   const handleRoleChange = (event) => setRole(event.target.value);
+  const handleRegisterSubmit = (e) => {
+    e.preventDefault();
+    const animalname = getName;
+    const email = getEmail;
+    const password = getPassword;
+    const confirmPassword = getConfirmPassword;
+    const phoneNumber = getPhone;
+    const animaleRole = getRole;
+    dispatch(authRegisterNew({
+      animalname,
+      email,
+      password,
+      confirmPassword,
+      phoneNumber,
+      animaleRole,
+    }));
+    console.log(registrationResponse);
+  };
 
   return (
     <Box className="w-full h-[100vh] flex justify-center items-center bg_wallpaper">
       <Box className="h-[600px] w-[500px] border-2 rounded-xl bg-primary2 border-nostalgicblue shadow-2xl">
-        <form className="w-full h-full flex justify-evenly items-center flex-col">
+        <form
+          className="w-full h-full flex justify-evenly items-center flex-col"
+          onSubmit={handleRegisterSubmit}
+        >
           <span className="text-2xl font-bold mb-4">Register</span>
 
           <TextField
@@ -36,6 +67,8 @@ const SignupPage = () => {
             placeholder="Enter your name"
             variant="standard"
             color="black"
+            value={getName}
+            onChange={(e) => setName(e.target.value)}
           />
           <TextField
             type="email"
@@ -43,6 +76,8 @@ const SignupPage = () => {
             placeholder="Enter your email"
             variant="standard"
             color="black"
+            value={getEmail}
+            onChange={(e) => setEmail(e.target.value)}
           />
 
           <FormControl className="w-[80%] mb-4" variant="standard">
@@ -62,6 +97,8 @@ const SignupPage = () => {
               }
               className="bg-transparent outline-none placeholder-[black] fs-2"
               color="black"
+              value={getPassword}
+              onChange={(e) => setPassword(e.target.value)}
             />
           </FormControl>
 
@@ -85,6 +122,8 @@ const SignupPage = () => {
               }
               className="bg-transparent outline-none placeholder-[black] fs-2"
               color="black"
+              value={getConfirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
             />
           </FormControl>
 
@@ -94,12 +133,14 @@ const SignupPage = () => {
             placeholder="Enter your phone (optional)"
             variant="standard"
             color="black"
+            value={getPhone}
+            onChange={(e) => setPhone(e.target.value)}
           />
 
           <FormControl className="w-[80%] mb-4" variant="standard">
             <InputLabel color="black">Desired role? (optional)</InputLabel>
             <Select
-              value={role}
+              value={getRole}
               onChange={handleRoleChange}
               displayEmpty
               className="bg-transparent outline-none placeholder-[black] fs-2"
@@ -118,12 +159,15 @@ const SignupPage = () => {
 
           <p className="text-center">
             Already have an account?{" "}
-            <span className="text-base font-bold underline hover:cursor-pointer hover:text-chestnut" onClick={() => navigate("/login")}>
+            <span
+              className="text-base font-bold underline hover:cursor-pointer hover:text-chestnut"
+              onClick={() => navigate("/login")}
+            >
               Login
             </span>
           </p>
 
-          <Link to={"/login"}>
+          {/* <Link to={"/login"}> */}
           <Button
             variant="contained"
             type="submit"
@@ -132,7 +176,7 @@ const SignupPage = () => {
           >
             Register
           </Button>
-          </Link>
+          {/* </Link> */}
         </form>
       </Box>
     </Box>
