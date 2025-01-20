@@ -1,23 +1,4 @@
-// import React from 'react'
-
-// const LoginPage = () => {
-//   return (
-//     <div className='w-full h-[100vh] flex justify-center items-center bg_wallpaper4'>
-//        <div className='h-[400px] w-[500px] border-2 rounded-xl bg-primary2 border-white shadow-2xl'>
-//         <form className='w-full h-full flex justify-evenly items-center flex-col'>
-//             <span className='text-2xl font-bold'>Login</span>
-//             <input type="email" className='w-[80%] h-[40px] bg-transparent outline-none border-b placeholder-[black] fs-2' placeholder='Enter your email'/>
-//             <input type="password" className='w-[80%] h-[40px] bg-transparent outline-none border-b placeholder-[black] fs-2' placeholder='Enter your password'/>
-//             <input type="password" className='w-[80%] h-[40px] bg-transparent outline-none border-b placeholder-[black] fs-2' placeholder='Confirm your password'/>
-//             <p>Not registered? <span className='text-base font-bold underline hover:cursor-pointer hover:text-chestnut'>Signup</span></p>
-//         </form>
-//         </div>
-//     </div>
-//   )
-// }
-
-// export default LoginPage
-import * as React from "react";
+import React, { useEffect, useState } from "react";
 import Box from "@mui/material/Box";
 import IconButton from "@mui/material/IconButton";
 import InputLabel from "@mui/material/InputLabel";
@@ -29,17 +10,47 @@ import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import Button from "@mui/material/Button";
 import { Link, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { authActions, authLogin } from "../../../slices/AuthenticationSlices/AuthSlice";
 
 const LoginPage = () => {
-  const [showPassword, setShowPassword] = React.useState(false);
-  const navigate = useNavigate();
+  const [getEmail, setEmail] = useState("");
+  const [getPassword, setPassword] = useState("");
 
+  const [showPassword, setShowPassword] = useState(false);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  
+  const {loginResponse} = useSelector((state) => state.auth);
   const handleClickShowPassword = () => setShowPassword((prev) => !prev);
+  
+  useEffect(() => {
+    dispatch(authActions.resetLoginResponse());
+  }, [])
+  
+    useEffect(() => {
+      if(loginResponse?.status === "success" && loginResponse){
+        navigate("/dashboard");
+        dispatch(authActions.resetLoginResponse());
+      }
+    }, [loginResponse])
+
+    const handleLoginSubmit = (e) => {
+      e.preventDefault();
+      const email = getEmail;
+      const password = getPassword;
+      dispatch(
+        authLogin({
+          email,
+          password,
+        }));
+    }
+
 
   return (
     <Box className="w-full h-[100vh] flex justify-center items-center bg_wallpaper4">
       <Box className="h-[400px] w-[500px] border-2 rounded-xl bg-primary2 border-nostalgicblue shadow-2xl">
-        <form className="w-full h-full flex justify-evenly items-center flex-col">
+        <form className="w-full h-full flex justify-evenly items-center flex-col" onSubmit={handleLoginSubmit}>
           <span className="text-2xl font-bold">Login</span>
 
           <TextField
@@ -48,6 +59,8 @@ const LoginPage = () => {
             placeholder="Enter your email"
             variant="standard"
             color="black"
+            value={getEmail}
+            onChange={(e) => setEmail(e.target.value)}
           />
 
           <FormControl className="w-[80%] mb-4" variant="standard">
@@ -67,6 +80,8 @@ const LoginPage = () => {
               }
               className="bg-transparent outline-none placeholder-[black] fs-2"
               color="black"
+              value={getPassword}
+            onChange={(e) => setPassword(e.target.value)}
             />
           </FormControl>
           <p className="text-center">
@@ -90,7 +105,6 @@ const LoginPage = () => {
             </span>
           </p>
 
-          <Link to={"/dashboard"}>
             <Button
               variant="contained"
               type="submit"
@@ -99,7 +113,6 @@ const LoginPage = () => {
             >
               Login
             </Button>
-          </Link>
         </form>
       </Box>
     </Box>

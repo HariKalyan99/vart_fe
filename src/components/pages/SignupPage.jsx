@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Box from "@mui/material/Box";
 import IconButton from "@mui/material/IconButton";
 import InputLabel from "@mui/material/InputLabel";
@@ -11,9 +11,9 @@ import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 import Button from "@mui/material/Button";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { authRegisterNew } from "../../../slices/AuthenticationSlices/AuthSlice";
+import { authActions, authRegisterNew } from "../../../slices/AuthenticationSlices/AuthSlice";
 
 const SignupPage = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -24,16 +24,29 @@ const SignupPage = () => {
   const [getPassword, setPassword] = useState("");
   const [getConfirmPassword, setConfirmPassword] = useState("");
   const [getPhone, setPhone] = useState("");
-
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const {registrationResponse} = useSelector((state) => state.auth)
+  const { registrationResponse } = useSelector(
+    (state) => state.auth
+  );
+
+  useEffect(() => {
+    dispatch(authActions.resetRegistrationResponse());
+  }, [])
+
+  useEffect(() => {
+    if(registrationResponse?.status === "success" && registrationResponse){
+      navigate("/login");
+    dispatch(authActions.resetRegistrationResponse());
+
+    }
+  }, [registrationResponse])
 
   const handleClickShowPassword = () => setShowPassword((prev) => !prev);
   const handleClickShowConfirmPassword = () =>
     setShowConfirmPassword((prev) => !prev);
   const handleRoleChange = (event) => setRole(event.target.value);
-  const handleRegisterSubmit = (e) => {
+  const handleRegisterSubmit = async(e) => {
     e.preventDefault();
     const animalname = getName;
     const email = getEmail;
@@ -41,18 +54,21 @@ const SignupPage = () => {
     const confirmPassword = getConfirmPassword;
     const phoneNumber = getPhone;
     const animaleRole = getRole;
-    dispatch(authRegisterNew({
-      animalname,
-      email,
-      password,
-      confirmPassword,
-      phoneNumber,
-      animaleRole,
-    }));
-    console.log(registrationResponse);
-  };
+    dispatch(
+      authRegisterNew({
+        animalname,
+        email,
+        password,
+        confirmPassword,
+        phoneNumber,
+        animaleRole,
+      }));
+    };
+
+
 
   return (
+    <>
     <Box className="w-full h-[100vh] flex justify-center items-center bg_wallpaper">
       <Box className="h-[600px] w-[500px] border-2 rounded-xl bg-primary2 border-nostalgicblue shadow-2xl">
         <form
@@ -167,7 +183,6 @@ const SignupPage = () => {
             </span>
           </p>
 
-          {/* <Link to={"/login"}> */}
           <Button
             variant="contained"
             type="submit"
@@ -176,10 +191,10 @@ const SignupPage = () => {
           >
             Register
           </Button>
-          {/* </Link> */}
         </form>
       </Box>
     </Box>
+    </>
   );
 };
 

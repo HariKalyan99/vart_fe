@@ -10,7 +10,10 @@ import {
 import { Bars3Icon,  XMarkIcon } from "@heroicons/react/24/outline";
 import logo from "../../assets/Z.png";
 import { Box, Button } from "@mui/material";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { authActions, authLogout } from "../../../slices/AuthenticationSlices/AuthSlice";
+import { useEffect } from "react";
 
 const navigation = [
   { name: "Dashboard", to: "/dashboard", current: true },
@@ -22,6 +25,23 @@ function classNames(...classes) {
 }
 
 export default function NavigationBar({ create, details, dash }) {
+  const {logoutResponse} = useSelector((state) => state.auth)
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+      dispatch(authActions.resetLoginResponse());
+    }, [])
+    
+      useEffect(() => {
+        if(logoutResponse?.status === "success" && logoutResponse){
+          navigate("/login");
+          dispatch(authActions.resetLoginResponse());
+        }
+      }, [logoutResponse])
+  const handleLogout = () => {
+    dispatch(authLogout());
+  }
   return (
     <Disclosure
       as="nav"
@@ -34,7 +54,7 @@ export default function NavigationBar({ create, details, dash }) {
           <Box className="absolute inset-y-0 left-0 flex items-center sm:hidden">
             {/* Mobile menu button*/}
             <DisclosureButton className="group relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
-              <span className="absolute -inset-0.5" />
+              <span className="absolute -inset-0.5" ></span>
               <span className="sr-only">Open main menu</span>
               <Bars3Icon
                 aria-hidden="true"
@@ -83,7 +103,7 @@ export default function NavigationBar({ create, details, dash }) {
             <Menu as="Box" className="relative ml-3">
               <Box>
                 <MenuButton className="relative flex rounded-full bg-raddishpinklight text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800 justify-center items-center">
-                  <span className="absolute -inset-1.5" />
+                  <span className="absolute -inset-1.5" ></span>
                   <span className="sr-only">Open user menu</span>
                   <span className="px-4 font-bold text-black hidden sm:block">
                     LION
@@ -108,12 +128,12 @@ export default function NavigationBar({ create, details, dash }) {
                   </Link>
                 </MenuItem>
                 <MenuItem>
-                  <Link
-                    to={"/login"}
-                    className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100 data-[focus]:outline-none"
+                  <Box
+                    className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100 data-[focus]:outline-none hover:cursor-pointer"
+                    onClick={handleLogout}
                   >
                     Logout
-                  </Link>
+                  </Box>
                 </MenuItem>
               </MenuItems>
             </Menu>
