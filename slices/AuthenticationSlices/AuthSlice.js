@@ -12,6 +12,10 @@ const initialState = {
   loginPending: false,
   logoutResponse: {},
   logoutPending: false,
+  forgotPasswordMail: {},
+  forgotPasswordEmailPending: false,
+  resetPasswordResponse: {},
+  resetPasswordPending: false,
 };
 
 export const authRegisterNew = createAsyncThunk(
@@ -231,6 +235,118 @@ export const authLogout = createAsyncThunk(
 );
 
 
+
+export const forgotPasswordResponse = createAsyncThunk(
+  "auth/forgotpwd",
+  async (email) => {
+    try {
+      const {data} = await axios.post("/api/v1/auth/forgotpassword", {email}, {
+        headers: {
+          "Content-Type": "application/json",
+          appvalidationtoken: `${backendConfig.headercontract}`,
+        },
+      });
+      if (data.status === "success") {
+        toast.success(`${data.message}`, {
+          position: "top-center",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: false,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+          transition: Slide,
+        });
+      }
+      return data;
+    } catch (error) {
+      if (error.response) {
+        const { message } = error.response.data;
+        toast.error(`${message}`, {
+          position: "top-center",
+          autoClose: 4000,
+          hideProgressBar: false,
+          closeOnClick: false,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+          transition: Slide,
+        });
+      } else {
+        toast.error(`Unknown error occurred`, {
+          position: "top-center",
+          autoClose: 4000,
+          hideProgressBar: false,
+          closeOnClick: false,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+          transition: Slide,
+        });
+      }
+    }
+  }
+);
+
+export const authResetPassword = createAsyncThunk(
+  "auth/resetpwd",
+  async (resetDetails) => {
+    try {
+      const {data} = await axios.post("/api/v1/auth/resetpassword", resetDetails, {
+        headers: {
+          "Content-Type": "application/json",
+          appvalidationtoken: `${backendConfig.headercontract}`,
+        },
+      });
+      if (data.status === "success") {
+        toast.success(`${data.message}`, {
+          position: "top-center",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: false,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+          transition: Slide,
+        });
+      }
+      return data;
+    } catch (error) {
+      if (error.response) {
+        const { message } = error.response.data;
+        toast.error(`${message}`, {
+          position: "top-center",
+          autoClose: 4000,
+          hideProgressBar: false,
+          closeOnClick: false,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+          transition: Slide,
+        });
+      } else {
+        toast.error(`Unknown error occurred`, {
+          position: "top-center",
+          autoClose: 4000,
+          hideProgressBar: false,
+          closeOnClick: false,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+          transition: Slide,
+        });
+      }
+    }
+  }
+);
+
+
 const authSlice = createSlice({
   name: "auth",
   initialState,
@@ -280,6 +396,31 @@ const authSlice = createSlice({
     })
     .addCase(authLogout.rejected, (state) => {
       state.logoutPending = false;
+    });
+
+// forgot-pwt
+    builder
+    .addCase(forgotPasswordResponse.pending, (state) => {
+      state.forgotPasswordEmailPending = true;
+    })
+    .addCase(forgotPasswordResponse.fulfilled, (state, action) => {
+      state.forgotPasswordMail = action.payload;
+      state.forgotPasswordEmailPending = false;
+    })
+    .addCase(forgotPasswordResponse.rejected, (state) => {
+      state.forgotPasswordEmailPending = false;
+    });
+// reset-pwd
+    builder
+    .addCase(authResetPassword.pending, (state) => {
+      state.resetPasswordPending = true;
+    })
+    .addCase(authResetPassword.fulfilled, (state, action) => {
+      state.resetPasswordResponse = action.payload;
+      state.resetPasswordPending = false;
+    })
+    .addCase(authResetPassword.rejected, (state) => {
+      state.resetPasswordResponse = false;
     });
   },
 });
