@@ -24,15 +24,17 @@ const LoginPage = () => {
   
   const {loginResponse} = useSelector((state) => state.auth);
   const handleClickShowPassword = () => setShowPassword((prev) => !prev);
-  
+
   useEffect(() => {
-    dispatch(authActions.resetLoginResponse());
+    dispatch(authActions.resetPasswordEmailResponse());
+    dispatch(authActions.resetForgotPasswordResponse());
+    dispatch(authActions.resetRegistrationResponse());
   }, [])
   
     useEffect(() => {
       if(loginResponse?.status === "success" && loginResponse){
-        navigate("/dashboard");
-        dispatch(authActions.resetLoginResponse());
+        dispatch(authActions.resetRegistrationResponse());
+        navigate("/dashboard")
       }
     }, [loginResponse])
 
@@ -45,6 +47,8 @@ const LoginPage = () => {
           email,
           password,
         }));
+
+    
     }
 
 
@@ -90,7 +94,6 @@ const LoginPage = () => {
             <Link to={"/forgot-pwd"}>
             <span
               className="text-base font-bold underline hover:cursor-pointer hover:text-chestnut"
-              onClick={() => navigate("/register")}
             >
               Reset password
             </span>
@@ -98,12 +101,14 @@ const LoginPage = () => {
           </p>
           <p className="text-center">
             Not registered?{" "}
+            <Link to={"/register"}>
+
             <span
               className="text-base font-bold underline hover:cursor-pointer hover:text-chestnut"
-              onClick={() => navigate("/register")}
             >
               Signup
             </span>
+            </Link>
           </p>
 
             <Button

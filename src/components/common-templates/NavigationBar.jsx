@@ -7,54 +7,64 @@ import {
   MenuItem,
   MenuItems,
 } from "@headlessui/react";
-import { Bars3Icon,  XMarkIcon } from "@heroicons/react/24/outline";
+import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import logo from "../../assets/Z.png";
-import { Box, Button } from "@mui/material";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { authActions, authLogout } from "../../../slices/AuthenticationSlices/AuthSlice";
+import {
+  authActions,
+  authLogout,
+} from "../../../slices/AuthenticationSlices/AuthSlice";
 import { useEffect } from "react";
 
 const navigation = [
-  { name: "Dashboard", to: "/dashboard", current: true },
-  { name: "Register new", to: "/create", current: false },
+  {
+    name: "navStyle === 'dash'board",
+    to: "/navStyle === 'dash'board",
+    current: true,
+  },
+  { name: "Register new", to: "/navStyle === 'create'", current: false },
 ];
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
-export default function NavigationBar({ create, details, dash }) {
-  const {logoutResponse} = useSelector((state) => state.auth)
+export default function NavigationBar({ navStyle }) {
+  const { logoutResponse } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   useEffect(() => {
+    dispatch(authActions.resetLoginResponse());
+    dispatch(authActions.resetLogoutResponse());
+  }, []);
+
+  useEffect(() => {
+    if (logoutResponse?.status === "success" && logoutResponse) {
       dispatch(authActions.resetLoginResponse());
-    }, [])
-    
-      useEffect(() => {
-        if(logoutResponse?.status === "success" && logoutResponse){
-          navigate("/login");
-          dispatch(authActions.resetLoginResponse());
-        }
-      }, [logoutResponse])
+      dispatch(authActions.resetLogoutResponse());
+      navigate("/login");
+    }
+  }, [logoutResponse]);
   const handleLogout = () => {
     dispatch(authLogout());
-  }
+  };
   return (
     <Disclosure
       as="nav"
-      className={`${create && "bg-chestnut"} ${details && "bg-chestnut"} ${
-        dash && "bg-saffron"
+      className={`${navStyle === "navStyle === 'create'" && "bg-chestnut"} ${
+        navStyle === "navStyle === 'details'" && "bg-chestnut"
+      } ${
+        navStyle === "navStyle === 'dash'" && "bg-saffron"
       } sticky w-full top-2 rounded-[3rem] border-2 border-2 z-[100]`}
     >
-      <Box className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
-        <Box className="relative flex h-16 items-center justify-between">
-          <Box className="absolute inset-y-0 left-0 flex items-center sm:hidden">
+      <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
+        <div className="relative flex h-16 items-center justify-between">
+          <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
             {/* Mobile menu button*/}
             <DisclosureButton className="group relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
-              <span className="absolute -inset-0.5" ></span>
+              <span className="absolute -inset-0.5"></span>
               <span className="sr-only">Open main menu</span>
               <Bars3Icon
                 aria-hidden="true"
@@ -65,17 +75,17 @@ export default function NavigationBar({ create, details, dash }) {
                 className="hidden size-6 group-data-[open]:block"
               />
             </DisclosureButton>
-          </Box>
-          <Box className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
-            <Box className="flex shrink-0 items-center">
+          </div>
+          <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
+            <div className="flex shrink-0 items-center">
               <img
                 alt="Your Company"
                 src={logo}
                 className="h-10 object-cover"
               />
-            </Box>
-            <Box className="hidden sm:ml-6 sm:block">
-              <Box className="flex space-x-4">
+            </div>
+            <div className="hidden sm:ml-6 sm:block">
+              <div className="flex space-x-4">
                 {navigation.map((item) => (
                   <Link
                     key={item.name}
@@ -83,11 +93,15 @@ export default function NavigationBar({ create, details, dash }) {
                     aria-current={item.current ? "page" : undefined}
                     className={classNames(
                       item.current
-                        ? `${create && "bg-saffron"} ${
-                            details && "bg-saffron"
-                          } ${dash && "bg-chestnut"} text-white border`
-                        : `text-white ${create && "hover:bg-saffron"} ${details && "hover:bg-saffron"} ${
-                            dash && "hover:bg-chestnut"
+                        ? `${navStyle === "create" && "bg-saffron"} ${
+                            navStyle === "details" && "bg-saffron"
+                          } ${
+                            navStyle === "dash" && "bg-chestnut"
+                          } text-white border`
+                        : `text-white ${
+                            navStyle === "create" && "hover:bg-saffron"
+                          } ${navStyle === "details" && "hover:bg-saffron"} ${
+                            navStyle === "dash" && "hover:bg-chestnut"
                           } hover:text-white border`,
                       "rounded-md px-3 py-2 text-sm font-medium"
                     )}
@@ -95,15 +109,15 @@ export default function NavigationBar({ create, details, dash }) {
                     {item.name}
                   </Link>
                 ))}
-              </Box>
-            </Box>
-          </Box>
-          <Box className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
+              </div>
+            </div>
+          </div>
+          <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
             {/* Profile dropdown */}
-            <Menu as="Box" className="relative ml-3">
-              <Box>
+            <Menu as="div" className="relative ml-3">
+              <div>
                 <MenuButton className="relative flex rounded-full bg-raddishpinklight text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800 justify-center items-center">
-                  <span className="absolute -inset-1.5" ></span>
+                  <span className="absolute -inset-1.5"></span>
                   <span className="sr-only">Open user menu</span>
                   <span className="px-4 font-bold text-black hidden sm:block">
                     LION
@@ -114,7 +128,7 @@ export default function NavigationBar({ create, details, dash }) {
                     className="size-12 rounded-full"
                   />
                 </MenuButton>
-              </Box>
+              </div>
               <MenuItems
                 transition
                 className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black/5 transition focus:outline-none data-[closed]:scale-95 data-[closed]:transform data-[closed]:opacity-0 data-[enter]:duration-100 data-[leave]:duration-75 data-[enter]:ease-out data-[leave]:ease-in"
@@ -128,21 +142,21 @@ export default function NavigationBar({ create, details, dash }) {
                   </Link>
                 </MenuItem>
                 <MenuItem>
-                  <Box
+                  <div
                     className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100 data-[focus]:outline-none hover:cursor-pointer"
                     onClick={handleLogout}
                   >
                     Logout
-                  </Box>
+                  </div>
                 </MenuItem>
               </MenuItems>
             </Menu>
-          </Box>
-        </Box>
-      </Box>
+          </div>
+        </div>
+      </div>
 
       <DisclosurePanel className="sm:hidden">
-        <Box className="space-y-1 px-2 pb-3 pt-2">
+        <div className="space-y-1 px-2 pb-3 pt-2">
           {navigation.map((item) => (
             <DisclosureButton
               key={item.name}
@@ -159,7 +173,7 @@ export default function NavigationBar({ create, details, dash }) {
               {item.name}
             </DisclosureButton>
           ))}
-        </Box>
+        </div>
       </DisclosurePanel>
     </Disclosure>
   );

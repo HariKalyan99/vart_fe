@@ -153,7 +153,6 @@ export const authLogout = createAsyncThunk(
   async () => {
     try {
       const token = Cookies.get('jwt');
-      console.log(token)
       const { data } = await axios.get(
         "/api/v1/auth/logout",
         {
@@ -358,7 +357,21 @@ const authSlice = createSlice({
     resetLoginResponse: (state) => {
       state.loginResponse = {};
       state.loginPending = false;
+    },
+    resetLogoutResponse: (state) => {
+      state.logoutResponse = {};
+      state.logoutPending = false;
+    },
+    resetPasswordEmailResponse: (state) => {
+      state.forgotPasswordMail = {};
+      state.forgotPasswordEmailPending = false;
+    },
+    resetForgotPasswordResponse: (state) => {
+      state.resetPasswordResponse = {};
+      state.resetPasswordPending = false;
     }
+
+
   },
   extraReducers: (builder) => {
     builder

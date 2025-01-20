@@ -24,6 +24,13 @@ const ForgotPwdPage = () => {
     forgotPasswordEmailPending,
     resetPasswordResponse,
   } = useSelector((state) => state.auth);
+
+  useEffect(() => {
+    dispatch(authActions.resetPasswordEmailResponse());
+    dispatch(authActions.resetForgotPasswordResponse());
+  }, [])
+
+
   useEffect(() => {
     if (forgotPasswordMail?.status === "success" && forgotPasswordMail) {
       setEmail("");
@@ -36,7 +43,6 @@ const ForgotPwdPage = () => {
       setToken("");
       setNewPassword("");
       setConfirmNewPassword("");
-      dispatch(authActions.resetLoginResponse());
       navigate("/login");
     }
   }, [resetPasswordResponse]);
@@ -50,6 +56,7 @@ const ForgotPwdPage = () => {
     const token = getToken;
     const newPassword = getNewPassword;
     const confirmPassword = getConfirmNewPassword;
+    console.log(token, newPassword, confirmPassword)
     dispatch(authResetPassword({ token, newPassword, confirmPassword }));
   };
 

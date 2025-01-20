@@ -3,7 +3,6 @@ import hero from "../../assets/logo.gif";
 import NavigationBar from "../common-templates/NavigationBar";
 import Card from "../common-templates/Card";
 import FooterBar from "../common-templates/FooterBar";
-import { Box } from "@mui/material";
 import SpeedDial from "@mui/material/SpeedDial";
 import SpeedDialIcon from "@mui/material/SpeedDialIcon";
 import SpeedDialAction from "@mui/material/SpeedDialAction";
@@ -16,6 +15,7 @@ import { GiQueenCrown } from "react-icons/gi";
 import { GiPikeman } from "react-icons/gi";
 import { FaHandPointer } from "react-icons/fa";
 import LightTooltip from "../utils/MUITooltip";
+import { Box } from "@mui/material";
 
 const actions = [
   { icon: <FaChessKing size={25} />, name: "kingofjungle" },
@@ -27,7 +27,8 @@ const Dashboard = () => {
   return (
     <>
       <Box className="bg-chestnut">
-        <NavigationBar dash />
+        <NavigationBar navStyle={"dash"} />
+        
         <Box className="w-full h-auto min-h-[100vh] flex bg-chestnut relative flex justify-center items-center flex-col">
           <Box className="w-full h-[45rem] flex justify-center items-center mt-4 container">
             <img
@@ -51,7 +52,7 @@ const Dashboard = () => {
           </span>
           <Box className="mt-[1rem] container w-full p-4 flex flex-wrap justify-center items-center gap-6">
             {[1, 2, 3, 4, 5, 6, 7, 8, 9].map((_, ind) => (
-              <Card key={ind} ind={ind} />
+              <Card key={ind} ind={_} />
             ))}
           </Box>
         </Box>

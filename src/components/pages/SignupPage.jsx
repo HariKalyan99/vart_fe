@@ -36,8 +36,8 @@ const SignupPage = () => {
 
   useEffect(() => {
     if(registrationResponse?.status === "success" && registrationResponse){
+      dispatch(authActions.resetRegistrationResponse());
       navigate("/login");
-    dispatch(authActions.resetRegistrationResponse());
 
     }
   }, [registrationResponse])

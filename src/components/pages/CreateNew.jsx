@@ -15,7 +15,7 @@ const CreateNew = () => {
           <Box className="min-h-[85vh] container mt-[2rem] w-full flex justify-center items-center gap-4">
             <CreateCard />
             <Box className="w-[50%] h-[100%] justify-center items-center flex">
-              <AnimalCard copy />
+              <AnimalCard copy={true} />
             </Box>
           </Box>
         </Box>
