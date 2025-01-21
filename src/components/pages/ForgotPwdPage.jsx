@@ -23,6 +23,7 @@ const ForgotPwdPage = () => {
     forgotPasswordMail,
     forgotPasswordEmailPending,
     resetPasswordResponse,
+    resetPasswordPending
   } = useSelector((state) => state.auth);
 
   useEffect(() => {
@@ -64,6 +65,7 @@ const ForgotPwdPage = () => {
     <>
       <Box className="flex h-auto flex-col p-4 justify-center items-center absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 gap-2 rounded-xl z-[100]">
         {forgotPasswordEmailPending && <CircularProgress color="inherit" />}
+        {resetPasswordPending && <CircularProgress color="inherit" />}
       </Box>
       <Box
         className={`w-full h-[100vh] flex justify-center items-center ${

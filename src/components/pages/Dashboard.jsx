@@ -11,7 +11,7 @@ import { GiQueenCrown } from "react-icons/gi";
 import { GiPikeman } from "react-icons/gi";
 import { FaHandPointer } from "react-icons/fa";
 import LightTooltip from "../utils/MUITooltip";
-import { Box } from "@mui/material";
+import { Box, Skeleton, Stack } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { crudActions, getList } from "../../../slices/CRUDSlices/CrudOperationSlice";
 import { authActions } from "../../../slices/AuthenticationSlices/AuthSlice"
@@ -20,7 +20,7 @@ import { useNavigate } from "react-router-dom";
 
 
 const Dashboard = () => {
-  const {listOfInduviduals} = useSelector((state) => state.crud);
+  const {listOfInduviduals, listOfInduvidualsPending} = useSelector((state) => state.crud);
   const loginInduvidual = JSON.parse(localStorage?.getItem('data'))?.role || ""
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -85,7 +85,14 @@ const Dashboard = () => {
           <Box className="mt-[1rem] container w-full p-4 flex flex-wrap justify-center items-center gap-6">
             {listOfInduviduals?.data?.length > 0 ? listOfInduviduals?.data.map((induvidual) => (
               <AnimalCard key={induvidual.id} induvidual={induvidual} />
-            ))  :  <Box className="w-full h-[45rem] flex justify-center items-center mt-4 container">
+            ))  : listOfInduvidualsPending ? [1,2,3,4,5,6].map((_, ind) => <Stack key={ind} spacing={1}>
+            {/* For variant="text", adjust the height via font-size */}
+            <Skeleton variant="text" sx={{ fontSize: '1rem' }} />
+            {/* For other variants, adjust the size with `width` and `height` */}
+            <Skeleton variant="circular" width={40} height={40} />
+            <Skeleton variant="rectangular" width={210} height={60} />
+            <Skeleton variant="rounded" width={210} height={60} />
+          </Stack>) : listOfInduviduals?.data?.length === 0 && <Box className="w-full h-[45rem] flex justify-center items-center mt-4 container">
               <Box className="w-[50%] h-full flex justify-center items-start flex-col">
               <span className="text-[4rem] font-bold text-nostalgicblue text-wrap">
                 We are starting soon!
@@ -132,6 +139,9 @@ const Dashboard = () => {
           </SpeedDial>
         </LightTooltip>
       </Box>
+
+      
+
     </>
   );
 };

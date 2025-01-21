@@ -4,6 +4,7 @@ import {
   Button,
   Card,
   CardContent,
+  CircularProgress,
   FormControl,
   MenuItem,
   Select,
@@ -22,6 +23,7 @@ import { MdEmail } from "react-icons/md";
 import { IoMdPhonePortrait } from "react-icons/io";
 import { Textarea } from "@headlessui/react";
 import { SiContributorcovenant } from "react-icons/si";
+import { useSelector } from "react-redux";
 
 const CreateCard = ({getName, setName,
   getDepRole,
@@ -38,6 +40,7 @@ const CreateCard = ({getName, setName,
   setAddress,
   getContributions,
   setContributions, handleCreateSubmit}) => {
+    const {createInduvidualPending} = useSelector(state => state.crud)
   const handleCatChange = (e) => {
     if (e.target.value === "herbivores") {
       setCategory({ category: e.target.value, icon: <PiPlantFill size={25} /> });
@@ -52,9 +55,11 @@ const CreateCard = ({getName, setName,
     }
   };
 
+
   
   return (
     <Card className="w-[50%] border-4 border-nostaligicblue h-[100%] flex flex-col gap-4 bg-raddishpinklight shadow-2xl relative p-2">
+     
       <Box className="w-full h-[45%]">
         <img src={cp} alt="card_photo" className="w-full h-full object-cover" />
       </Box>
@@ -101,7 +106,7 @@ const CreateCard = ({getName, setName,
               {getCategory.icon ? getCategory.icon : <GiBossKey size={25} />}
               <FormControl className="w-[80%] mb-4" variant="standard">
                 <Select
-                  value={getCategory.category}
+                  value={getCategory?.category}
                   onChange={handleCatChange}
                   displayEmpty
                   className="bg-transparent outline-none placeholder-[black] fs-2"
@@ -200,7 +205,7 @@ const CreateCard = ({getName, setName,
               />
             </Box>
 
-            <Box className="w-full flex justify-center">
+            <Box className="w-full flex justify-center items-center flex-col gap-2">
               <Button
                 variant="contained"
                 type="submit"
@@ -209,6 +214,8 @@ const CreateCard = ({getName, setName,
               >
                 Add
               </Button>
+
+            {createInduvidualPending && <CircularProgress color="inherit" />}
             </Box>
           </Box>
         </form>

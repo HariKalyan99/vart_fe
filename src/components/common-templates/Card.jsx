@@ -69,6 +69,7 @@ const AnimalCard = ({
           !copy && induvidual.animalRole === "zookeeper" && "border-saffron"
         } bg-raddishpinklight rounded-xl shadow-2xl relative p-2`}
       >
+        
         <img
           src={a}
           alt="animal_photo"

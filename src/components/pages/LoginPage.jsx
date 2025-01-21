@@ -11,9 +11,12 @@ import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import Button from "@mui/material/Button";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { authActions, authLogin } from "../../../slices/AuthenticationSlices/AuthSlice";
-import Cookies from 'js-cookie'
-
+import {
+  authActions,
+  authLogin,
+} from "../../../slices/AuthenticationSlices/AuthSlice";
+import Cookies from "js-cookie";
+import { CircularProgress } from "@mui/material";
 
 const LoginPage = () => {
   const [getEmail, setEmail] = useState("");
@@ -23,45 +26,46 @@ const LoginPage = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const token = Cookies.get("jwt")
-    if(token){
-      navigate("/dashboard");
-    }
-  
-  const {loginResponse} = useSelector((state) => state.auth);
+  const token = Cookies.get("jwt");
+  if (token) {
+    navigate("/dashboard");
+  }
+
+  const { loginResponse, loginPending } = useSelector((state) => state.auth);
   const handleClickShowPassword = () => setShowPassword((prev) => !prev);
 
   useEffect(() => {
     dispatch(authActions.resetPasswordEmailResponse());
     dispatch(authActions.resetForgotPasswordResponse());
     dispatch(authActions.resetRegistrationResponse());
-  }, [])
-  
-    useEffect(() => {
-      if(loginResponse?.status === "success" && loginResponse){
-        dispatch(authActions.resetRegistrationResponse());
-        navigate("/dashboard")
-      }
-    }, [loginResponse])
+  }, []);
 
-    const handleLoginSubmit = (e) => {
-      e.preventDefault();
-      const email = getEmail;
-      const password = getPassword;
-      dispatch(
-        authLogin({
-          email,
-          password,
-        }));
-
-    
+  useEffect(() => {
+    if (loginResponse?.status === "success" && loginResponse) {
+      dispatch(authActions.resetRegistrationResponse());
+      navigate("/dashboard");
     }
+  }, [loginResponse]);
 
+  const handleLoginSubmit = (e) => {
+    e.preventDefault();
+    const email = getEmail;
+    const password = getPassword;
+    dispatch(
+      authLogin({
+        email,
+        password,
+      })
+    );
+  };
 
   return (
     <Box className="w-full h-[100vh] flex justify-center items-center bg_wallpaper4">
       <Box className="h-[400px] w-[500px] border-2 rounded-xl bg-primary2 border-nostalgicblue shadow-2xl">
-        <form className="w-full h-full flex justify-evenly items-center flex-col" onSubmit={handleLoginSubmit}>
+        <form
+          className="w-full h-full flex justify-evenly items-center flex-col"
+          onSubmit={handleLoginSubmit}
+        >
           <span className="text-2xl font-bold">Login</span>
 
           <TextField
@@ -92,39 +96,35 @@ const LoginPage = () => {
               className="bg-transparent outline-none placeholder-[black] fs-2"
               color="black"
               value={getPassword}
-            onChange={(e) => setPassword(e.target.value)}
+              onChange={(e) => setPassword(e.target.value)}
             />
           </FormControl>
           <p className="text-center">
             Forgot password?{" "}
             <Link to={"/forgot-pwd"}>
-            <span
-              className="text-base font-bold underline hover:cursor-pointer hover:text-chestnut"
-            >
-              Reset password
-            </span>
+              <span className="text-base font-bold underline hover:cursor-pointer hover:text-chestnut">
+                Reset password
+              </span>
             </Link>
           </p>
           <p className="text-center">
             Not registered?{" "}
             <Link to={"/register"}>
-
-            <span
-              className="text-base font-bold underline hover:cursor-pointer hover:text-chestnut"
-            >
-              Signup
-            </span>
+              <span className="text-base font-bold underline hover:cursor-pointer hover:text-chestnut">
+                Signup
+              </span>
             </Link>
           </p>
 
-            <Button
-              variant="contained"
-              type="submit"
-              sx={{ backgroundColor: "#70645C" }}
-              className="hover:bg-black"
-            >
-              Login
-            </Button>
+          <Button
+            variant="contained"
+            type="submit"
+            sx={{ backgroundColor: "#70645C" }}
+            className="hover:bg-black"
+          >
+            Login
+          </Button>
+          {loginPending && <CircularProgress color="inherit" />}
         </form>
       </Box>
     </Box>

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import NavigationBar from "../common-templates/NavigationBar";
 import FooterBar from "../common-templates/FooterBar";
-import { Box } from "@mui/material";
+import { Box, CircularProgress } from "@mui/material";
 
 import AnimalCard from "../common-templates/Card";
 import CreateCard from "../CreateCard";
@@ -62,7 +62,9 @@ const CreateNew = () => {
       <Box className="bg-nostalgicblue w-full min-h-[100vh] h-auto flex justify-center flex-col">
         <NavigationBar navStyle={"create"} />
         <Box className="w-full h-full mt-4 flex justify-center">
+          
           <Box className="min-h-[85vh] container mt-[2rem] w-full flex justify-center items-center gap-4">
+          
             <CreateCard
               getName={getName}
               setName={setName}
@@ -81,8 +83,9 @@ const CreateNew = () => {
               getContributions={getContributions}
               setContributions={setContributions}
               handleCreateSubmit={handleCreateSubmit}
-            />
+              />
             <Box className="w-[50%] h-[100%] justify-center items-center flex">
+             
               <AnimalCard
                 copy={true}
                 getName={getName}
@@ -90,8 +93,9 @@ const CreateNew = () => {
                 getCategory={getCategory}
                 getEmail={getEmail}
                 getPhone={getPhone}
-              />
+                />
             </Box>
+            
           </Box>
         </Box>
         <FooterBar create />
