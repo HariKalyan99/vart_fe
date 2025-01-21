@@ -123,7 +123,7 @@ const Dashboard = () => {
           right: 0,
         }}
       >
-        <LightTooltip title="Request for role?" placement="top">
+        <LightTooltip title="Request for role? This feature is about to come!" placement="top">
           <SpeedDial
             ariaLabel="SpeedDial request for roles"
             sx={{ position: "absolute", bottom: 16, right: 16 }}

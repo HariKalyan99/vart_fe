@@ -33,8 +33,6 @@ import {
 } from "../../slices/CRUDSlices/CrudOperationSlice";
 import { GiPikeman, GiQueenCrown } from "react-icons/gi";
 import { FcBinoculars } from "react-icons/fc";
-import { authLogout } from "../../slices/AuthenticationSlices/AuthSlice";
-
 const ProfileCard = () => {
   const [open, setOpen] = useState(false);
   const [changePassword, setchangePassword] = useState(false);
@@ -58,7 +56,6 @@ const ProfileCard = () => {
   useEffect(() => {
     if (editInduvidual?.status === "success" && editInduvidual) {
       handleRequestClose();
-      dispatch(authLogout());
     }
   }, [editInduvidual]);
 
