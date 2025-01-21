@@ -44,8 +44,6 @@ export const getList = createAsyncThunk("induviduals/list", async () => {
   }
 });
 
-
-
 export const getInduvidual = createAsyncThunk("induviduals/one", async (id) => {
   try {
     const token = Cookies.get("jwt");
@@ -66,7 +64,6 @@ export const getInduvidual = createAsyncThunk("induviduals/one", async (id) => {
     handleError(error);
   }
 });
-
 
 export const createOne = createAsyncThunk(
   "induviduals/create",
@@ -96,27 +93,33 @@ export const createOne = createAsyncThunk(
   }
 );
 
-export const deleteOne = createAsyncThunk("induviduals/remove", async (animalId) => {
-  try {
-    console.log(animalId);
-    const token = Cookies.get("jwt");
-    const { data } = await axios.delete(`/api/v1/animals/animalremove/${animalId}`, {
-      headers: {
-        "Content-Type": "application/json",
-        appvalidationtoken: `${backendConfig.headercontract}`,
-        Authorization: `Bearer ${token}`,
-      },
-    });
-    if (data.status === "success") {
-      showToast(data.message);
-    } else {
-      showToast(data.message, "warning");
+export const deleteOne = createAsyncThunk(
+  "induviduals/remove",
+  async (animalId) => {
+    try {
+      console.log(animalId);
+      const token = Cookies.get("jwt");
+      const { data } = await axios.delete(
+        `/api/v1/animals/animalremove/${animalId}`,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            appvalidationtoken: `${backendConfig.headercontract}`,
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      if (data.status === "success") {
+        showToast(data.message);
+      } else {
+        showToast(data.message, "warning");
+      }
+      return data;
+    } catch (error) {
+      handleError(error);
     }
-    return data;
-  } catch (error) {
-    handleError(error);
   }
-});
+);
 
 export const editOne = createAsyncThunk(
   "induviduals/edit",
@@ -157,8 +160,8 @@ const crudSlice = createSlice({
     },
     resetEditInduvidualResponse: (state) => {
       state.editInduvidual = {};
-  state.editInduvidualPending = false;
-    }
+      state.editInduvidualPending = false;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -209,8 +212,7 @@ const crudSlice = createSlice({
         state.editInduvidualPending = false;
       });
 
-
-      builder
+    builder
       .addCase(getInduvidual.pending, (state) => {
         state.getOneInduvidualResponsePending = true;
       })

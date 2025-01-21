@@ -16,123 +16,120 @@ import LightTooltip from "./utils/MUITooltip";
 import { useDispatch, useSelector } from "react-redux";
 import { getInduvidual } from "../../slices/CRUDSlices/CrudOperationSlice";
 import { useParams } from "react-router-dom";
+import { Box, Typography, Paper } from "@mui/material";
 
 const DetailsCard = () => {
-  const {getOneInduvidual} = useSelector(state => state.crud);
+  const { getOneInduvidual } = useSelector((state) => state.crud);
   const dispatch = useDispatch();
-
-  const {id} = useParams();
+  const { id } = useParams();
 
   useEffect(() => {
-    dispatch(getInduvidual(id))
-  }, [])
+    dispatch(getInduvidual(id));
+  }, [dispatch, id]);
 
   return (
-    <div className="w-full h-auto border-nostalgicblue border-4 bg-raddishpinklight rounded-xl shadow-2xl relative overflow-hidden p-2">
-      <img src={a} alt="animal_photo" className="w-full h-[40%] object-cover" />
-{/* 
-      {ind % 2 === 0 ? (
-        <div className="absolute top-4 left-4 ">
-          <LightTooltip title="KING" placement="top">
-            <IconButton sx={{ color: "white" }}>
-              <FaChessKing className=" text-nostalgicblue  text-[2rem]" />
-            </IconButton>
-          </LightTooltip>
-        </div>
-      ) : ind !== 3 ? (
-        <div className="absolute top-4 left-4 ">
-          <LightTooltip title="QUEEN" placement="top">
-            <IconButton sx={{ color: "white" }}>
-              <GiQueenCrown className=" text-nostalgicblue  text-[2rem]" />
-            </IconButton>
-          </LightTooltip>
-        </div>
-      ) : (
-        <div className="absolute top-4 left-4 ">
-          <LightTooltip title="KEEPER" placement="top">
-            <IconButton sx={{ color: "white" }}>
-              <GiPikeman className=" text-nostalgicblue  text-[2rem]" />
-            </IconButton>
-          </LightTooltip>
-        </div>
-      )} */}
-      
+    <Paper className="w-full h-auto bg-raddishpinklight rounded-xl shadow-2xl relative overflow-hidden p-4 border border-4 border-chestnut">
+      <img
+        src={a}
+        alt="animal_photo"
+        className="w-full h-[40%] object-cover rounded-lg"
+      />
 
-      <div className="w-full h-[55%] relative z-[10] flex justify-between gap-2 items-start flex-col px-2 mt-2 border-4 border-chestnut p-2">
-        <div className="w-full h-[40%] flex flex-col justify-between items-start ">
-          <div className="flex justify-center gap-2 items-center">
+      <Box className="w-full h-[55%] relative z-[10] flex flex-col gap-4 mt-4 p-4 bg-white border-4 border-chestnut rounded-lg">
+        <Box className="flex flex-col gap-3">
+          <div className="flex gap-2 items-center">
             <TfiDrupal size={25} />
-            <span className="text-xl font-semibold text-black">
-              <span className="italic">Name:</span> {getOneInduvidual?.data && getOneInduvidual?.data.animalname || "NA"}
-            </span>
+            <Typography variant="h6" className="font-semibold text-black">
+              <span className="italic">Name:</span>{" "}
+              {(getOneInduvidual?.data && getOneInduvidual?.data.animalname) ||
+                "NA"}
+            </Typography>
           </div>
-          <div className="flex justify-center gap-2 items-center">
+
+          <div className="flex gap-2 items-center">
             <TbShieldStar size={25} />
-
-            <span className="text-xl font-semibold text-black text-wrap">
-              <span className=" italic">Role: </span> {getOneInduvidual?.data && getOneInduvidual?.data.animalRole || "NA"}
-            </span>
+            <Typography variant="h6" className="font-semibold text-black">
+              <span className="italic">Role: </span>{" "}
+              {(getOneInduvidual?.data && getOneInduvidual?.data.animalRole) ||
+                "NA"}
+            </Typography>
           </div>
-          <div className="flex justify-center gap-2 items-center">
+
+          <div className="flex gap-2 items-center">
             <PiPlantFill size={25} />
-
-            <span className="text-xl font-semibold text-wrap">
-              {" "}
-              <span className=" italic">Category: </span>{getOneInduvidual?.data && getOneInduvidual?.data.category || "NA"}
-            </span>
+            <Typography variant="h6" className="font-semibold text-black">
+              <span className="italic">Category: </span>
+              {(getOneInduvidual?.data && getOneInduvidual?.data.category) ||
+                "NA"}
+            </Typography>
           </div>
-        </div>
-        <div className="h-[40%] w-full flex gap-2 items-start ">
-          <div className="flex justify-center gap-2 items-center">
+        </Box>
+
+        <Box className="flex flex-col gap-3">
+          <div className="flex gap-2 items-center">
             <MdEmail size={25} />
-
-            <span className="text-xl font-semibold text-wrap">
-            {getOneInduvidual?.data && getOneInduvidual?.data.email || "NA"}
-            </span>
+            <Typography variant="h6" className="font-semibold text-black">
+              {(getOneInduvidual?.data && getOneInduvidual?.data.email) || "NA"}
+            </Typography>
           </div>
 
-          <div className="flex justify-center gap-2 items-center">
+          <div className="flex gap-2 items-center">
             <IoMdPhonePortrait size={25} />
-
-            <span className="text-xl font-semibold text-wrap">{getOneInduvidual?.data && getOneInduvidual?.data.phoneNumber || "NA"}</span>
+            <Typography variant="h6" className="font-semibold text-black">
+              {(getOneInduvidual?.data && getOneInduvidual?.data.phoneNumber) ||
+                "NA"}
+            </Typography>
           </div>
-        </div>
+        </Box>
 
-        <div className="flex justify-center gap-2 items-center">
+        <Box className="flex gap-2 items-center">
           <FaBirthdayCake size={25} />
+          <Typography variant="h6" className="font-semibold text-black">
+            <span className="italic">DOB: </span>{" "}
+            {(getOneInduvidual?.data && getOneInduvidual?.data.dob) || "NA"}
+          </Typography>
+        </Box>
 
-          <span className="text-xl font-semibold text-wrap">
-            <span className="">DOB: </span> {getOneInduvidual?.data && getOneInduvidual?.data.dob || "NA"}
-          </span>
-        </div>
-
-        <div className="flex justify-center gap-2 items-center">
+        <Box className="flex gap-2 items-center">
           <FaRoute className="text-[3rem] font-bold" />
+          <Typography variant="h6" className="font-semibold text-black">
+            {(getOneInduvidual?.data && getOneInduvidual?.data.address) || "NA"}
+          </Typography>
+        </Box>
 
-          <span className="text-xl font-semibold text-wrap">
-          {getOneInduvidual?.data && getOneInduvidual?.data.address || "NA"}{" "}
-          </span>
-        </div>
-        <div className="flex justify-center gap-2 items-center">
+        <Box className="flex gap-2 items-center">
           <SiContributorcovenant size={25} />
+          <Typography variant="h6" className="font-semibold text-black">
+            {(getOneInduvidual?.data && getOneInduvidual?.data.contributions) ||
+              "NA"}
+          </Typography>
+        </Box>
 
-          <span className="text-xl font-semibold text-wrap">
-          {getOneInduvidual?.data && getOneInduvidual?.data.contributions || "NA"}
-          </span>
-        </div>
-        <div className="flex justify-between w-full bg-chestnut text-white p-2">
-          <span className="text-[0.8rem] font-bold">
+        <Box className="flex justify-between w-full bg-chestnut text-white p-2 mt-4 rounded-lg">
+          <Typography variant="body2" className="font-bold text-xs">
             Registered on:{" "}
-            <span className="text-base font-semibold">{getOneInduvidual?.data && new Date(getOneInduvidual?.data.createdAt).toLocaleDateString() || "NA"}</span>
-          </span>
+            <span className="text-sm font-semibold">
+              {(getOneInduvidual?.data &&
+                new Date(
+                  getOneInduvidual?.data.createdAt
+                ).toLocaleDateString()) ||
+                "NA"}
+            </span>
+          </Typography>
 
-          <span className="text-[0.8rem] font-bold">
+          <Typography variant="body2" className="font-bold text-xs">
             Edited on:{" "}
-            <span className="text-base font-semibold">{getOneInduvidual?.data && new Date(getOneInduvidual?.data.updatedAt).toLocaleDateString() || "NA"}</span>
-          </span>
-        </div>
-      </div>
-    </div>
+            <span className="text-sm font-semibold">
+              {(getOneInduvidual?.data &&
+                new Date(
+                  getOneInduvidual?.data.updatedAt
+                ).toLocaleDateString()) ||
+                "NA"}
+            </span>
+          </Typography>
+        </Box>
+      </Box>
+    </Paper>
   );
 };
 

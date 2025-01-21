@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { MdEmail } from "react-icons/md";
 import { IoMdPhonePortrait } from "react-icons/io";
 import { SiContributorcovenant } from "react-icons/si";
-import { FaBirthdayCake } from "react-icons/fa";
+import { FaBirthdayCake, FaChessKing } from "react-icons/fa";
 import { FaRoute } from "react-icons/fa";
 import { FaEdit } from "react-icons/fa";
 import { RiDeleteBin6Line } from "react-icons/ri";
@@ -24,6 +24,7 @@ import {
   editOne,
   getInduvidual,
 } from "../../slices/CRUDSlices/CrudOperationSlice";
+import { GiPikeman, GiQueenCrown } from "react-icons/gi";
 
 const ProfileCard = () => {
   const [open, setOpen] = useState(false);
@@ -73,19 +74,19 @@ const ProfileCard = () => {
   return (
     <>
       <div className="w-full h-auto border-nostalgicblue border-4 bg-raddishpinklight rounded-xl shadow-2xl relative overflow-hidden p-2 flex justify-center items-center flex-col">
-        {/* {ind % 2 === 0 ? (
+        {getOneInduvidual?.data.animalRole === "kingofjungle" ? (
         <div className="absolute top-4 left-4 ">
           <LightTooltip title="KING" placement="top">
             <IconButton sx={{ color: "white" }}>
-              <FaChessKing className=" text-nostalgicblue  text-[2rem]" />
+              <FaChessKing className=" text-chestnut  text-[2rem]" />
             </IconButton>
           </LightTooltip>
         </div>
-      ) : ind !== 3 ? (
+      ) : getOneInduvidual?.data.animalRole === "queenofjungle" ? (
         <div className="absolute top-4 left-4 ">
           <LightTooltip title="QUEEN" placement="top">
             <IconButton sx={{ color: "white" }}>
-              <GiQueenCrown className=" text-nostalgicblue  text-[2rem]" />
+              <GiQueenCrown className=" text-chestnut  text-[2rem]" />
             </IconButton>
           </LightTooltip>
         </div>
@@ -93,11 +94,11 @@ const ProfileCard = () => {
         <div className="absolute top-4 left-4 ">
           <LightTooltip title="KEEPER" placement="top">
             <IconButton sx={{ color: "white" }}>
-              <GiPikeman className=" text-nostalgicblue  text-[2rem]" />
+              <GiPikeman className=" text-chestnut  text-[2rem]" />
             </IconButton>
           </LightTooltip>
         </div>
-      )} */}
+      )}
 
         <div className="w-[200px] h-[200px] border-4 rounded-[50%] overflow-hidden mt-4 hover:opacity-50 opacity-100">
           <img
