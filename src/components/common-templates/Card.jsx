@@ -28,12 +28,10 @@ const AnimalCard = ({ induvidual, copy, getName,
 
   const handleRequestOpen = () => setRequestAgree(true);
   const handleRequestClose = () => setRequestAgree(false);
-  const handleOpen = (e) => {
-    e.stopPropagation();
+  const handleOpen = () => {
     setOpen(true)
   };
-  const handleClose = (e) => {
-    e.stopPropagation();
+  const handleClose = () => {
     setOpen(false)
   };
   return (

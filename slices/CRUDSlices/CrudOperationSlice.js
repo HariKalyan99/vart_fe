@@ -106,6 +106,7 @@ export const editOne = createAsyncThunk(
           },
         }
       );
+      console.log(data);
       if (data.status === "success") {
         showToast(data.message);
       } else {
@@ -126,6 +127,10 @@ const crudSlice = createSlice({
       state.createInduvidual = {};
       state.createInduvidualPending = false;
     },
+    resetEditInduvidualResponse: (state) => {
+      state.editInduvidual = {};
+  state.editInduvidualPending = false;
+    }
   },
   extraReducers: (builder) => {
     builder

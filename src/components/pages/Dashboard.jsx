@@ -45,6 +45,7 @@ const Dashboard = () => {
 
   useEffect(() => {
     dispatch(getList());
+    dispatch(crudActions.resetEditInduvidualResponse());
     dispatch(crudActions.resetCreationResponse());
     dispatch(authActions.resetLogoutResponse());
   }, [])
