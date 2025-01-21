@@ -65,8 +65,6 @@ const ProfileCard = () => {
 
   const handlePasswordChangeSubmit = (e) => {
     e.preventDefault();
-
-    if (getNewConfirmPassword === getNewPassword) {
       dispatch(
         editOne({
           body: {
@@ -76,7 +74,6 @@ const ProfileCard = () => {
           id: getOneInduvidual.data?.id,
         })
       );
-    }
   };
 
   return (

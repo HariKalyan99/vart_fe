@@ -56,7 +56,7 @@ const EditCard = ({ handleClose, open, induvidual }) => {
       ) {
         let newLocal = {
           ...JSON.parse(localStorage.getItem("data")),
-          role: editInduvidual?.data.animalRole,
+          role: editInduvidual?.data.animalRole, name: editInduvidual?.data.animalname,
         };
         localStorage.setItem("data", JSON.stringify(newLocal));
       }
