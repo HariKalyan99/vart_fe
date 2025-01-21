@@ -15,14 +15,14 @@ export const handleError = (error) => {
 
 export const showToast = (message, type = "success") => {
     const toastOptions = {
-      position: "top-center",
+      position: "top-right",
       autoClose: 3000,
       hideProgressBar: false,
       closeOnClick: false,
       pauseOnHover: true,
       draggable: true,
       progress: undefined,
-      theme: "light",
+      theme: "colored",
       transition: Slide,
     };
   
