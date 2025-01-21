@@ -39,15 +39,15 @@ const CreateCard = ({getName, setName,
   getContributions,
   setContributions, handleCreateSubmit}) => {
   const handleCatChange = (e) => {
-    if (e.target.value === "Herbivores") {
+    if (e.target.value === "herbivores") {
       setCategory({ category: e.target.value, icon: <PiPlantFill size={25} /> });
-    } else if (e.target.value === "Reptiles") {
+    } else if (e.target.value === "reptiles") {
       setCategory({ category: e.target.value, icon: <GiReptileTail size={25} /> });
-    } else if (e.target.value === "Amphibians") {
+    } else if (e.target.value === "amphibians") {
       setCategory({ category: e.target.value, icon: <GiCrocJaws size={25} /> });
-    } else if (e.target.value === "Carnivores") {
+    } else if (e.target.value === "carnivores") {
       setCategory({ category: e.target.value, icon: <GiNeedleJaws size={25} /> });
-    } else if (e.target.value === "Omnivores") {
+    } else if (e.target.value === "omnivores") {
       setCategory({ category: e.target.value, icon: <FaCrow size={25} /> });
     }
   };
@@ -115,11 +115,11 @@ const CreateCard = ({getName, setName,
                     Select your Category
                   </MenuItem>
                   {[
-                    "Herbivores",
-                    "Reptiles",
-                    "Amphibians",
-                    "Carnivores",
-                    "Omnivores",
+                    "herbivores",
+                    "reptiles",
+                    "amphibians",
+                    "carnivores",
+                    "omnivores",
                   ].map((cat, ind) => (
                     <MenuItem key={ind} value={cat}>
                       {cat}

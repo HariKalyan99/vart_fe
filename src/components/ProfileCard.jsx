@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { MdEmail } from "react-icons/md";
 import { IoMdPhonePortrait } from "react-icons/io";
 import { SiContributorcovenant } from "react-icons/si";
@@ -16,9 +16,11 @@ import { Box, Button, FormControl, Input, InputLabel } from "@mui/material";
 import MUIModal from "./utils/MUIModal";
 import EditCard from "./EditCard";
 import { MdOutlineSecurity } from "react-icons/md";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { BiShowAlt } from "react-icons/bi";
 import { TiCancelOutline } from "react-icons/ti";
+import { useDispatch, useSelector } from "react-redux";
+import { getInduvidual } from "../../slices/CRUDSlices/CrudOperationSlice";
 
 const ProfileCard = ({}) => {
   const [open, setOpen] = useState(false);
@@ -33,6 +35,16 @@ const ProfileCard = ({}) => {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
+  const {getOneInduvidual} = useSelector(state => state.crud);
+  const dispatch = useDispatch();
+
+  const {id} = useParams();
+
+  useEffect(() => {
+    dispatch(getInduvidual(id))
+  }, [])
+
+  console.log(getOneInduvidual)
 
   return (
     <>
@@ -76,14 +88,14 @@ const ProfileCard = ({}) => {
             <div className="flex justify-center gap-2 items-center">
               <TfiDrupal size={25} />
               <span className="text-xl font-semibold text-black">
-                <span className="italic">Name:</span> Lion
+                <span className="italic">Name:</span> {getOneInduvidual?.data && getOneInduvidual?.data.animalname || "NA"}
               </span>
             </div>
             <div className="flex justify-center gap-2 items-center">
               <TbShieldStar size={25} />
 
               <span className="text-xl font-semibold text-black text-wrap">
-                <span className=" italic">Role: </span> king of jungle
+                <span className=" italic">Role: </span> {getOneInduvidual?.data && getOneInduvidual?.data.animalRole || "NA"}
               </span>
             </div>
             <div className="flex justify-center gap-2 items-center">
@@ -91,7 +103,7 @@ const ProfileCard = ({}) => {
 
               <span className="text-xl font-semibold text-wrap">
                 {" "}
-                <span className=" italic">Category: </span>Herbivores
+                <span className=" italic">Category: </span>{getOneInduvidual?.data && getOneInduvidual?.data.category || "NA"}
               </span>
             </div>
           </div>
@@ -100,7 +112,7 @@ const ProfileCard = ({}) => {
               <MdEmail size={25} />
 
               <span className="text-xl font-semibold text-wrap">
-                hello@gmail.com
+              {getOneInduvidual?.data && getOneInduvidual?.data.email || "NA"}
               </span>
             </div>
 
@@ -108,13 +120,13 @@ const ProfileCard = ({}) => {
               <IoMdPhonePortrait size={25} />
 
               <span className="text-xl font-semibold text-wrap">
-                9889988998
+              {getOneInduvidual?.data && getOneInduvidual?.data.phoneNumber || "NA"}
               </span>
             </div>
           </div>
           <div className="flex justify-center gap-2 items-center">
             <MdOutlineSecurity size={25} />
-            {pwd ? <span className="text-base">password</span> : <BiShowAlt className="inline hover:text-chestnut hover:cursor-pointer" size={25} onClick={handlePwdOpen}/>}
+            
             <span
               className="text-base font-semibold text-black italic hover:text-chestnut hover:cursor-pointer hover:underline"
               onClick={handleRequestOpen}
@@ -126,7 +138,7 @@ const ProfileCard = ({}) => {
             <FaBirthdayCake size={25} />
 
             <span className="text-xl font-semibold text-wrap">
-              <span className="">DOB: </span> 20-10-24
+              <span className="">DOB: </span>{getOneInduvidual?.data && getOneInduvidual?.data.dob || "NA"}
             </span>
           </div>
 
@@ -134,18 +146,14 @@ const ProfileCard = ({}) => {
             <FaRoute className="text-[3rem] font-bold" />
 
             <span className="text-xl font-semibold text-wrap">
-              totam magnam molestias necessitatibus quisquam perspiciatis a
-              repellendus, possimus perferendis cum odit ratione ducimus
-              corrupti, eaque inventore quidem recusandae consectetur blanditiis
-              itaque reprehenderit odio iure iusto dicta. Delectus, laudantium
-              harum!{" "}
+            {getOneInduvidual?.data && getOneInduvidual?.data.address || "NA"}{" "}
             </span>
           </div>
           <div className="flex justify-center gap-2 items-center">
             <SiContributorcovenant size={25} />
 
             <span className="text-xl font-semibold text-wrap">
-              Ate a lion, ran over an elephant
+            {getOneInduvidual?.data && getOneInduvidual?.data.contributions || "NA"}
             </span>
           </div>
           <Box className="flex justify-evenly items-center gap-6 bg-nostalgicblue w-full mb-4">
@@ -159,7 +167,7 @@ const ProfileCard = ({}) => {
                 <RiDeleteBin6Line size={30} className="text-black" />
               </IconButton>
             </LightTooltip>
-            <Link to={`/details/${1}`}>
+            <Link to={`/details/${getOneInduvidual.data?.id}`}>
             <LightTooltip title="Read more" placement="top">
               <IconButton sx={{ color: "white" }}>
                 <CiRead size={30} className="text-black" />
@@ -170,12 +178,12 @@ const ProfileCard = ({}) => {
           <div className="flex justify-between w-full bg-chestnut text-white p-2">
             <span className="text-[0.8rem] font-bold">
               Registered on:{" "}
-              <span className="text-base font-semibold">20th fe, 2025</span>
+              <span className="text-base font-semibold">{getOneInduvidual?.data && new Date(getOneInduvidual?.data.createdAt).toLocaleDateString() || "NA"}</span>
             </span>
 
             <span className="text-[0.8rem] font-bold">
               Edited on:{" "}
-              <span className="text-base font-semibold">20th fe, 2025</span>
+              <span className="text-base font-semibold">{getOneInduvidual?.data && new Date(getOneInduvidual?.data.updatedAt).toLocaleDateString() || "NA"}</span>
             </span>
           </div>
         </div>
@@ -187,7 +195,7 @@ const ProfileCard = ({}) => {
         aria-labelledby="modal-edit"
         aria-describedby="modal-edit-description"
       >
-        <EditCard handleClose={handleClose} open={open} id="modal-edit" />
+        <EditCard handleClose={handleClose} open={open} id="modal-edit" induvidual={getOneInduvidual.data}/>
       </MUIModal>
 
       <MUIModal

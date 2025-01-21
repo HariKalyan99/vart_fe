@@ -10,6 +10,9 @@ const initialState = {
   listOfInduviduals: {},
   listOfInduvidualsPending: false,
 
+  getOneInduvidual: {},
+  getOneInduvidualResponsePending: false,
+
   createInduvidual: {},
   createInduvidualPending: false,
 
@@ -40,6 +43,30 @@ export const getList = createAsyncThunk("induviduals/list", async () => {
     handleError(error);
   }
 });
+
+
+
+export const getInduvidual = createAsyncThunk("induviduals/one", async (id) => {
+  try {
+    const token = Cookies.get("jwt");
+    const { data } = await axios.get(`/api/v1/animals/findanimal/${id}`, {
+      headers: {
+        "Content-Type": "application/json",
+        appvalidationtoken: `${backendConfig.headercontract}`,
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    // if (data.status === "success") {
+    //   showToast(data.message);
+    // } else {
+    //   showToast(data.message, "warning");
+    // }
+    return data;
+  } catch (error) {
+    handleError(error);
+  }
+});
+
 
 export const createOne = createAsyncThunk(
   "induviduals/create",
@@ -179,6 +206,19 @@ const crudSlice = createSlice({
       })
       .addCase(editOne.rejected, (state) => {
         state.editInduvidualPending = false;
+      });
+
+
+      builder
+      .addCase(getInduvidual.pending, (state) => {
+        state.getOneInduvidualResponsePending = true;
+      })
+      .addCase(getInduvidual.fulfilled, (state, action) => {
+        state.getOneInduvidual = action.payload;
+        state.getOneInduvidualResponsePending = false;
+      })
+      .addCase(getInduvidual.rejected, (state) => {
+        state.getOneInduvidualResponsePending = false;
       });
   },
 });

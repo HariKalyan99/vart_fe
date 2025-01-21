@@ -25,7 +25,7 @@ export default function NavigationBar({ navStyle }) {
   const { logoutResponse } = useSelector(
     (state) => state.auth
   );
-  const loginInduvidual = localStorage.getItem('role');
+  const loginInduvidual = JSON.parse(localStorage.getItem('data'))?.role;
   let navigation;
   if (loginInduvidual === "zookeeper") {
     navigation = [
@@ -48,11 +48,6 @@ export default function NavigationBar({ navStyle }) {
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
-  // useEffect(() => {
-  //   dispatch(authActions.resetLoginResponse());
-  //   dispatch(authActions.resetLogoutResponse());
-  // }, []);
 
   useEffect(() => {
     if (logoutResponse?.status === "success" && logoutResponse) {
@@ -134,7 +129,7 @@ export default function NavigationBar({ navStyle }) {
                   <span className="absolute -inset-1.5"></span>
                   <span className="sr-only">Open user menu</span>
                   <span className="px-4 font-bold text-black hidden sm:block">
-                    LION
+                    {JSON.parse(localStorage.getItem('data'))?.name}
                   </span>
                   <img
                     alt="animal_profile"
@@ -149,7 +144,7 @@ export default function NavigationBar({ navStyle }) {
               >
                 <MenuItem>
                   <Link
-                    to={`/profile/${1}`}
+                    to={`/profile/${JSON.parse(localStorage.getItem('data'))?.id}`}
                     className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100 data-[focus]:outline-none"
                   >
                     Your Profile

@@ -493,7 +493,7 @@ export const authLogin = createAsyncThunk(
         },
       });
       if (data.status === "success") {
-        localStorage.setItem("role", data.role);
+        localStorage.setItem("data", JSON.stringify(data));
         showToast(data.message);
       } else {
         showToast(data.message, "warning");

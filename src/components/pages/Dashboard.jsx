@@ -20,7 +20,7 @@ import { authActions } from "../../../slices/AuthenticationSlices/AuthSlice";
 const Dashboard = () => {
 
   const {listOfInduviduals} = useSelector((state) => state.crud);
-  const loginInduvidual = localStorage.getItem('role');
+  const loginInduvidual = JSON.parse(localStorage.getItem('data')).role || ""
   const dispatch = useDispatch();
 
   let actions;

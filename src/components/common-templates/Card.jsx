@@ -19,12 +19,17 @@ import EditCard from "../EditCard";
 import MUIModal from "../utils/MUIModal";
 import { Link } from "react-router-dom";
 import { FcBinoculars } from "react-icons/fc";
+import { useDispatch } from "react-redux";
+import { crudActions } from "../../../slices/CRUDSlices/CrudOperationSlice";
 
 const AnimalCard = ({ induvidual, copy, getName,
-  getDepRole }) => {
-    const loginInduvidual = localStorage.getItem('role');
+  getDepRole,getCategory,
+  getEmail,
+  getPhone }) => {
+    const loginInduvidual = JSON.parse(localStorage.getItem('data')).role
   const [open, setOpen] = useState(false);
   const [requestAgree, setRequestAgree] = useState(false);
+  const dispatch = useDispatch();
 
   const handleRequestOpen = () => setRequestAgree(true);
   const handleRequestClose = () => setRequestAgree(false);
@@ -32,6 +37,7 @@ const AnimalCard = ({ induvidual, copy, getName,
     setOpen(true)
   };
   const handleClose = () => {
+    dispatch(crudActions.resetEditInduvidualResponse());
     setOpen(false)
   };
   return (
@@ -85,24 +91,24 @@ const AnimalCard = ({ induvidual, copy, getName,
             <Box className="flex justify-center gap-2 items-center">
               <TfiDrupal size={25} />
               <Typography variant="h6" className="font-semibold text-black">
-                <span className="italic">Name:</span> {!copy && induvidual.animalname}
+                <span className="italic">Name:</span> {!copy ? induvidual.animalname : getName}
               </Typography>
             </Box>
             <Box className="flex justify-center gap-2 items-center">
               <TbShieldStar size={25} />
               <Typography variant="h6" className="font-semibold text-black">
                 <span className="italic">Role: </span>{" "}
-                {!copy && induvidual.animalRole || "NA"}
+                {!copy ? induvidual.animalRole : getDepRole}
               </Typography>
             </Box>
             <Box className="flex justify-center gap-2 items-center">
               <PiPlantFill size={25} />
               <Typography variant="h6" className="font-semibold text-black">
                 <span className="italic">Category: </span>{" "}
-                {!copy && induvidual.category || "NA"}
+                {!copy ? induvidual.category : getCategory.category}
               </Typography>
             </Box>
-
+{/* feature need to be added */}
             {false && (
               <Box className="flex justify-center gap-2 items-center">
                 <FaHandPointer size={25} />
@@ -124,14 +130,14 @@ const AnimalCard = ({ induvidual, copy, getName,
             <Box className="flex justify-center gap-2 items-center">
               <MdEmail size={25} />
               <Typography className="font-semibold text-black text-base text-wrap">
-                {!copy && induvidual.email}
+                {!copy ? induvidual.email : getEmail}
               </Typography>
             </Box>
 
             <Box className="flex justify-center gap-2 items-center">
               <IoMdPhonePortrait size={25} />
               <Typography className="font-semibold text-black text-base text-wrap">
-                {!copy && induvidual.phoneNumber}
+                {!copy ? induvidual.phoneNumber : getPhone}
               </Typography>
             </Box>
           </Box>

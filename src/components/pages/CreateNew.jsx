@@ -87,6 +87,9 @@ const CreateNew = () => {
                 copy={true}
                 getName={getName}
                 getDepRole={getDepRole}
+                getCategory={getCategory}
+                getEmail={getEmail}
+                getPhone={getPhone}
               />
             </Box>
           </Box>
