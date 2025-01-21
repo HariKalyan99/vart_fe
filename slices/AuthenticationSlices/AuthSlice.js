@@ -442,7 +442,6 @@ import axios from "axios";
 import { config } from "../../backend/config";
 import Cookies from "js-cookie";
 import { handleError, showToast } from "../../helpers/helperFunction";
-import { getList } from "../CRUDSlices/CrudOperationSlice";
 
 const backendConfig = config.backend;
 const initialState = {
@@ -450,7 +449,6 @@ const initialState = {
   registrationPending: false,
   loginResponse: {},
   loginPending: false,
-  loginInduvidual: "",
   logoutResponse: {},
   logoutPending: false,
   forgotPasswordMail: {},
@@ -483,9 +481,10 @@ export const authRegisterNew = createAsyncThunk(
   }
 );
 
+
 export const authLogin = createAsyncThunk(
   "auth/login",
-  async (loginDetails, {dispatch}) => {
+  async (loginDetails) => {
     try {
       const { data } = await axios.post("/api/v1/auth/login", loginDetails, {
         headers: {
@@ -494,7 +493,7 @@ export const authLogin = createAsyncThunk(
         },
       });
       if (data.status === "success") {
-        await dispatch(getList());
+        localStorage.setItem("role", data.role);
         showToast(data.message);
       } else {
         showToast(data.message, "warning");
@@ -518,6 +517,7 @@ export const authLogout = createAsyncThunk("auth/logout", async () => {
     });
     if (data.status === "success") {
       showToast(data.message);
+      localStorage.clear();
       Cookies.remove("jwt");
     } else {
       showToast(data.message, "warning");
@@ -620,7 +620,6 @@ const authSlice = createSlice({
       })
       .addCase(authLogin.fulfilled, (state, action) => {
         state.loginResponse = action.payload;
-        state.loginInduvidual = action.payload.role;
         state.loginPending = false;
       })
       .addCase(authLogin.rejected, (state) => {

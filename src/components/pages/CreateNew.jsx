@@ -7,6 +7,7 @@ import AnimalCard from "../common-templates/Card";
 import CreateCard from "../CreateCard";
 import { useDispatch, useSelector } from "react-redux";
 import { createOne } from "../../../slices/CRUDSlices/CrudOperationSlice";
+import { useNavigate } from "react-router-dom";
 
 const CreateNew = () => {
   const [getName, setName] = useState("");
@@ -20,9 +21,14 @@ const CreateNew = () => {
 
   const [creationDetails, setCreationDetails] = useState("");
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
-  const {} =  useSelector((state) => state.crud);
-
+  const {createInduvidual} =  useSelector((state) => state.crud);
+  useEffect(() => {
+    if(createInduvidual?.status === "success" && createInduvidual){
+      navigate("/dashboard");
+    }
+  }, [createInduvidual])
 
   useEffect(() => {
     if(creationDetails.animalname?.length > 0 && creationDetails.animalRole?.length > 0){
@@ -40,15 +46,6 @@ const CreateNew = () => {
     const dob = getDob;
     const address = getAddress;
     const contributions = getContributions;
-    console.log({
-      animalname,
-      animalRole,
-      category: category.toLowerCase(),
-      email,
-      phoneNumber,
-      dob,
-      address,
-      contributions})
     setCreationDetails({
       animalname,
       animalRole,

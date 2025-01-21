@@ -19,18 +19,23 @@ import EditCard from "../EditCard";
 import MUIModal from "../utils/MUIModal";
 import { Link } from "react-router-dom";
 import { FcBinoculars } from "react-icons/fc";
-import { useSelector } from "react-redux";
 
 const AnimalCard = ({ induvidual, copy, getName,
   getDepRole }) => {
+    const loginInduvidual = localStorage.getItem('role');
   const [open, setOpen] = useState(false);
   const [requestAgree, setRequestAgree] = useState(false);
 
-  const {loginInduvidual} =  useSelector((state) => state.auth);
   const handleRequestOpen = () => setRequestAgree(true);
   const handleRequestClose = () => setRequestAgree(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  const handleOpen = (e) => {
+    e.stopPropagation();
+    setOpen(true)
+  };
+  const handleClose = (e) => {
+    e.stopPropagation();
+    setOpen(false)
+  };
   return (
     <>
       <Card

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Box,
   Button,
@@ -23,8 +23,10 @@ import { IoMdPhonePortrait } from "react-icons/io";
 import { Textarea } from "@headlessui/react";
 import { SiContributorcovenant } from "react-icons/si";
 import { MdCancelPresentation } from "react-icons/md";
+import { useDispatch } from "react-redux";
+import { editOne } from "../../slices/CRUDSlices/CrudOperationSlice";
 
-const EditCard = ({ handleClose, open, profile, induvidual }) => {
+const EditCard = ({ handleClose, open, induvidual }) => {
    const [getName, setName] = useState(induvidual.animalname);
     const [getEmail, setEmail] = useState(induvidual.email);
     const [getPhone, setPhone] = useState(induvidual.phoneNumber);
@@ -33,9 +35,16 @@ const EditCard = ({ handleClose, open, profile, induvidual }) => {
     const [getContributions, setContributions] = useState(induvidual.contributions);
   const [role, setRole] = useState(induvidual.animalRole || "");
   const [cat, setCat] = useState("");
-  const handleRoleChange = (e) => setRole(e.target.value);
+
+  const dispatch = useDispatch();
+
+  const handleRoleChange = (e) => {
+    e.stopPropagation();
+    setRole(e.target.value)
+  };
 
   const handleCatChange = (e) => {
+    e.stopPropagation();
     if (e.target.value === "Herbivores") {
       setCat({ category: e.target.value, icon: <PiPlantFill size={25} /> });
     } else if (e.target.value === "Reptiles") {
@@ -51,6 +60,23 @@ const EditCard = ({ handleClose, open, profile, induvidual }) => {
 
   const handleEditDetails = (e) => {
     e.preventDefault();
+    const animalname = getName;
+    const animalRole = role;
+    const category = cat.category;
+    const email = getEmail;
+    const phoneNumber = getPhone;
+    const dob = getDob;
+    const address = getAddress;
+    const contributions = getContributions;
+    dispatch(editOne({body: {
+      animalname,
+      animalRole,
+      category: category.toLowerCase(),
+      email,
+      phoneNumber,
+      dob,
+      address,
+      contributions}, id: induvidual.id}))
   }
   return (
     <Fade in={open}>
@@ -66,7 +92,10 @@ const EditCard = ({ handleClose, open, profile, induvidual }) => {
                   color="black"
                   className="w-[80%]"
                   value={getName}
-                  onChange={(e) => setName(e.target.value)}
+                  onChange={(e) => {
+                    e.stopPropagation();
+                    setName(e.target.value);
+                  }}
                 />
               </Box>
 
@@ -131,7 +160,10 @@ const EditCard = ({ handleClose, open, profile, induvidual }) => {
                   color="black"
                   className="w-[80%]"
                   value={getEmail}
-                  onChange={(e) => setEmail(e.target.value)}
+                  onChange={(e) => {
+                    e.stopPropagation();
+                    setEmail(e.target.value);
+                  }}
                 />
               </Box>
 
@@ -143,7 +175,10 @@ const EditCard = ({ handleClose, open, profile, induvidual }) => {
                   color="black"
                   className="w-[80%]"
                   value={getPhone}
-                  onChange={(e) => setPhone(e.target.value)}
+                  onChange={(e) => {
+                    e.stopPropagation();
+                    setPhone(e.target.value);
+                  }}
                 />
               </Box>
 
@@ -156,7 +191,10 @@ const EditCard = ({ handleClose, open, profile, induvidual }) => {
                   color="black"
                   className="w-[80%]"
                   value={getDob}
-                  onChange={(e) => setDob(e.target.value)}
+                  onChange={(e) =>{
+                    e.stopPropagation();
+                     setDob(e.target.value);
+                  }}
                 />
               </Box>
 
@@ -170,7 +208,10 @@ const EditCard = ({ handleClose, open, profile, induvidual }) => {
                   className="w-[80%] border p-2"
                   rows={4}
                   value={getAddress}
-                  onChange={(e) => setAddress(e.target.value)}
+                  onChange={(e) => {
+                    e.stopPropagation();
+                    setAddress(e.target.value);
+                  }}
                 />
               </Box>
             </Box>
@@ -187,7 +228,10 @@ const EditCard = ({ handleClose, open, profile, induvidual }) => {
                   className="w-[80%] border p-2"
                   rows={5}
                   value={getContributions}
-                  onChange={(e) => setContributions(e.target.value)}
+                  onChange={(e) => {
+                    e.stopPropagation();
+                    setContributions(e.target.value);
+                  }}
                 />
               </Box>
 

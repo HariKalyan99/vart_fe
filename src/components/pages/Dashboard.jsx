@@ -13,12 +13,14 @@ import { FaHandPointer } from "react-icons/fa";
 import LightTooltip from "../utils/MUITooltip";
 import { Box } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
-import { getList } from "../../../slices/CRUDSlices/CrudOperationSlice";
+import { crudActions, getList } from "../../../slices/CRUDSlices/CrudOperationSlice";
+import { authActions } from "../../../slices/AuthenticationSlices/AuthSlice";
 
 
 const Dashboard = () => {
 
-  const {listOfInduviduals, loginInduvidual} = useSelector((state) => state.crud);
+  const {listOfInduviduals} = useSelector((state) => state.crud);
+  const loginInduvidual = localStorage.getItem('role');
   const dispatch = useDispatch();
 
   let actions;
@@ -43,9 +45,9 @@ const Dashboard = () => {
 
   useEffect(() => {
     dispatch(getList());
-    console.log(listOfInduviduals)
+    dispatch(crudActions.resetCreationResponse());
+    dispatch(authActions.resetLogoutResponse());
   }, [])
-  console.log(listOfInduviduals)
   return (
     <>
       <Box className="bg-chestnut">

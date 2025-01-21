@@ -1,31 +1,16 @@
 import React, { useState } from "react";
-import a from "../assets/dash.gif";
-import { SiAnimalplanet } from "react-icons/si";
-import { GiAnimalSkull } from "react-icons/gi";
 import { MdEmail } from "react-icons/md";
 import { IoMdPhonePortrait } from "react-icons/io";
-import { TfiControlEject } from "react-icons/tfi";
 import { SiContributorcovenant } from "react-icons/si";
 import { FaBirthdayCake } from "react-icons/fa";
 import { FaRoute } from "react-icons/fa";
-import { FaChessKing } from "react-icons/fa";
-import { GiQueenCrown } from "react-icons/gi";
-import { GiGoalKeeper } from "react-icons/gi";
 import { FaEdit } from "react-icons/fa";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { CiRead } from "react-icons/ci";
 import IconButton from "@mui/material/IconButton";
-import { GiPikeman } from "react-icons/gi";
 import { PiPlantFill } from "react-icons/pi";
-import { GiDeer } from "react-icons/gi";
 import { TfiDrupal } from "react-icons/tfi";
-import { GiBossKey } from "react-icons/gi";
 import { TbShieldStar } from "react-icons/tb";
-import { GiBorderedShield } from "react-icons/gi";
-import { GiReptileTail } from "react-icons/gi"; //reptile
-import { GiCrocJaws } from "react-icons/gi"; //amphi
-import { GiNeedleJaws } from "react-icons/gi"; //carnivores
-import { FaCrow } from "react-icons/fa"; //omni
 import LightTooltip from "./utils/MUITooltip";
 import { Box, Button, FormControl, Input, InputLabel } from "@mui/material";
 import MUIModal from "./utils/MUIModal";

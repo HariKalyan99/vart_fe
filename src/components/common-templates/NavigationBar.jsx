@@ -22,9 +22,10 @@ function classNames(...classes) {
 }
 
 export default function NavigationBar({ navStyle }) {
-  const { logoutResponse, loginInduvidual } = useSelector(
+  const { logoutResponse } = useSelector(
     (state) => state.auth
   );
+  const loginInduvidual = localStorage.getItem('role');
   let navigation;
   if (loginInduvidual === "zookeeper") {
     navigation = [
@@ -48,15 +49,15 @@ export default function NavigationBar({ navStyle }) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  useEffect(() => {
-    dispatch(authActions.resetLoginResponse());
-    dispatch(authActions.resetLogoutResponse());
-  }, []);
+  // useEffect(() => {
+  //   dispatch(authActions.resetLoginResponse());
+  //   dispatch(authActions.resetLogoutResponse());
+  // }, []);
 
   useEffect(() => {
     if (logoutResponse?.status === "success" && logoutResponse) {
-      dispatch(authActions.resetLoginResponse());
       dispatch(authActions.resetLogoutResponse());
+      dispatch(authActions.resetLoginResponse());
       navigate("/login");
     }
   }, [logoutResponse]);
