@@ -11,14 +11,14 @@ function App() {
       <Box className="fixed bottom-5 left-5 flex gap-2">
         <Link to={`https://github.com/HariKalyan99/vart_fe.git`}>
           <LightTooltip title="Frontend" placement="top">
-            <IconButton sx={{ color: "white" }} >
+            <IconButton sx={{ color: "black" }} >
               <FaGithub size={35} />
             </IconButton>
           </LightTooltip>
         </Link>
         <Link to={`https://github.com/HariKalyan99/vart.git`}>
           <LightTooltip title="Backend" placement="top">
-            <IconButton sx={{ color: "white" }} >
+            <IconButton sx={{ color: "black" }} >
               <SiGithubactions size={35} />
             </IconButton>
           </LightTooltip>
