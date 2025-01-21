@@ -62,7 +62,7 @@ const SignupPage = () => {
     const password = getPassword;
     const confirmPassword = getConfirmPassword;
     const phoneNumber = getPhone;
-    const animaleRole = getRole;
+    const animalRole = getRole?.toLowerCase();
     dispatch(
       authRegisterNew({
         animalname,
@@ -70,7 +70,7 @@ const SignupPage = () => {
         password,
         confirmPassword,
         phoneNumber,
-        animaleRole,
+        animalRole,
       })
     );
   };

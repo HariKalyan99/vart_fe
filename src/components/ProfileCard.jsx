@@ -12,7 +12,14 @@ import { PiPlantFill } from "react-icons/pi";
 import { TfiDrupal } from "react-icons/tfi";
 import { TbShieldStar } from "react-icons/tb";
 import LightTooltip from "./utils/MUITooltip";
-import { Box, Button, CircularProgress, FormControl, Input, InputLabel } from "@mui/material";
+import {
+  Box,
+  Button,
+  CircularProgress,
+  FormControl,
+  Input,
+  InputLabel,
+} from "@mui/material";
 import MUIModal from "./utils/MUIModal";
 import EditCard from "./EditCard";
 import { MdOutlineSecurity } from "react-icons/md";
@@ -25,6 +32,7 @@ import {
   getInduvidual,
 } from "../../slices/CRUDSlices/CrudOperationSlice";
 import { GiPikeman, GiQueenCrown } from "react-icons/gi";
+import { FcBinoculars } from "react-icons/fc";
 
 const ProfileCard = () => {
   const [open, setOpen] = useState(false);
@@ -39,17 +47,18 @@ const ProfileCard = () => {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
-  const { getOneInduvidual, editInduvidual, editInduvidualPending } = useSelector((state) => state.crud);
+  const { getOneInduvidual, editInduvidual, editInduvidualPending } =
+    useSelector((state) => state.crud);
   const dispatch = useDispatch();
   const [getNewPassword, setNewPassword] = useState("");
   const [getNewConfirmPassword, setNewConfirmPassword] = useState("");
 
   const { id } = useParams();
-   useEffect(() => {
-       if(editInduvidual?.status === "success" && editInduvidual){
-        handleRequestClose();
-       }
-     }, [editInduvidual])
+  useEffect(() => {
+    if (editInduvidual?.status === "success" && editInduvidual) {
+      handleRequestClose();
+    }
+  }, [editInduvidual]);
 
   useEffect(() => {
     dispatch(getInduvidual(id));
@@ -74,31 +83,33 @@ const ProfileCard = () => {
   return (
     <>
       <div className="w-full h-auto border-nostalgicblue border-4 bg-raddishpinklight rounded-xl shadow-2xl relative overflow-hidden p-2 flex justify-center items-center flex-col">
-        {getOneInduvidual?.data.animalRole === "kingofjungle" ? (
-        <div className="absolute top-4 left-4 ">
-          <LightTooltip title="KING" placement="top">
-            <IconButton sx={{ color: "white" }}>
-              <FaChessKing className=" text-chestnut  text-[2rem]" />
-            </IconButton>
-          </LightTooltip>
-        </div>
-      ) : getOneInduvidual?.data.animalRole === "queenofjungle" ? (
-        <div className="absolute top-4 left-4 ">
-          <LightTooltip title="QUEEN" placement="top">
-            <IconButton sx={{ color: "white" }}>
-              <GiQueenCrown className=" text-chestnut  text-[2rem]" />
-            </IconButton>
-          </LightTooltip>
-        </div>
-      ) : (
-        <div className="absolute top-4 left-4 ">
-          <LightTooltip title="KEEPER" placement="top">
-            <IconButton sx={{ color: "white" }}>
-              <GiPikeman className=" text-chestnut  text-[2rem]" />
-            </IconButton>
-          </LightTooltip>
-        </div>
-      )}
+        {getOneInduvidual.data?.animalRole === "kingofjungle" ? (
+          <div className="absolute top-4 left-4 ">
+            <LightTooltip title="KING" placement="top">
+              <IconButton sx={{ color: "white" }}>
+                <FaChessKing className=" text-chestnut  text-[2rem]" />
+              </IconButton>
+            </LightTooltip>
+          </div>
+        ) : getOneInduvidual.data?.animalRole === "queenofjungle" ? (
+          <div className="absolute top-4 left-4 ">
+            <LightTooltip title="QUEEN" placement="top">
+              <IconButton sx={{ color: "white" }}>
+                <GiQueenCrown className=" text-chestnut  text-[2rem]" />
+              </IconButton>
+            </LightTooltip>
+          </div>
+        ) : getOneInduvidual.data?.animalRole === "zookeeper" ? (
+          <div className="absolute top-4 left-4 ">
+            <LightTooltip title="KEEPER" placement="top">
+              <IconButton sx={{ color: "white" }}>
+                <GiPikeman className=" text-chestnut  text-[2rem]" />
+              </IconButton>
+            </LightTooltip>
+          </div>
+        ) : (
+          <FcBinoculars size={25} />
+        )}
 
         <div className="w-[200px] h-[200px] border-4 rounded-[50%] overflow-hidden mt-4 hover:opacity-50 opacity-100">
           <img
@@ -257,8 +268,8 @@ const ProfileCard = () => {
         aria-describedby="modal-request-description"
       >
         <Box className="flex w-[300px] h-auto bg-white flex-col p-4 justify-center items-center absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 gap-2 rounded-xl">
-      {editInduvidualPending && <CircularProgress color="inherit" />}
-          
+          {editInduvidualPending && <CircularProgress color="inherit" />}
+
           <span className="inline-block text-center">Reset password?</span>
           <form
             className="flex flex-col justify-center items-center gap-2"

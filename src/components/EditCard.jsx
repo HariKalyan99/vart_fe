@@ -25,7 +25,7 @@ import { Textarea } from "@headlessui/react";
 import { SiContributorcovenant } from "react-icons/si";
 import { MdCancelPresentation } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
-import { crudActions, editOne, getList } from "../../slices/CRUDSlices/CrudOperationSlice";
+import { crudActions, editOne, getInduvidual, getList } from "../../slices/CRUDSlices/CrudOperationSlice";
 import { useNavigate } from "react-router-dom";
 
 const EditCard = ({ handleClose, open, induvidual }) => {
@@ -42,7 +42,10 @@ const EditCard = ({ handleClose, open, induvidual }) => {
 
  useEffect(() => {
      if(editInduvidual?.status === "success" && editInduvidual){
+      let newLocal = {...JSON.parse(localStorage.getItem('data')), role: editInduvidual?.data.animalRole}
+      localStorage.setItem('data', JSON.stringify(newLocal));
       dispatch(getList());
+      dispatch(getInduvidual(induvidual.id))
       handleClose(); 
       dispatch(crudActions.resetEditInduvidualResponse());
      }

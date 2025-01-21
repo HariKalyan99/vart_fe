@@ -137,7 +137,6 @@ export const editOne = createAsyncThunk(
           },
         }
       );
-      console.log(data);
       if (data.status === "success") {
         showToast(data.message);
       } else {
