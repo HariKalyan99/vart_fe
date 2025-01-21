@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import a from "../../assets/dash.gif";
 import { MdEmail } from "react-icons/md";
 import { IoMdPhonePortrait } from "react-icons/io";
@@ -19,38 +19,68 @@ import EditCard from "../EditCard";
 import MUIModal from "../utils/MUIModal";
 import { Link } from "react-router-dom";
 import { FcBinoculars } from "react-icons/fc";
-import { useDispatch } from "react-redux";
-import { crudActions } from "../../../slices/CRUDSlices/CrudOperationSlice";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  crudActions,
+  deleteOne,
+  getList,
+} from "../../../slices/CRUDSlices/CrudOperationSlice";
 
-const AnimalCard = ({ induvidual, copy, getName,
-  getDepRole,getCategory,
+const AnimalCard = ({
+  induvidual,
+  copy,
+  getName,
+  getDepRole,
+  getCategory,
   getEmail,
-  getPhone }) => {
-    const loginInduvidual = JSON.parse(localStorage.getItem('data')).role
+  getPhone,
+}) => {
+  const loginInduvidual = JSON.parse(localStorage.getItem("data")).role;
   const [open, setOpen] = useState(false);
   const [requestAgree, setRequestAgree] = useState(false);
   const dispatch = useDispatch();
+  const { deleteInduvidual } = useSelector((state) => state.crud);
+
+  useEffect(() => {
+    if (deleteInduvidual?.status === "success" && deleteInduvidual) {
+      dispatch(getList());
+    }
+  }, [deleteInduvidual]);
 
   const handleRequestOpen = () => setRequestAgree(true);
   const handleRequestClose = () => setRequestAgree(false);
   const handleOpen = () => {
-    setOpen(true)
+    setOpen(true);
   };
   const handleClose = () => {
     dispatch(crudActions.resetEditInduvidualResponse());
-    setOpen(false)
+    setOpen(false);
+  };
+
+  const handleDelete = (id) => {
+    dispatch(deleteOne(id));
   };
   return (
     <>
       <Card
         className={`${
           copy ? "w-full h-full" : "w-[450px] h-auto"
-        } border-4 border-nostalgicblue ${!copy && induvidual.animalRole === "zookeeper" && "border-saffron"} bg-raddishpinklight rounded-xl shadow-2xl relative p-2`}
+        } border-4 border-nostalgicblue ${
+          !copy && induvidual.animalRole === "zookeeper" && "border-saffron"
+        } bg-raddishpinklight rounded-xl shadow-2xl relative p-2`}
       >
         <img
           src={a}
           alt="animal_photo"
-          className={`w-full h-[40%] object-cover ${copy && `${getName && getName?.length > 0 || getDepRole && getDepRole?.length > 0 ? "opacity-100" : "opacity-50"}`}`}
+          className={`w-full h-[40%] object-cover ${
+            copy &&
+            `${
+              (getName && getName?.length > 0) ||
+              (getDepRole && getDepRole?.length > 0)
+                ? "opacity-100"
+                : "opacity-50"
+            }`
+          }`}
         />
 
         <Box className="absolute top-4 left-4">
@@ -72,18 +102,26 @@ const AnimalCard = ({ induvidual, copy, getName,
                 <GiPikeman className="text-raddishpinklight text-[2.5rem]" />
               </IconButton>
             </LightTooltip>
-          ) : (!copy && 
-            <LightTooltip title="ON BENCH" placement="top">
-              <IconButton sx={{ color: "white" }}>
-                <FcBinoculars size={25} />
-              </IconButton>
-            </LightTooltip>
+          ) : (
+            !copy && (
+              <LightTooltip title="ON BENCH" placement="top">
+                <IconButton sx={{ color: "white" }}>
+                  <FcBinoculars size={25} />
+                </IconButton>
+              </LightTooltip>
+            )
           )}
         </Box>
 
         <CardContent
           className={`w-full h-[55%] relative z-[10] flex justify-between gap-2 items-start flex-col mt-4 border-4 border-chestnut ${
-            copy && `${getName && getName?.length > 0 || getDepRole && getDepRole?.length > 0 ? "opacity-100" : "opacity-50"}`
+            copy &&
+            `${
+              (getName && getName?.length > 0) ||
+              (getDepRole && getDepRole?.length > 0)
+                ? "opacity-100"
+                : "opacity-50"
+            }`
           }`}
           sx={{ padding: "0.5rem" }}
         >
@@ -91,7 +129,8 @@ const AnimalCard = ({ induvidual, copy, getName,
             <Box className="flex justify-center gap-2 items-center">
               <TfiDrupal size={25} />
               <Typography variant="h6" className="font-semibold text-black">
-                <span className="italic">Name:</span> {!copy ? induvidual.animalname : getName}
+                <span className="italic">Name:</span>{" "}
+                {!copy ? induvidual.animalname : getName}
               </Typography>
             </Box>
             <Box className="flex justify-center gap-2 items-center">
@@ -108,7 +147,7 @@ const AnimalCard = ({ induvidual, copy, getName,
                 {!copy ? induvidual.category : getCategory.category}
               </Typography>
             </Box>
-{/* feature need to be added */}
+            {/* feature need to be added */}
             {false && (
               <Box className="flex justify-center gap-2 items-center">
                 <FaHandPointer size={25} />
@@ -142,32 +181,54 @@ const AnimalCard = ({ induvidual, copy, getName,
             </Box>
           </Box>
           <Box className="flex justify-evenly items-center gap-6 bg-raddishpinklight w-full mb-4">
-            {loginInduvidual === "zookeeper" && <LightTooltip title="Edit" placement="top">
-              <IconButton sx={{ color: "white" }} onClick={handleOpen} disabled={copy}>
-                <FaEdit size={30} className="text-black" />
-              </IconButton>
-            </LightTooltip>}
-            {loginInduvidual === "queenofjungle" && <LightTooltip title="Edit" placement="top">
-              <IconButton sx={{ color: "white" }} onClick={handleOpen} disabled={copy}>
-                <FaEdit size={30} className="text-black" />
-              </IconButton>
-            </LightTooltip>}
-            {loginInduvidual === "zookeeper" && <LightTooltip title="Delete" placement="top">
-              <IconButton sx={{ color: "white" }} disabled={copy}>
-                <RiDeleteBin6Line size={30} className="text-black" />
-              </IconButton>
-            </LightTooltip>}
-            {copy ? <LightTooltip title="Read more" placement="top">
-                <IconButton sx={{ color: "white" }} disabled={copy}>
-                  <CiRead size={30} className="text-black" />
+            {loginInduvidual === "zookeeper" && (
+              <LightTooltip title="Edit" placement="top">
+                <IconButton
+                  sx={{ color: "white" }}
+                  onClick={handleOpen}
+                  disabled={copy}
+                >
+                  <FaEdit size={30} className="text-black" />
                 </IconButton>
-              </LightTooltip> : <Link to={`/details/${induvidual.id}`}>
+              </LightTooltip>
+            )}
+            {loginInduvidual === "queenofjungle" && (
+              <LightTooltip title="Edit" placement="top">
+                <IconButton
+                  sx={{ color: "white" }}
+                  onClick={handleOpen}
+                  disabled={copy}
+                >
+                  <FaEdit size={30} className="text-black" />
+                </IconButton>
+              </LightTooltip>
+            )}
+            {loginInduvidual === "zookeeper" && (
+              <LightTooltip title="Delete" placement="top">
+                <IconButton
+                  sx={{ color: "white" }}
+                  disabled={copy}
+                  onClick={() => handleDelete(induvidual.id)}
+                >
+                  <RiDeleteBin6Line size={30} className="text-black" />
+                </IconButton>
+              </LightTooltip>
+            )}
+            {copy ? (
               <LightTooltip title="Read more" placement="top">
                 <IconButton sx={{ color: "white" }} disabled={copy}>
                   <CiRead size={30} className="text-black" />
                 </IconButton>
               </LightTooltip>
-            </Link>}
+            ) : (
+              <Link to={`/details/${induvidual.id}`}>
+                <LightTooltip title="Read more" placement="top">
+                  <IconButton sx={{ color: "white" }} disabled={copy}>
+                    <CiRead size={30} className="text-black" />
+                  </IconButton>
+                </LightTooltip>
+              </Link>
+            )}
           </Box>
           {copy ? (
             <Box className="flex justify-between w-full bg-chestnut text-white p-2 absolute bottom-0 right-0">
@@ -197,7 +258,12 @@ const AnimalCard = ({ induvidual, copy, getName,
         aria-labelledby="modal-edit"
         aria-describedby="modal-edit-description"
       >
-        <EditCard handleClose={handleClose} open={open} id="modal-edit" induvidual={induvidual}/>
+        <EditCard
+          handleClose={handleClose}
+          open={open}
+          id="modal-edit"
+          induvidual={induvidual}
+        />
       </MUIModal>
 
       <MUIModal

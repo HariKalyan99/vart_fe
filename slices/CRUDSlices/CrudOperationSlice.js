@@ -96,10 +96,11 @@ export const createOne = createAsyncThunk(
   }
 );
 
-export const deleteOne = createAsyncThunk("induviduals/remove", async (id) => {
+export const deleteOne = createAsyncThunk("induviduals/remove", async (animalId) => {
   try {
+    console.log(animalId);
     const token = Cookies.get("jwt");
-    const { data } = await axios.delete(`/api/v1/animals/animalremove/${id}`, {
+    const { data } = await axios.delete(`/api/v1/animals/animalremove/${animalId}`, {
       headers: {
         "Content-Type": "application/json",
         appvalidationtoken: `${backendConfig.headercontract}`,

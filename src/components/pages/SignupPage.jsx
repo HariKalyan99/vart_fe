@@ -14,6 +14,7 @@ import Button from "@mui/material/Button";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { authActions, authRegisterNew } from "../../../slices/AuthenticationSlices/AuthSlice";
+import Cookies from 'js-cookie'
 
 const SignupPage = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -29,6 +30,13 @@ const SignupPage = () => {
   const { registrationResponse } = useSelector(
     (state) => state.auth
   );
+
+
+
+  const token = Cookies.get("jwt")
+  if(token){
+    navigate("/dashboard")
+  }
 
   useEffect(() => {
     dispatch(authActions.resetRegistrationResponse());

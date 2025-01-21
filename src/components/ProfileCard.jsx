@@ -162,11 +162,6 @@ const ProfileCard = ({}) => {
                 <FaEdit size={30} className="text-black" onClick={handleOpen} />
               </IconButton>
             </LightTooltip>
-            <LightTooltip title="Delete" placement="top">
-              <IconButton sx={{ color: "white" }}>
-                <RiDeleteBin6Line size={30} className="text-black" />
-              </IconButton>
-            </LightTooltip>
             <Link to={`/details/${getOneInduvidual.data?.id}`}>
             <LightTooltip title="Read more" placement="top">
               <IconButton sx={{ color: "white" }}>

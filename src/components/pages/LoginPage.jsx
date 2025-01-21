@@ -12,6 +12,7 @@ import Button from "@mui/material/Button";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { authActions, authLogin } from "../../../slices/AuthenticationSlices/AuthSlice";
+import Cookies from 'js-cookie'
 
 
 const LoginPage = () => {
@@ -21,6 +22,11 @@ const LoginPage = () => {
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
+  const token = Cookies.get("jwt")
+    if(token){
+      navigate("/dashboard");
+    }
   
   const {loginResponse} = useSelector((state) => state.auth);
   const handleClickShowPassword = () => setShowPassword((prev) => !prev);

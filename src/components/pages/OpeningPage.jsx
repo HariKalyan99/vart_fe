@@ -2,9 +2,15 @@ import React from "react";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import photo from "../../assets/home.gif";
-import { Link } from "react-router-dom";
-
+import { Link, useNavigate } from "react-router-dom";
+import Cookies from 'js-cookie'
 const OpeningPage = () => {
+const navigate = useNavigate()
+  const token = Cookies.get("jwt")
+  if(token){
+    navigate("/dashboard");
+  }
+
   return (
     <Box className="relative w-full h-[100vh] flex justify-center items-center">
       <Box className="w-[100%] h-[100%] absolute z-[-10]">

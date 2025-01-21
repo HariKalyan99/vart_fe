@@ -14,14 +14,21 @@ import LightTooltip from "../utils/MUITooltip";
 import { Box } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { crudActions, getList } from "../../../slices/CRUDSlices/CrudOperationSlice";
-import { authActions } from "../../../slices/AuthenticationSlices/AuthSlice";
+import { authActions } from "../../../slices/AuthenticationSlices/AuthSlice"
+import Cookies from 'js-cookie'
+import { useNavigate } from "react-router-dom";
 
 
 const Dashboard = () => {
-
   const {listOfInduviduals} = useSelector((state) => state.crud);
-  const loginInduvidual = JSON.parse(localStorage.getItem('data')).role || ""
+  const loginInduvidual = JSON.parse(localStorage?.getItem('data'))?.role || ""
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const token = Cookies.get("jwt")
+  if(!token){
+    navigate("/login")
+  }
 
   let actions;
   if(loginInduvidual === "kingofjungle"){
@@ -76,7 +83,7 @@ const Dashboard = () => {
             Registered animals
           </span>
           <Box className="mt-[1rem] container w-full p-4 flex flex-wrap justify-center items-center gap-6">
-            {listOfInduviduals.data?.length > 0 ? listOfInduviduals?.data.map((induvidual) => (
+            {listOfInduviduals?.data?.length > 0 ? listOfInduviduals?.data.map((induvidual) => (
               <AnimalCard key={induvidual.id} induvidual={induvidual} />
             ))  :  <Box className="w-full h-[45rem] flex justify-center items-center mt-4 container">
               <Box className="w-[50%] h-full flex justify-center items-start flex-col">
