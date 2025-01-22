@@ -11,82 +11,48 @@ import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import Button from "@mui/material/Button";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  authActions,
-  authLogin,
-} from "../../../slices/AuthenticationSlices/AuthSlice";
+import { authActions, authLogin } from "../../../slices/AuthenticationSlices/AuthSlice";
 import Cookies from "js-cookie";
 import { CircularProgress } from "@mui/material";
 
-const validationObj = [
-  { type: "mail", valid: false },
-  { type: "pwd", valid: false },
-];
+const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 const LoginPage = () => {
-  const [getEmail, setEmail] = useState("");
-  const [getPassword, setPassword] = useState("");
-  const [getValid, setValid] = useState(validationObj);
-
+  const [formData, setFormData] = useState({ email: "", password: "" });
   const [showPassword, setShowPassword] = useState(false);
+  const [valid, setValid] = useState({ email: false, password: false });
+
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const { loginResponse, loginPending } = useSelector((state) => state.auth);
 
   const token = Cookies.get("jwt");
-  if (token) {
-    navigate("/dashboard");
-  }
-
-  const { loginResponse, loginPending } = useSelector((state) => state.auth);
-  const handleClickShowPassword = () => setShowPassword((prev) => !prev);
+  if (token) navigate("/dashboard");
 
   useEffect(() => {
     dispatch(authActions.resetPasswordEmailResponse());
     dispatch(authActions.resetForgotPasswordResponse());
     dispatch(authActions.resetRegistrationResponse());
-  }, []);
+  }, [dispatch]);
 
   useEffect(() => {
-    if (loginResponse?.status === "success" && loginResponse) {
-      dispatch(authActions.resetRegistrationResponse());
-      navigate("/dashboard");
-    }
-  }, [loginResponse]);
+    if (loginResponse?.status === "success") navigate("/dashboard");
+  }, [loginResponse, navigate]);
+
+  const handleInputChange = (field, value, validator) => {
+    setFormData({ ...formData, [field]: value });
+    setValid((prev) => ({ ...prev, [field]: !validator(value) }));
+  };
 
   const handleLoginSubmit = (e) => {
     e.preventDefault();
-    const email = getEmail;
-    const password = getPassword;
-    dispatch(
-      authLogin({
-        email,
-        password,
-      })
-    );
+    dispatch(authLogin(formData));
   };
-
-  const updateValidation = (type, valid) => {
-    setValid((prevValid) =>
-      prevValid.map((item) => (item.type === type ? { ...item, valid } : item))
-    );
-  };
-
-  const handleChange = (setter, validator, type, e) => {
-    const value = e.target.value;
-    setter(value);
-    const isValid = validator(value);
-    updateValidation(type, !isValid);
-  };
-
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
   return (
     <Box className="w-full h-[100vh] flex justify-center items-center bg_wallpaper4">
       <Box className="h-[400px] w-[500px] border-2 rounded-xl bg-primary2 border-nostalgicblue shadow-2xl">
-        <form
-          className="w-full h-full flex justify-evenly items-center flex-col"
-          onSubmit={handleLoginSubmit}
-        >
+        <form className="w-full h-full flex justify-evenly items-center flex-col" onSubmit={handleLoginSubmit}>
           <span className="text-2xl font-bold">Login</span>
 
           <TextField
@@ -95,72 +61,40 @@ const LoginPage = () => {
             placeholder="Enter your email"
             variant="standard"
             color="black"
-            value={getEmail}
-            onChange={(e) =>
-              handleChange(
-                setEmail,
-                (email) => emailRegex.test(email),
-                "mail",
-                e
-              )
-            }
+            value={formData.email}
+            onChange={(e) => handleInputChange("email", e.target.value, (val) => emailRegex.test(val))}
           />
-          {getValid.find((x) => x.type === "mail")?.valid && (
-            <span className="w-[80%] text-left text-sm text-raddishpinklight text-base">
-              Invalid email format!
-            </span>
-          )}
+          {valid.email && <span className="w-[80%] text-left text-sm text-[red]">Invalid email format!</span>}
+
           <FormControl className="w-[80%] mb-4" variant="standard">
-            <InputLabel htmlFor="password" color="black">
-              Enter your password
-            </InputLabel>
+            <InputLabel htmlFor="password" color="black">Enter your password</InputLabel>
             <Input
               id="password"
               type={showPassword ? "text" : "password"}
               placeholder="Enter your password"
               endAdornment={
                 <InputAdornment position="end">
-                  <IconButton onClick={handleClickShowPassword} edge="end">
+                  <IconButton onClick={() => setShowPassword((prev) => !prev)} edge="end">
                     {showPassword ? <VisibilityOff /> : <Visibility />}
                   </IconButton>
                 </InputAdornment>
               }
               className="bg-transparent outline-none placeholder-[black] fs-2"
               color="black"
-              value={getPassword}
-              onChange={(e) =>
-                handleChange(setPassword, (pwd) => pwd.length >= 7, "pwd", e)
-              }
+              value={formData.password}
+              onChange={(e) => handleInputChange("password", e.target.value, (val) => val.length >= 7)}
             />
           </FormControl>
-          {getValid.find((x) => x.type === "pwd")?.valid && (
-            <span className="w-[80%] text-left text-sm text-raddishpinklight text-base">
-              Password should be at least 7 characters!
-            </span>
-          )}
+          {valid.password && <span className="w-[80%] text-left text-sm text-[red]">Password should be at least 7 characters!</span>}
+
           <p className="text-center">
-            Forgot password?{" "}
-            <Link to={"/forgot-pwd"}>
-              <span className="text-base font-bold underline hover:cursor-pointer hover:text-chestnut">
-                Reset password
-              </span>
-            </Link>
+            Forgot password? <Link to="/forgot-pwd" className="text-base font-bold underline hover:text-chestnut">Reset password</Link>
           </p>
           <p className="text-center">
-            Not registered?{" "}
-            <Link to={"/register"}>
-              <span className="text-base font-bold underline hover:cursor-pointer hover:text-chestnut">
-                Signup
-              </span>
-            </Link>
+            Not registered? <Link to="/register" className="text-base font-bold underline hover:text-chestnut">Signup</Link>
           </p>
 
-          <Button
-            variant="contained"
-            type="submit"
-            sx={{ backgroundColor: "#70645C" }}
-            className="hover:bg-black"
-          >
+          <Button variant="contained" type="submit" sx={{ backgroundColor: "#70645C" }} className="hover:bg-black">
             Login
           </Button>
           {loginPending && <CircularProgress color="inherit" />}

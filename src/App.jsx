@@ -5,6 +5,7 @@ import { SiGithubactions } from "react-icons/si";
 import LightTooltip from "./components/utils/MUITooltip";
 
 function App() {
+  
   return (
     <Box>
       <Outlet />

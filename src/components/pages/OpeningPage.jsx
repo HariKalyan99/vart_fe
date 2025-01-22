@@ -3,11 +3,11 @@ import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import photo from "../../assets/home.gif";
 import { Link, useNavigate } from "react-router-dom";
-import Cookies from 'js-cookie'
+import Cookies from "js-cookie";
 const OpeningPage = () => {
-const navigate = useNavigate()
-  const token = Cookies.get("jwt")
-  if(token){
+  const navigate = useNavigate();
+  const token = Cookies.get("jwt");
+  if (token) {
     navigate("/dashboard");
   }
 

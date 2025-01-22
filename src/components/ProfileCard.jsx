@@ -38,11 +38,8 @@ import FooterBar from "./common-templates/FooterBar";
 const ProfileSource = () => {
   const [open, setOpen] = useState(false);
   const [changePassword, setchangePassword] = useState(false);
-  const [getShowPassword, setShowPassword] = useState(false);
-  const [pwd, setPwd] = useState(false);
-
-  const handlePwdOpen = () => setShowPassword(true);
-  const handlePwdClose = () => setShowPassword(false);
+  const [getNewPassword, setNewPassword] = useState("");
+  const [getNewConfirmPassword, setNewConfirmPassword] = useState("");
   const handleRequestOpen = () => setchangePassword(true);
   const handleRequestClose = () => setchangePassword(false);
   const handleOpen = () => setOpen(true);
@@ -51,13 +48,10 @@ const ProfileSource = () => {
   const { getOneInduvidual, editInduvidual, editInduvidualPending } =
     useSelector((state) => state.crud);
   const dispatch = useDispatch();
-  const [getNewPassword, setNewPassword] = useState("");
-  const [getNewConfirmPassword, setNewConfirmPassword] = useState("");
 
   const { id } = useParams();
   useEffect(() => {
     if (editInduvidual?.status === "success" && editInduvidual) {
-      console.log("he");
       handleRequestClose();
       dispatch(getInduvidual(id));
     }
@@ -86,46 +80,37 @@ const ProfileSource = () => {
       <Box className="w-full h-full mt-4 flex justify-center">
         <Box className="min-h-[80vh] container mt-[2rem] w-full flex justify-center items-center gap-4">
           <Box className="w-[50%] border h-auto">
-            <div className="w-full h-auto border-nostalgicblue border-4 bg-raddishpinklight rounded-xl shadow-2xl relative overflow-hidden p-2 flex justify-center items-center flex-col">
-              {getOneInduvidual.data?.animalRole === "kingofjungle" ? (
-                <div className="absolute top-4 left-4 ">
-                  <LightTooltip title="KING" placement="top">
+            <Box className="w-full h-auto border-nostalgicblue border-4 bg-raddishpinklight rounded-xl shadow-2xl relative overflow-hidden p-2 flex justify-center items-center flex-col">
+              {getOneInduvidual.data?.animalRole !== null && (
+                <Box className="absolute top-4 left-4 ">
+                  <LightTooltip title={"ROLE"} placement="top">
                     <IconButton sx={{ color: "white" }}>
-                      <FaChessKing className=" text-chestnut  text-[2rem]" />
+                      {getOneInduvidual.data?.animalRole === "kingofjungle" ? (
+                        <FaChessKing className=" text-chestnut  text-[2rem]" />
+                      ) : getOneInduvidual.data?.animalRole ===
+                        "queenofjungle" ? (
+                        <GiQueenCrown className=" text-chestnut  text-[2rem]" />
+                      ) : getOneInduvidual.data?.animalRole === "zookeeper" ? (
+                        <GiPikeman className=" text-chestnut  text-[2rem]" />
+                      ) : (
+                        <FcBinoculars size={25} />
+                      )}
                     </IconButton>
                   </LightTooltip>
-                </div>
-              ) : getOneInduvidual.data?.animalRole === "queenofjungle" ? (
-                <div className="absolute top-4 left-4 ">
-                  <LightTooltip title="QUEEN" placement="top">
-                    <IconButton sx={{ color: "white" }}>
-                      <GiQueenCrown className=" text-chestnut  text-[2rem]" />
-                    </IconButton>
-                  </LightTooltip>
-                </div>
-              ) : getOneInduvidual.data?.animalRole === "zookeeper" ? (
-                <div className="absolute top-4 left-4 ">
-                  <LightTooltip title="KEEPER" placement="top">
-                    <IconButton sx={{ color: "white" }}>
-                      <GiPikeman className=" text-chestnut  text-[2rem]" />
-                    </IconButton>
-                  </LightTooltip>
-                </div>
-              ) : (
-                <FcBinoculars size={25} />
+                </Box>
               )}
 
-              <div className="w-[200px] h-[200px] border-4 rounded-[50%] overflow-hidden mt-4 hover:opacity-50 opacity-100">
+              <Box className="w-[200px] h-[200px] border-4 rounded-[50%] overflow-hidden mt-4 hover:opacity-50 opacity-100">
                 <img
                   src="https://us.123rf.com/450wm/kucingliarz/kucingliarz2404/kucingliarz240400577/228714838-vector-illustration-of-a-cute-panda-bear-with-abstract-geometric-background.jpg?ver=6"
                   alt="profile_photo"
                   className="object-cover w-[100%] h-[100%]"
                 />
-              </div>
+              </Box>
 
-              <div className="w-full h-[55%] relative z-[10] flex justify-between gap-2 items-start flex-col px-2 mt-2 border-4 border-chestnut p-2">
-                <div className="w-full h-[40%] flex flex-col justify-between items-start ">
-                  <div className="flex justify-center gap-2 items-center">
+              <Box className="w-full h-[55%] relative z-[10] flex justify-between gap-2 items-start flex-col px-2 mt-2 border-4 border-chestnut p-2">
+                <Box className="w-full h-[40%] flex flex-col justify-between items-start ">
+                  <Box className="flex justify-center gap-2 items-center">
                     <TfiDrupal size={25} />
                     <span className="text-xl font-semibold text-black">
                       <span className="italic">Name:</span>{" "}
@@ -133,8 +118,8 @@ const ProfileSource = () => {
                         getOneInduvidual?.data.animalname) ||
                         "NA"}
                     </span>
-                  </div>
-                  <div className="flex justify-center gap-2 items-center">
+                  </Box>
+                  <Box className="flex justify-center gap-2 items-center">
                     <TbShieldStar size={25} />
 
                     <span className="text-xl font-semibold text-black text-wrap">
@@ -143,8 +128,8 @@ const ProfileSource = () => {
                         getOneInduvidual?.data.animalRole) ||
                         "NA"}
                     </span>
-                  </div>
-                  <div className="flex justify-center gap-2 items-center">
+                  </Box>
+                  <Box className="flex justify-center gap-2 items-center">
                     <PiPlantFill size={25} />
 
                     <span className="text-xl font-semibold text-wrap">
@@ -154,10 +139,10 @@ const ProfileSource = () => {
                         getOneInduvidual?.data.category) ||
                         "NA"}
                     </span>
-                  </div>
-                </div>
-                <div className="h-[40%] w-full flex gap-2 items-start ">
-                  <div className="flex justify-center gap-2 items-center">
+                  </Box>
+                </Box>
+                <Box className="h-[40%] w-full flex gap-2 items-start ">
+                  <Box className="flex justify-center gap-2 items-center">
                     <MdEmail size={25} />
 
                     <span className="text-xl font-semibold text-wrap">
@@ -165,9 +150,9 @@ const ProfileSource = () => {
                         getOneInduvidual?.data.email) ||
                         "NA"}
                     </span>
-                  </div>
+                  </Box>
 
-                  <div className="flex justify-center gap-2 items-center">
+                  <Box className="flex justify-center gap-2 items-center">
                     <IoMdPhonePortrait size={25} />
 
                     <span className="text-xl font-semibold text-wrap">
@@ -175,9 +160,9 @@ const ProfileSource = () => {
                         getOneInduvidual?.data.phoneNumber) ||
                         "NA"}
                     </span>
-                  </div>
-                </div>
-                <div className="flex justify-center gap-2 items-center">
+                  </Box>
+                </Box>
+                <Box className="flex justify-center gap-2 items-center">
                   <MdOutlineSecurity size={25} />
 
                   <span
@@ -186,8 +171,8 @@ const ProfileSource = () => {
                   >
                     Change Password?
                   </span>
-                </div>
-                <div className="flex justify-center gap-2 items-center">
+                </Box>
+                <Box className="flex justify-center gap-2 items-center">
                   <FaBirthdayCake size={25} />
 
                   <span className="text-xl font-semibold text-wrap">
@@ -195,18 +180,18 @@ const ProfileSource = () => {
                     {(getOneInduvidual?.data && getOneInduvidual?.data.dob) ||
                       "NA"}
                   </span>
-                </div>
+                </Box>
 
-                <div className="flex justify-center gap-2 items-center">
-                  <FaRoute className="text-[3rem] font-bold" />
+                <Box className="flex justify-center gap-2 items-center">
+                  <FaRoute className="text-[1.5rem] font-bold" />
 
                   <span className="text-xl font-semibold text-wrap">
                     {(getOneInduvidual?.data &&
                       getOneInduvidual?.data.address) ||
                       "NA"}{" "}
                   </span>
-                </div>
-                <div className="flex justify-center gap-2 items-center">
+                </Box>
+                <Box className="flex justify-center gap-2 items-center">
                   <SiContributorcovenant size={25} />
 
                   <span className="text-xl font-semibold text-wrap">
@@ -214,7 +199,7 @@ const ProfileSource = () => {
                       getOneInduvidual?.data.contributions) ||
                       "NA"}
                   </span>
-                </div>
+                </Box>
                 <Box className="flex justify-evenly items-center gap-6 bg-nostalgicblue w-full mb-4">
                   <LightTooltip title="Edit" placement="top">
                     <IconButton sx={{ color: "white" }}>
@@ -233,7 +218,7 @@ const ProfileSource = () => {
                     </LightTooltip>
                   </Link>
                 </Box>
-                <div className="flex justify-between w-full bg-chestnut text-white p-2">
+                <Box className="flex justify-between w-full bg-chestnut text-white p-2">
                   <span className="text-[0.8rem] font-bold">
                     Registered on:{" "}
                     <span className="text-base font-semibold">
@@ -255,9 +240,9 @@ const ProfileSource = () => {
                         "NA"}
                     </span>
                   </span>
-                </div>
-              </div>
-            </div>
+                </Box>
+              </Box>
+            </Box>
 
             <MUIModal
               open={open}
@@ -341,42 +326,6 @@ const ProfileSource = () => {
                     </Button>
                   </Box>
                 </form>
-              </Box>
-            </MUIModal>
-
-            <MUIModal
-              open={getShowPassword}
-              onClose={handlePwdClose}
-              aria-labelledby="modal-pwd"
-              aria-describedby="modal-pwd-description"
-            >
-              <Box className="flex w-[300px] h-auto bg-white flex-col p-4 justify-center items-center absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 gap-2 rounded-xl">
-                <FormControl
-                  className="w-full mb-4"
-                  variant="standard"
-                  color="black"
-                >
-                  <InputLabel htmlFor="email" color="black">
-                    enter your mail?
-                  </InputLabel>
-                  <Input
-                    id="email"
-                    type={"email"}
-                    placeholder="Confirm your mail"
-                  />
-                </FormControl>
-                <Button
-                  variant="contained"
-                  type="button"
-                  sx={{ backgroundColor: "#70645C" }}
-                  className="hover:bg-black mt-2"
-                  onClick={() => {
-                    setPwd((prev) => !prev);
-                    return handlePwdClose();
-                  }}
-                >
-                  Confirm
-                </Button>
               </Box>
             </MUIModal>
           </Box>

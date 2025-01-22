@@ -23,18 +23,21 @@ const CreateNew = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const {createInduvidual} =  useSelector((state) => state.crud);
+  const { createInduvidual } = useSelector((state) => state.crud);
   useEffect(() => {
-    if(createInduvidual?.status === "success" && createInduvidual){
+    if (createInduvidual?.status === "success" && createInduvidual) {
       navigate("/dashboard");
     }
-  }, [createInduvidual])
+  }, [createInduvidual]);
 
   useEffect(() => {
-    if(creationDetails.animalname?.length > 0 && creationDetails.animalRole?.length > 0){
+    if (
+      creationDetails.animalname?.length > 0 &&
+      creationDetails.animalRole?.length > 0
+    ) {
       dispatch(createOne(creationDetails));
     }
-  }, [creationDetails])
+  }, [creationDetails]);
 
   const handleCreateSubmit = (e) => {
     e.preventDefault();
@@ -54,17 +57,15 @@ const CreateNew = () => {
       phoneNumber,
       dob,
       address,
-      contributions}
-    );
+      contributions,
+    });
   };
   return (
     <>
       <Box className="bg-nostalgicblue w-full min-h-[100vh] h-auto flex justify-center flex-col">
         <NavigationBar navStyle={"create"} />
         <Box className="w-full h-full mt-4 flex justify-center">
-          
           <Box className="min-h-[85vh] container mt-[2rem] w-full flex justify-center items-center gap-4">
-          
             <CreateCard
               getName={getName}
               setName={setName}
@@ -83,9 +84,8 @@ const CreateNew = () => {
               getContributions={getContributions}
               setContributions={setContributions}
               handleCreateSubmit={handleCreateSubmit}
-              />
+            />
             <Box className="w-[50%] h-[100%] justify-center items-center flex">
-             
               <AnimalCard
                 copy={true}
                 getName={getName}
@@ -93,9 +93,8 @@ const CreateNew = () => {
                 getCategory={getCategory}
                 getEmail={getEmail}
                 getPhone={getPhone}
-                />
+              />
             </Box>
-            
           </Box>
         </Box>
         <FooterBar create />

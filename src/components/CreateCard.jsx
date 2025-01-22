@@ -46,7 +46,7 @@ const CreateCard = ({getName, setName,
       setCategory({ category: e.target.value, icon: <PiPlantFill size={25} /> });
     } else if (e.target.value === "reptiles") {
       setCategory({ category: e.target.value, icon: <GiReptileTail size={25} /> });
-    } else if (e.target.value === "amphibians") {
+    } else if (e.target.value === "amphibian") {
       setCategory({ category: e.target.value, icon: <GiCrocJaws size={25} /> });
     } else if (e.target.value === "carnivores") {
       setCategory({ category: e.target.value, icon: <GiNeedleJaws size={25} /> });
@@ -122,7 +122,7 @@ const CreateCard = ({getName, setName,
                   {[
                     "herbivores",
                     "reptiles",
-                    "amphibians",
+                    "amphibian",
                     "carnivores",
                     "omnivores",
                   ].map((cat, ind) => (

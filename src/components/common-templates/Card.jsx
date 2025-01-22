@@ -69,7 +69,6 @@ const AnimalCard = ({
           !copy && induvidual.animalRole === "zookeeper" && "border-saffron"
         } bg-raddishpinklight rounded-xl shadow-2xl relative p-2`}
       >
-        
         <img
           src={a}
           alt="animal_photo"
@@ -149,7 +148,7 @@ const AnimalCard = ({
               </Typography>
             </Box>
             {/* feature need to be added */}
-            {false && (
+            {true && (
               <Box className="flex justify-center gap-2 items-center">
                 <FaHandPointer size={25} />
                 <Typography variant="h6" className="font-semibold text-black">

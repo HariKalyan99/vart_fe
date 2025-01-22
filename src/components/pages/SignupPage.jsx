@@ -118,7 +118,7 @@ const SignupPage = () => {
               }
             />
             {getValid.find((x) => x.type === "name")?.valid && (
-              <span className="w-[80%] text-left text-sm text-raddishpinklight text-base">
+              <span className="w-[80%] text-left text-sm text-[red] text-base">
                 Name should be more than 5 characters and unique!
               </span>
             )}
@@ -140,7 +140,7 @@ const SignupPage = () => {
               }
             />
             {getValid.find((x) => x.type === "mail")?.valid && (
-              <span className="w-[80%] text-left text-sm text-raddishpinklight text-base">
+              <span className="w-[80%] text-left text-sm text-[red] text-base">
                 Invalid email format!
               </span>
             )}
@@ -169,7 +169,7 @@ const SignupPage = () => {
               />
             </FormControl>
             {getValid.find((x) => x.type === "pwd")?.valid && (
-              <span className="w-[80%] text-left text-sm text-raddishpinklight text-base">
+              <span className="w-[80%] text-left text-sm text-[red] text-base">
                 Password should be at least 7 characters!
               </span>
             )}
@@ -204,7 +204,7 @@ const SignupPage = () => {
               />
             </FormControl>
             {getValid.find((x) => x.type === "confirmpwd")?.valid && (
-              <span className="w-[80%] text-left text-sm text-raddishpinklight text-base">
+              <span className="w-[80%] text-left text-sm text-[red] text-base">
                 Password is not matching!
               </span>
             )}
@@ -227,7 +227,7 @@ const SignupPage = () => {
               required
             />
             {getValid.find((x) => x.type === "phone")?.valid && (
-              <span className="w-[80%] text-left text-sm text-raddishpinklight text-base">
+              <span className="w-[80%] text-left text-sm text-[red] text-base">
                 Invalid phone!
               </span>
             )}
