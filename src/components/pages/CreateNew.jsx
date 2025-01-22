@@ -46,7 +46,7 @@ const CreateNew = () => {
     const category = getCategory.category;
     const email = getEmail;
     const phoneNumber = getPhone;
-    const dob = getDob;
+    const dob = new Date(getDob)?.toDateString();
     const address = getAddress;
     const contributions = getContributions;
     setCreationDetails({

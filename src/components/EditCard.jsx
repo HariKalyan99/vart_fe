@@ -22,7 +22,8 @@ import { GiNeedleJaws } from "react-icons/gi"; //carnivores
 import { FaBirthdayCake, FaCrow, FaRoute } from "react-icons/fa"; //omni
 import { MdEmail } from "react-icons/md";
 import { IoMdPhonePortrait } from "react-icons/io";
-import { Textarea } from "@headlessui/react";
+import { FaCriticalRole } from "react-icons/fa";
+// import { Textarea } from "@headlessui/react";
 import { SiContributorcovenant } from "react-icons/si";
 import { MdCancelPresentation } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
@@ -94,7 +95,7 @@ const EditCard = ({ handleClose, induvidual }) => {
       dispatch(crudActions.resetEditInduvidualResponse());
     }
   }, [editInduvidual]);
-  const handleRoleChange = (e) => setRole(e.target.value);
+  // const handleRoleChange = (e) => setRole(e.target.value);
   const handleCatChange = (e) => {
     const category = e.target.value;
     const icons = {
@@ -115,7 +116,7 @@ const EditCard = ({ handleClose, induvidual }) => {
       category: cat.category?.toLowerCase(),
       email: getEmail,
       phoneNumber: getPhone,
-      dob: getDob,
+      dob: new Date(getDob)?.toDateString(),
       address: getAddress,
       contributions: getContributions,
     };
@@ -137,8 +138,8 @@ const EditCard = ({ handleClose, induvidual }) => {
         <form onSubmit={handleEditDetails} className="w-full h-full flex flex-col gap-2">
           <Box className="w-full border h-full flex flex-col gap-2 p-2">
             <EditField icon={<TfiDrupal size={25} />} value={getName} onChange={(e) => setName(e.target.value)} placeholder="Enter name" />
-            <EditField icon={<TbShieldStar size={25} />} value={role} onChange={handleRoleChange} isSelect options={[{ value: "", label: "Select Role", disabled: true }, { value: "kingofjungle", label: "KING OF JUNGLE" }, { value: "queenofjungle", label: "QUEEN OF JUNGLE" }]} />
-            <EditField icon={cat.icon || <FaBirthdayCake size={25} />} value={cat.category} onChange={handleCatChange} isSelect options={[{ value: "", label: "Select Category", disabled: true }, ...categoryOptions]} />
+            {/* <EditField icon={<TbShieldStar size={25} />} value={role} onChange={handleRoleChange} isSelect options={[{ value: "", label: "Select Role", disabled: true }, { value: "kingofjungle", label: "KING OF JUNGLE" }, { value: "queenofjungle", label: "QUEEN OF JUNGLE" }]} /> */}
+            <EditField icon={cat.icon || <FaCriticalRole size={25} />} value={cat.category} onChange={handleCatChange} isSelect options={[{ value: "", label: "Select Category", disabled: true }, ...categoryOptions]} />
             <EditField icon={<MdEmail size={25} />} value={getEmail} onChange={(e) => setEmail(e.target.value)} placeholder="Enter email" />
             <EditField icon={<IoMdPhonePortrait size={25} />} value={getPhone} onChange={(e) => setPhone(e.target.value)} placeholder="Enter phone number" />
             <EditField icon={<FaBirthdayCake size={25} />} value={getDob} onChange={(e) => setDob(e.target.value)} placeholder="Enter your DOB" type="date" />
