@@ -18,7 +18,7 @@ const validationObj = [
 ];
 
 const ForgotPwdPage = () => {
-  const [mailSent, setMailSent] = useState(true);
+  const [mailSent, setMailSent] = useState(false);
   const [getValid, setValid] = useState(validationObj);
   const [getEmail, setEmail] = useState("");
   const [getToken, setToken] = useState("");
