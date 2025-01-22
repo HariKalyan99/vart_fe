@@ -11,8 +11,15 @@ import {
 } from "../../../slices/AuthenticationSlices/AuthSlice";
 import CircularProgress from "@mui/material/CircularProgress";
 
+const validationObj = [
+  { type: "mail", valid: false },
+  { type: "pwd", valid: false },
+  { type: "confirmpwd", valid: false },
+];
+
 const ForgotPwdPage = () => {
-  const [mailSent, setMailSent] = useState(false);
+  const [mailSent, setMailSent] = useState(true);
+  const [getValid, setValid] = useState(validationObj);
   const [getEmail, setEmail] = useState("");
   const [getToken, setToken] = useState("");
   const [getNewPassword, setNewPassword] = useState("");
@@ -23,14 +30,13 @@ const ForgotPwdPage = () => {
     forgotPasswordMail,
     forgotPasswordEmailPending,
     resetPasswordResponse,
-    resetPasswordPending
+    resetPasswordPending,
   } = useSelector((state) => state.auth);
 
   useEffect(() => {
     dispatch(authActions.resetPasswordEmailResponse());
     dispatch(authActions.resetForgotPasswordResponse());
-  }, [])
-
+  }, []);
 
   useEffect(() => {
     if (forgotPasswordMail?.status === "success" && forgotPasswordMail) {
@@ -57,9 +63,23 @@ const ForgotPwdPage = () => {
     const token = getToken;
     const newPassword = getNewPassword;
     const confirmPassword = getConfirmNewPassword;
-    console.log(token, newPassword, confirmPassword)
     dispatch(authResetPassword({ token, newPassword, confirmPassword }));
   };
+
+  const updateValidation = (type, valid) => {
+    setValid((prevValid) =>
+      prevValid.map((item) => (item.type === type ? { ...item, valid } : item))
+    );
+  };
+
+  const handleChange = (setter, validator, type, e) => {
+    const value = e.target.value;
+    setter(value);
+    const isValid = validator(value);
+    updateValidation(type, !isValid);
+  };
+
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
   return (
     <>
@@ -99,8 +119,21 @@ const ForgotPwdPage = () => {
                 variant="standard"
                 color="black"
                 value={getNewPassword}
-                onChange={(e) => setNewPassword(e.target.value)}
+                onChange={(e) =>
+                  handleChange(
+                    setNewPassword,
+                    (pwd) => pwd.length >= 7,
+                    "pwd",
+                    e
+                  )
+                }
               />
+              {getValid.find((x) => x.type === "pwd")?.valid && (
+                <span className="w-[80%] text-left text-sm text-raddishpinklight text-base">
+                  Password should be at least 7 characters!
+                </span>
+              )}
+
               <TextField
                 type="password"
                 className="w-[80%] mb-4"
@@ -108,9 +141,18 @@ const ForgotPwdPage = () => {
                 variant="standard"
                 color="black"
                 value={getConfirmNewPassword}
-                onChange={(e) => setConfirmNewPassword(e.target.value)}
+                onChange={(e) => {
+                  const value = e.target.value;
+                  setConfirmNewPassword(value);
+                  const isValid = value === getNewPassword;
+                  updateValidation("confirmpwd", !isValid);
+                }}
               />
-
+              {getValid.find((x) => x.type === "confirmpwd")?.valid && (
+                <span className="w-[80%] text-left text-sm text-raddishpinklight text-base">
+                  Password is not matching!
+                </span>
+              )}
               <Button
                 variant="contained"
                 type="submit"
@@ -141,9 +183,20 @@ const ForgotPwdPage = () => {
                 variant="standard"
                 color="black"
                 value={getEmail}
-                onChange={(e) => setEmail(e.target.value)}
+                onChange={(e) =>
+                  handleChange(
+                    setEmail,
+                    (email) => emailRegex.test(email),
+                    "mail",
+                    e
+                  )
+                }
               />
-
+              {getValid.find((x) => x.type === "mail")?.valid && (
+                <span className="w-[80%] text-left text-sm text-[red] text-base">
+                  Invalid email format!
+                </span>
+              )}
               <Button
                 variant="contained"
                 type="submit"

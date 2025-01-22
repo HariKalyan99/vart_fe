@@ -20,15 +20,23 @@ import {
 import Cookies from "js-cookie";
 import { CircularProgress } from "@mui/material";
 
+const validationObj = [
+  { type: "name", valid: false },
+  { type: "mail", valid: false },
+  { type: "pwd", valid: false },
+  { type: "confirmpwd", valid: false },
+  { type: "phone", valid: false },
+];
+
 const SignupPage = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-  const [getRole, setRole] = useState("");
   const [getName, setName] = useState("");
   const [getEmail, setEmail] = useState("");
   const [getPassword, setPassword] = useState("");
   const [getConfirmPassword, setConfirmPassword] = useState("");
   const [getPhone, setPhone] = useState("");
+  const [getValid, setValid] = useState(validationObj);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { registrationResponse, registrationPending } = useSelector(
@@ -54,7 +62,6 @@ const SignupPage = () => {
   const handleClickShowPassword = () => setShowPassword((prev) => !prev);
   const handleClickShowConfirmPassword = () =>
     setShowConfirmPassword((prev) => !prev);
-  const handleRoleChange = (event) => setRole(event.target.value);
   const handleRegisterSubmit = async (e) => {
     e.preventDefault();
     const animalname = getName;
@@ -62,7 +69,6 @@ const SignupPage = () => {
     const password = getPassword;
     const confirmPassword = getConfirmPassword;
     const phoneNumber = getPhone;
-    const animalRole = getRole?.toLowerCase();
     dispatch(
       authRegisterNew({
         animalname,
@@ -70,10 +76,25 @@ const SignupPage = () => {
         password,
         confirmPassword,
         phoneNumber,
-        animalRole,
       })
     );
   };
+
+  const updateValidation = (type, valid) => {
+    setValid((prevValid) =>
+      prevValid.map((item) => (item.type === type ? { ...item, valid } : item))
+    );
+  };
+
+  const handleChange = (setter, validator, type, e) => {
+    const value = e.target.value;
+    setter(value);
+    const isValid = validator(value);
+    updateValidation(type, !isValid);
+  };
+
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  const phoneRegex = /^\d{10}$/;
 
   return (
     <>
@@ -92,8 +113,16 @@ const SignupPage = () => {
               variant="standard"
               color="black"
               value={getName}
-              onChange={(e) => setName(e.target.value)}
+              onChange={(e) =>
+                handleChange(setName, (name) => name.length >= 5, "name", e)
+              }
             />
+            {getValid.find((x) => x.type === "name")?.valid && (
+              <span className="w-[80%] text-left text-sm text-raddishpinklight text-base">
+                Name should be more than 5 characters and unique!
+              </span>
+            )}
+
             <TextField
               type="email"
               className="w-[80%] h-[40px] mb-4 bg-transparent outline-none border-b placeholder-[black] fs-2"
@@ -101,8 +130,20 @@ const SignupPage = () => {
               variant="standard"
               color="black"
               value={getEmail}
-              onChange={(e) => setEmail(e.target.value)}
+              onChange={(e) =>
+                handleChange(
+                  setEmail,
+                  (email) => emailRegex.test(email),
+                  "mail",
+                  e
+                )
+              }
             />
+            {getValid.find((x) => x.type === "mail")?.valid && (
+              <span className="w-[80%] text-left text-sm text-raddishpinklight text-base">
+                Invalid email format!
+              </span>
+            )}
 
             <FormControl className="w-[80%] mb-4" variant="standard">
               <InputLabel htmlFor="password" color="black">
@@ -122,9 +163,16 @@ const SignupPage = () => {
                 className="bg-transparent outline-none placeholder-[black] fs-2"
                 color="black"
                 value={getPassword}
-                onChange={(e) => setPassword(e.target.value)}
+                onChange={(e) =>
+                  handleChange(setPassword, (pwd) => pwd.length >= 7, "pwd", e)
+                }
               />
             </FormControl>
+            {getValid.find((x) => x.type === "pwd")?.valid && (
+              <span className="w-[80%] text-left text-sm text-raddishpinklight text-base">
+                Password should be at least 7 characters!
+              </span>
+            )}
 
             <FormControl className="w-[80%] mb-4" variant="standard">
               <InputLabel htmlFor="confirmPassword" color="black">
@@ -147,9 +195,19 @@ const SignupPage = () => {
                 className="bg-transparent outline-none placeholder-[black] fs-2"
                 color="black"
                 value={getConfirmPassword}
-                onChange={(e) => setConfirmPassword(e.target.value)}
+                onChange={(e) => {
+                  const value = e.target.value;
+                  setConfirmPassword(value);
+                  const isValid = value === getPassword;
+                  updateValidation("confirmpwd", !isValid);
+                }}
               />
             </FormControl>
+            {getValid.find((x) => x.type === "confirmpwd")?.valid && (
+              <span className="w-[80%] text-left text-sm text-raddishpinklight text-base">
+                Password is not matching!
+              </span>
+            )}
 
             <TextField
               type="tel"
@@ -158,29 +216,21 @@ const SignupPage = () => {
               variant="standard"
               color="black"
               value={getPhone}
-              onChange={(e) => setPhone(e.target.value)}
+              onChange={(e) =>
+                handleChange(
+                  setPhone,
+                  (phone) => phoneRegex.test(phone),
+                  "phone",
+                  e
+                )
+              }
               required
             />
-
-            <FormControl className="w-[80%] mb-4" variant="standard">
-              <InputLabel color="black">Desired role? (optional)</InputLabel>
-              <Select
-                value={getRole}
-                onChange={handleRoleChange}
-                displayEmpty
-                className="bg-transparent outline-none placeholder-[black] fs-2"
-                color="black"
-                inputProps={{
-                  "aria-label": "Desired role",
-                }}
-              >
-                <MenuItem value="" disabled>
-                  Desired role? (optional)
-                </MenuItem>
-                <MenuItem value="kingofjungle">KING OF JUNGLE</MenuItem>
-                <MenuItem value="queenofjungle">QUEEN OF JUNGLE</MenuItem>
-              </Select>
-            </FormControl>
+            {getValid.find((x) => x.type === "phone")?.valid && (
+              <span className="w-[80%] text-left text-sm text-raddishpinklight text-base">
+                Invalid phone!
+              </span>
+            )}
 
             <p className="text-center">
               Already have an account?{" "}
