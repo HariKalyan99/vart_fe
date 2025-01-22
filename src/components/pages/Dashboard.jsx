@@ -21,12 +21,13 @@ import { useNavigate } from "react-router-dom";
 
 const Dashboard = () => {
   const {listOfInduviduals, listOfInduvidualsPending} = useSelector((state) => state.crud);
-  const loginInduvidual = JSON.parse(localStorage?.getItem('data'))?.role || ""
+  const loginInduvidual = JSON.parse(localStorage.getItem('data'))?.role || ""
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const token = Cookies.get("jwt")
   if(!token){
+    localStorage.clear();
     navigate("/login")
   }
 
@@ -47,11 +48,17 @@ const Dashboard = () => {
       { icon: <FaChessKing size={25} />, name: "kingofjungle" },
     ];
   }
-  
+  // for polling
+  useEffect(() => {
+    const interval = setInterval(() => {
+      dispatch(getList());
+    }, 1000); 
+
+    return () => clearInterval(interval);
+  }, [dispatch]);
   
 
   useEffect(() => {
-    dispatch(getList());
     dispatch(crudActions.resetEditInduvidualResponse());
     dispatch(crudActions.resetCreationResponse());
     dispatch(authActions.resetLogoutResponse());
