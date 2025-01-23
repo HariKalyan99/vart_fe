@@ -13,6 +13,7 @@ const validationObj = [
   { type: "mail", valid: false },
   { type: "pwd", valid: false },
   { type: "confirmpwd", valid: false },
+  {type: "token", valid: false}
 ];
 
 const ForgotPwdPage = () => {
@@ -104,12 +105,18 @@ const ForgotPwdPage = () => {
               <TextField
                 type="text"
                 className="w-[80%] mb-4"
-                placeholder="Enter the password sent to your mail"
+                placeholder="Enter the 40 character password sent to your mail"
                 variant="standard"
                 color="black"
                 value={getToken}
-                onChange={(e) => setToken(e.target.value)}
+                onChange={(e) => handleChange(setToken, (tkn) => tkn?.length >= 40, "token", e)}
               />
+               {getValid.find((x) => x.type === "token")?.valid && (
+                <span className="w-[80%] text-left text-sm text-[red] text-base">
+                  Invalid password
+                </span>
+              )}
+
               <TextField
                 type="text"
                 className="w-[80%] mb-4"
@@ -127,7 +134,7 @@ const ForgotPwdPage = () => {
                 }
               />
               {getValid.find((x) => x.type === "pwd")?.valid && (
-                <span className="w-[80%] text-left text-sm text-raddishpinklight text-base">
+                <span className="w-[80%] text-left text-sm text-[red] text-base">
                   Password should be at least 7 characters!
                 </span>
               )}
@@ -147,7 +154,7 @@ const ForgotPwdPage = () => {
                 }}
               />
               {getValid.find((x) => x.type === "confirmpwd")?.valid && (
-                <span className="w-[80%] text-left text-sm text-raddishpinklight text-base">
+                <span className="w-[80%] text-left text-sm text-[red] text-base">
                   Password is not matching!
                 </span>
               )}
