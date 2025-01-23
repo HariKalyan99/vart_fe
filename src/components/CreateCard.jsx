@@ -25,7 +25,9 @@ import { Textarea } from "@headlessui/react";
 import { SiContributorcovenant } from "react-icons/si";
 import { useSelector } from "react-redux";
 
-const CreateCard = ({getName, setName,
+const CreateCard = ({
+  getName,
+  setName,
   getDepRole,
   setDepRole,
   getCategory,
@@ -39,32 +41,43 @@ const CreateCard = ({getName, setName,
   getAddress,
   setAddress,
   getContributions,
-  setContributions, handleCreateSubmit}) => {
-    const {createInduvidualPending} = useSelector(state => state.crud)
+  setContributions,
+  handleCreateSubmit,
+}) => {
+  const { createAnimalPendingResponse } = useSelector((state) => state.crud);
   const handleCatChange = (e) => {
     if (e.target.value === "herbivores") {
-      setCategory({ category: e.target.value, icon: <PiPlantFill size={25} /> });
+      setCategory({
+        category: e.target.value,
+        icon: <PiPlantFill size={25} />,
+      });
     } else if (e.target.value === "reptiles") {
-      setCategory({ category: e.target.value, icon: <GiReptileTail size={25} /> });
+      setCategory({
+        category: e.target.value,
+        icon: <GiReptileTail size={25} />,
+      });
     } else if (e.target.value === "amphibian") {
       setCategory({ category: e.target.value, icon: <GiCrocJaws size={25} /> });
     } else if (e.target.value === "carnivores") {
-      setCategory({ category: e.target.value, icon: <GiNeedleJaws size={25} /> });
+      setCategory({
+        category: e.target.value,
+        icon: <GiNeedleJaws size={25} />,
+      });
     } else if (e.target.value === "omnivores") {
       setCategory({ category: e.target.value, icon: <FaCrow size={25} /> });
     }
   };
 
-
-  
   return (
     <Card className="w-[50%] border-4 border-nostaligicblue h-[100%] flex flex-col gap-4 bg-raddishpinklight shadow-2xl relative p-2">
-     
       <Box className="w-full h-[45%]">
         <img src={cp} alt="card_photo" className="w-full h-full object-cover" />
       </Box>
       <CardContent className="w-full border-4 border-chestnut h-[55%]">
-        <form className="w-full h-full flex gap-2" onSubmit={handleCreateSubmit}>
+        <form
+          className="w-full h-full flex gap-2"
+          onSubmit={handleCreateSubmit}
+        >
           <Box className="w-[50%] border h-full flex flex-col gap-2 p-2">
             <Box className="flex gap-2">
               <TfiDrupal size={25} />
@@ -215,7 +228,7 @@ const CreateCard = ({getName, setName,
                 Add
               </Button>
 
-            {createInduvidualPending && <CircularProgress color="inherit" />}
+              {createAnimalPendingResponse && <CircularProgress color="inherit" />}
             </Box>
           </Box>
         </form>

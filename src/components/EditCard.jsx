@@ -6,7 +6,6 @@ import {
   Card,
   CardContent,
   CircularProgress,
-  Fade,
   FormControl,
   MenuItem,
   Select,
@@ -15,7 +14,6 @@ import {
 import { TfiDrupal } from "react-icons/tfi";
 import { TbShieldStar } from "react-icons/tb";
 import { PiPlantFill } from "react-icons/pi";
-import { GiBossKey } from "react-icons/gi";
 import { GiReptileTail } from "react-icons/gi"; //reptile
 import { GiCrocJaws } from "react-icons/gi"; //amphi
 import { GiNeedleJaws } from "react-icons/gi"; //carnivores
@@ -27,12 +25,10 @@ import { FaCriticalRole } from "react-icons/fa";
 import { SiContributorcovenant } from "react-icons/si";
 import { MdCancelPresentation } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  crudActions,
-  editOne,
-  getInduvidual,
-  getList,
-} from "../../slices/CRUDSlices/CrudOperationSlice";
+import { getAnimalById } from "../../slices/CRUDSlices/getAnimalById";
+import { crudActions } from "../../slices/CRUDSlices/CrudOperationSlice";
+import { editAnimal } from "../../slices/CRUDSlices/editAnimal";
+import { getAnimalList } from "../../slices/CRUDSlices/getAnimalList";
 
 const EditField = ({ icon, value, onChange, placeholder, type = "text", rows = 1, isSelect = false, options = [] }) => {
   return (
@@ -76,25 +72,25 @@ const EditCard = ({ handleClose, induvidual }) => {
   const [cat, setCat] = useState("");
 
   const dispatch = useDispatch();
-  const { editInduvidual, editInduvidualPending } = useSelector(state => state.crud);
+  const { editAnimalResponse, editAnimalPendingResponse } = useSelector(state => state.crud);
 
   useEffect(() => {
-    if (editInduvidual?.status === "success" && editInduvidual) {
+    if (editAnimalResponse?.status === "success" && editAnimalResponse) {
       if (
-        JSON.parse(localStorage.getItem("data")).id === editInduvidual?.data.id
+        JSON.parse(localStorage.getItem("data")).id === editAnimalResponse?.data.id
       ) {
         let newLocal = {
           ...JSON.parse(localStorage.getItem("data")),
-          role: editInduvidual?.data.animalRole, name: editInduvidual?.data.animalname,
+          role: editAnimalResponse?.data.animalRole, name: editAnimalResponse?.data.animalname,
         };
         localStorage.setItem("data", JSON.stringify(newLocal));
       }
-      dispatch(getList());
-      dispatch(getInduvidual(induvidual.id));
+      dispatch(getAnimalList());
+      dispatch(getAnimalById(induvidual.id));
       handleClose();
-      dispatch(crudActions.resetEditInduvidualResponse());
+      dispatch(crudActions.reseteditAnimalResponse());
     }
-  }, [editInduvidual]);
+  }, [editAnimalResponse]);
   const handleRoleChange = (e) => setRole(e.target.value);
   const handleCatChange = (e) => {
     const category = e.target.value;
@@ -120,7 +116,7 @@ const EditCard = ({ handleClose, induvidual }) => {
       address: getAddress,
       contributions: getContributions,
     };
-    dispatch(editOne({ body: animalData, id: induvidual.id }));
+    dispatch(editAnimal({ body: animalData, id: induvidual.id }));
   };
 
   const categoryOptions = [
@@ -134,7 +130,7 @@ const EditCard = ({ handleClose, induvidual }) => {
   return (
     <Card className="w-[40%] border-4 border-nostaligicblue min-h-[70%] flex gap-4 bg-raddishpinklight shadow-2xl relative p-2 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
       <CardContent className="w-full border-4 border-chestnut h-[auto]">
-        {editInduvidualPending && <CircularProgress className="text-center" color="inherit" />}
+        {editAnimalPendingResponse && <CircularProgress className="text-center" color="inherit" />}
         <form onSubmit={handleEditDetails} className="w-full h-full flex flex-col gap-2">
           <Box className="w-full border h-full flex flex-col gap-2 p-2">
             <EditField icon={<TfiDrupal size={25} />} value={getName} onChange={(e) => setName(e.target.value)} placeholder="Enter name" />

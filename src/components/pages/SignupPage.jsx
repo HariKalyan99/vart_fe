@@ -13,12 +13,10 @@ import MenuItem from "@mui/material/MenuItem";
 import Button from "@mui/material/Button";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  authActions,
-  authRegisterNew,
-} from "../../../slices/AuthenticationSlices/AuthSlice";
 import Cookies from "js-cookie";
 import { CircularProgress } from "@mui/material";
+import { authActions } from "../../../slices/AuthenticationSlices/AuthSlice";
+import { registerNewAnimal } from "../../../slices/AuthenticationSlices/signupNewAnimal";
 
 const validationObj = [
   { type: "name", valid: false },
@@ -47,6 +45,7 @@ const SignupPage = () => {
   if (token) {
     navigate("/dashboard");
   }
+// chexk this if you need ?
 
   useEffect(() => {
     dispatch(authActions.resetRegistrationResponse());
@@ -70,7 +69,7 @@ const SignupPage = () => {
     const confirmPassword = getConfirmPassword;
     const phoneNumber = getPhone;
     dispatch(
-      authRegisterNew({
+      registerNewAnimal({
         animalname,
         email,
         password,

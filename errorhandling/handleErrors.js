@@ -9,7 +9,7 @@ export const handleError = (error) => {
     } else {
       showToast("Unknown error occurred", "error");
     }
-  };
+};
 
 
 

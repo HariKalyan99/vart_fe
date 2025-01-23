@@ -5,7 +5,6 @@ import { SiContributorcovenant } from "react-icons/si";
 import { FaBirthdayCake, FaChessKing } from "react-icons/fa";
 import { FaRoute } from "react-icons/fa";
 import { FaEdit } from "react-icons/fa";
-import { RiDeleteBin6Line } from "react-icons/ri";
 import { CiRead } from "react-icons/ci";
 import IconButton from "@mui/material/IconButton";
 import { PiPlantFill } from "react-icons/pi";
@@ -24,17 +23,14 @@ import MUIModal from "./utils/MUIModal";
 import EditCard from "./EditCard";
 import { MdOutlineSecurity } from "react-icons/md";
 import { Link, useParams } from "react-router-dom";
-import { BiShowAlt } from "react-icons/bi";
 import { TiCancelOutline } from "react-icons/ti";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  editOne,
-  getInduvidual,
-} from "../../slices/CRUDSlices/CrudOperationSlice";
 import { GiPikeman, GiQueenCrown } from "react-icons/gi";
 import { FcBinoculars } from "react-icons/fc";
 import NavigationBar from "./common-templates/NavigationBar";
 import FooterBar from "./common-templates/FooterBar";
+import { getAnimalById } from "../../slices/CRUDSlices/getAnimalById";
+import { editAnimal } from "../../slices/CRUDSlices/editAnimal";
 const ProfileSource = () => {
   const [open, setOpen] = useState(false);
   const [changePassword, setchangePassword] = useState(false);
@@ -45,31 +41,31 @@ const ProfileSource = () => {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
-  const { getOneInduvidual, editInduvidual, editInduvidualPending } =
+  const { getOneAnimalResponse, editAnimalResponse, editAnimalPendingResponse } =
     useSelector((state) => state.crud);
   const dispatch = useDispatch();
 
   const { id } = useParams();
   useEffect(() => {
-    if (editInduvidual?.status === "success" && editInduvidual) {
+    if (editAnimalResponse?.status === "success" && editAnimalResponse) {
       handleRequestClose();
-      dispatch(getInduvidual(id));
+      dispatch(getAnimalById(id));
     }
-  }, [editInduvidual]);
+  }, [editAnimalResponse]);
 
   useEffect(() => {
-    dispatch(getInduvidual(id));
+    dispatch(getAnimalById(id));
   }, []);
 
   const handlePasswordChangeSubmit = (e) => {
     e.preventDefault();
     dispatch(
-      editOne({
+      editAnimal({
         body: {
           password: getNewPassword,
           confirmPassword: getNewConfirmPassword,
         },
-        id: getOneInduvidual.data?.id,
+        id: getOneAnimalResponse.data?.id,
       })
     );
   };
@@ -81,16 +77,16 @@ const ProfileSource = () => {
         <Box className="min-h-[80vh] container mt-[2rem] w-full flex justify-center items-center gap-4">
           <Box className="w-[50%] border h-auto">
             <Box className="w-full h-auto border-nostalgicblue border-4 bg-raddishpinklight rounded-xl shadow-2xl relative overflow-hidden p-2 flex justify-center items-center flex-col">
-              {getOneInduvidual.data?.animalRole !== null && (
+              {getOneAnimalResponse.data?.animalRole !== null && (
                 <Box className="absolute top-4 left-4 ">
                   <LightTooltip title={"ROLE"} placement="top">
                     <IconButton sx={{ color: "white" }}>
-                      {getOneInduvidual.data?.animalRole === "kingofjungle" ? (
+                      {getOneAnimalResponse.data?.animalRole === "kingofjungle" ? (
                         <FaChessKing className=" text-chestnut  text-[2rem]" />
-                      ) : getOneInduvidual.data?.animalRole ===
+                      ) : getOneAnimalResponse.data?.animalRole ===
                         "queenofjungle" ? (
                         <GiQueenCrown className=" text-chestnut  text-[2rem]" />
-                      ) : getOneInduvidual.data?.animalRole === "zookeeper" ? (
+                      ) : getOneAnimalResponse.data?.animalRole === "zookeeper" ? (
                         <GiPikeman className=" text-chestnut  text-[2rem]" />
                       ) : (
                         <FcBinoculars size={25} />
@@ -114,8 +110,8 @@ const ProfileSource = () => {
                     <TfiDrupal size={25} />
                     <span className="text-xl font-semibold text-black">
                       <span className="italic">Name:</span>{" "}
-                      {(getOneInduvidual?.data &&
-                        getOneInduvidual?.data.animalname) ||
+                      {(getOneAnimalResponse?.data &&
+                        getOneAnimalResponse?.data.animalname) ||
                         "NA"}
                     </span>
                   </Box>
@@ -124,8 +120,8 @@ const ProfileSource = () => {
 
                     <span className="text-xl font-semibold text-black text-wrap">
                       <span className=" italic">Role: </span>{" "}
-                      {(getOneInduvidual?.data &&
-                        getOneInduvidual?.data.animalRole) ||
+                      {(getOneAnimalResponse?.data &&
+                        getOneAnimalResponse?.data.animalRole) ||
                         "NA"}
                     </span>
                   </Box>
@@ -135,8 +131,8 @@ const ProfileSource = () => {
                     <span className="text-xl font-semibold text-wrap">
                       {" "}
                       <span className=" italic">Category: </span>
-                      {(getOneInduvidual?.data &&
-                        getOneInduvidual?.data.category) ||
+                      {(getOneAnimalResponse?.data &&
+                        getOneAnimalResponse?.data.category) ||
                         "NA"}
                     </span>
                   </Box>
@@ -146,8 +142,8 @@ const ProfileSource = () => {
                     <MdEmail size={25} />
 
                     <span className="text-xl font-semibold text-wrap">
-                      {(getOneInduvidual?.data &&
-                        getOneInduvidual?.data.email) ||
+                      {(getOneAnimalResponse?.data &&
+                        getOneAnimalResponse?.data.email) ||
                         "NA"}
                     </span>
                   </Box>
@@ -156,8 +152,8 @@ const ProfileSource = () => {
                     <IoMdPhonePortrait size={25} />
 
                     <span className="text-xl font-semibold text-wrap">
-                      {(getOneInduvidual?.data &&
-                        getOneInduvidual?.data.phoneNumber) ||
+                      {(getOneAnimalResponse?.data &&
+                        getOneAnimalResponse?.data.phoneNumber) ||
                         "NA"}
                     </span>
                   </Box>
@@ -177,7 +173,7 @@ const ProfileSource = () => {
 
                   <span className="text-xl font-semibold text-wrap">
                     <span className="">DOB: </span>
-                    {(getOneInduvidual?.data && getOneInduvidual?.data.dob) ||
+                    {(getOneAnimalResponse?.data && getOneAnimalResponse?.data.dob) ||
                       "NA"}
                   </span>
                 </Box>
@@ -186,8 +182,8 @@ const ProfileSource = () => {
                   <FaRoute className="text-[1.5rem] font-bold" />
 
                   <span className="text-xl font-semibold text-wrap">
-                    {(getOneInduvidual?.data &&
-                      getOneInduvidual?.data.address) ||
+                    {(getOneAnimalResponse?.data &&
+                      getOneAnimalResponse?.data.address) ||
                       "NA"}{" "}
                   </span>
                 </Box>
@@ -195,8 +191,8 @@ const ProfileSource = () => {
                   <SiContributorcovenant size={25} />
 
                   <span className="text-xl font-semibold text-wrap">
-                    {(getOneInduvidual?.data &&
-                      getOneInduvidual?.data.contributions) ||
+                    {(getOneAnimalResponse?.data &&
+                      getOneAnimalResponse?.data.contributions) ||
                       "NA"}
                   </span>
                 </Box>
@@ -210,7 +206,7 @@ const ProfileSource = () => {
                       />
                     </IconButton>
                   </LightTooltip>
-                  <Link to={`/details/${getOneInduvidual.data?.id}`}>
+                  <Link to={`/details/${getOneAnimalResponse.data?.id}`}>
                     <LightTooltip title="Read more" placement="top">
                       <IconButton sx={{ color: "white" }}>
                         <CiRead size={30} className="text-black" />
@@ -222,9 +218,9 @@ const ProfileSource = () => {
                   <span className="text-[0.8rem] font-bold">
                     Registered on:{" "}
                     <span className="text-base font-semibold">
-                      {(getOneInduvidual?.data &&
+                      {(getOneAnimalResponse?.data &&
                         new Date(
-                          getOneInduvidual?.data.createdAt
+                          getOneAnimalResponse?.data.createdAt
                         ).toLocaleDateString()) ||
                         "NA"}
                     </span>
@@ -233,9 +229,9 @@ const ProfileSource = () => {
                   <span className="text-[0.8rem] font-bold">
                     Edited on:{" "}
                     <span className="text-base font-semibold">
-                      {(getOneInduvidual?.data &&
+                      {(getOneAnimalResponse?.data &&
                         new Date(
-                          getOneInduvidual?.data.updatedAt
+                          getOneAnimalResponse?.data.updatedAt
                         ).toLocaleDateString()) ||
                         "NA"}
                     </span>
@@ -254,7 +250,7 @@ const ProfileSource = () => {
                 handleClose={handleClose}
                 open={open}
                 id="modal-edit"
-                induvidual={getOneInduvidual.data}
+                induvidual={getOneAnimalResponse.data}
               />
             </MUIModal>
 
@@ -265,7 +261,7 @@ const ProfileSource = () => {
               aria-describedby="modal-request-description"
             >
               <Box className="flex w-[300px] h-auto bg-white flex-col p-4 justify-center items-center absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 gap-2 rounded-xl">
-                {editInduvidualPending && <CircularProgress color="inherit" />}
+                {editAnimalPendingResponse && <CircularProgress color="inherit" />}
 
                 <span className="inline-block text-center">
                   Reset password?

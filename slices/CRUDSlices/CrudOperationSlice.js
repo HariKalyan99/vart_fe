@@ -1,229 +1,102 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { config } from "../../backend/config";
-import { handleError, showToast } from "../../helpers/helperFunction";
-import Cookies from "js-cookie";
-import axios from "axios";
-
-const backendConfig = config.backend;
+import { createSlice } from "@reduxjs/toolkit";
+import { getAnimalList } from "./getAnimalList";
+import { createNewAnimal } from "./createAnimal";
+import { deleteAnimal } from "./deleteAnimal";
+import { editAnimal } from "./editAnimal";
+import { getAnimalById } from "./getAnimalById";
 
 const initialState = {
-  listOfInduviduals: {},
-  listOfInduvidualsPending: false,
+  listOfAnimalsResponse: {},
+  listOfAnimalsPendingResponse: false,
 
-  getOneInduvidual: {},
-  getOneInduvidualResponsePending: false,
+  getOneAnimalResponse: {},
+  getOneAnimalResponsePending: false,
 
-  createInduvidual: {},
-  createInduvidualPending: false,
+  createAnimalResponse: {},
+  createAnimalPendingResponse: false,
 
-  deleteInduvidual: {},
-  deleteInduvidualPending: false,
+  deleteAnimalResponse: {},
+  deleteAnimalPendingResponse: false,
 
-  editInduvidual: {},
-  editInduvidualPending: false,
+  editAnimalResponse: {},
+  editAnimalPendingResponse: false,
 };
 
-export const getList = createAsyncThunk("induviduals/list", async () => {
-  try {
-    const token = Cookies.get("jwt");
-    const { data } = await axios.get("/api/v1/animals/animalslist", {
-      headers: {
-        "Content-Type": "application/json",
-        appvalidationtoken: `${backendConfig.headercontract}`,
-        Authorization: `Bearer ${token}`,
-      },
-    });
-    // if (data.status === "success") {
-    //   showToast(data.message);
-    // } else {
-    //   showToast(data.message, "warning");
-    // }
-    return data;
-  } catch (error) {
-    handleError(error);
-  }
-});
-
-export const getInduvidual = createAsyncThunk("induviduals/one", async (id) => {
-  try {
-    const token = Cookies.get("jwt");
-    const { data } = await axios.get(`/api/v1/animals/findanimal/${id}`, {
-      headers: {
-        "Content-Type": "application/json",
-        appvalidationtoken: `${backendConfig.headercontract}`,
-        Authorization: `Bearer ${token}`,
-      },
-    });
-    // if (data.status === "success") {
-    //   showToast(data.message);
-    // } else {
-    //   showToast(data.message, "warning");
-    // }
-    return data;
-  } catch (error) {
-    handleError(error);
-  }
-});
-
-export const createOne = createAsyncThunk(
-  "induviduals/create",
-  async (newInduvidualData) => {
-    try {
-      const token = Cookies.get("jwt");
-      const { data } = await axios.post(
-        "/api/v1/animals/animalcreate",
-        newInduvidualData,
-        {
-          headers: {
-            "Content-Type": "application/json",
-            appvalidationtoken: `${backendConfig.headercontract}`,
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-      if (data.status === "success") {
-        showToast(data.message);
-      } else {
-        showToast(data.message, "warning");
-      }
-      return data;
-    } catch (error) {
-      handleError(error);
-    }
-  }
-);
-
-export const deleteOne = createAsyncThunk(
-  "induviduals/remove",
-  async (animalId) => {
-    try {
-      console.log(animalId);
-      const token = Cookies.get("jwt");
-      const { data } = await axios.delete(
-        `/api/v1/animals/animalremove/${animalId}`,
-        {
-          headers: {
-            "Content-Type": "application/json",
-            appvalidationtoken: `${backendConfig.headercontract}`,
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-      if (data.status === "success") {
-        showToast(data.message);
-      } else {
-        showToast(data.message, "warning");
-      }
-      return data;
-    } catch (error) {
-      handleError(error);
-    }
-  }
-);
-
-export const editOne = createAsyncThunk(
-  "induviduals/edit",
-  async (editedInduvidualData) => {
-    try {
-      const token = Cookies.get("jwt");
-      const { data } = await axios.put(
-        `/api/v1/animals/animaledit/${editedInduvidualData.id}`,
-        editedInduvidualData.body,
-        {
-          headers: {
-            "Content-Type": "application/json",
-            appvalidationtoken: `${backendConfig.headercontract}`,
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-      if (data.status === "success") {
-        showToast(data.message);
-      } else {
-        showToast(data.message, "warning");
-      }
-      return data;
-    } catch (error) {
-      handleError(error);
-    }
-  }
-);
-
-const crudSlice = createSlice({
+const animalOperationSlices = createSlice({
   name: "crud",
   initialState,
   reducers: {
     resetCreationResponse: (state) => {
-      state.createInduvidual = {};
-      state.createInduvidualPending = false;
+      state.createAnimalResponse = {};
+      state.createAnimalPending = false;
     },
-    resetEditInduvidualResponse: (state) => {
-      state.editInduvidual = {};
-      state.editInduvidualPending = false;
+    reseteditAnimalResponse: (state) => {
+      state.editAnimalResponse = {};
+      state.editAnimalPendingResponse = false;
     },
   },
   extraReducers: (builder) => {
     builder
-      .addCase(getList.pending, (state) => {
-        state.listOfInduvidualsPending = true;
+      .addCase(getAnimalList.pending, (state) => {
+        state.listOfAnimalsPendingResponse = true;
       })
-      .addCase(getList.fulfilled, (state, action) => {
-        state.listOfInduviduals = action.payload;
-        state.listOfInduvidualsPending = false;
+      .addCase(getAnimalList.fulfilled, (state, action) => {
+        state.listOfAnimalsResponse = action.payload;
+        state.listOfAnimalsPendingResponse = false;
       })
-      .addCase(getList.rejected, (state) => {
-        state.listOfInduvidualsPending = false;
+      .addCase(getAnimalList.rejected, (state) => {
+        state.listOfAnimalsPendingResponse = false;
       });
 
     builder
-      .addCase(createOne.pending, (state) => {
-        state.createInduvidualPending = true;
+      .addCase(createNewAnimal.pending, (state) => {
+        state.createAnimalPendingResponse = true;
       })
-      .addCase(createOne.fulfilled, (state, { payload }) => {
-        state.createInduvidual = payload;
-        state.createInduvidualPending = false;
+      .addCase(createNewAnimal.fulfilled, (state, { payload }) => {
+        state.createAnimalResponse = payload;
+        state.createAnimalPendingResponse = false;
       })
-      .addCase(createOne.rejected, (state) => {
-        state.createInduvidualPending = false;
+      .addCase(createNewAnimal.rejected, (state) => {
+        state.createAnimalPendingResponse = false;
       });
 
     builder
-      .addCase(deleteOne.pending, (state) => {
-        state.deleteInduvidualPending = true;
+      .addCase(deleteAnimal.pending, (state) => {
+        state.deleteAnimalPendingResponse = true;
       })
-      .addCase(deleteOne.fulfilled, (state, action) => {
-        state.deleteInduvidual = action.payload;
-        state.deleteInduvidualPending = false;
+      .addCase(deleteAnimal.fulfilled, (state, action) => {
+        state.deleteAnimalResponse = action.payload;
+        state.deleteAnimalPendingResponse = false;
       })
-      .addCase(deleteOne.rejected, (state) => {
-        state.deleteInduvidualPending = false;
+      .addCase(deleteAnimal.rejected, (state) => {
+        state.deleteAnimalPendingResponse = false;
       });
 
     builder
-      .addCase(editOne.pending, (state) => {
-        state.editInduvidualPending = true;
+      .addCase(editAnimal.pending, (state) => {
+        state.editAnimalPendingResponse = true;
       })
-      .addCase(editOne.fulfilled, (state, action) => {
-        state.editInduvidual = action.payload;
-        state.editInduvidualPending = false;
+      .addCase(editAnimal.fulfilled, (state, action) => {
+        state.editAnimalResponse = action.payload;
+        state.editAnimalPendingResponse = false;
       })
-      .addCase(editOne.rejected, (state) => {
-        state.editInduvidualPending = false;
+      .addCase(editAnimal.rejected, (state) => {
+        state.editAnimalPendingResponse = false;
       });
 
     builder
-      .addCase(getInduvidual.pending, (state) => {
-        state.getOneInduvidualResponsePending = true;
+      .addCase(getAnimalById.pending, (state) => {
+        state.getOneAnimalResponsePending = true;
       })
-      .addCase(getInduvidual.fulfilled, (state, action) => {
-        state.getOneInduvidual = action.payload;
-        state.getOneInduvidualResponsePending = false;
+      .addCase(getAnimalById.fulfilled, (state, action) => {
+        state.getOneAnimalResponse = action.payload;
+        state.getOneAnimalResponsePending = false;
       })
-      .addCase(getInduvidual.rejected, (state) => {
-        state.getOneInduvidualResponsePending = false;
+      .addCase(getAnimalById.rejected, (state) => {
+        state.getOneAnimalResponsePending = false;
       });
   },
 });
 
-export const crudActions = crudSlice.actions;
-export default crudSlice.reducer;
+export const crudActions = animalOperationSlices.actions;
+export default animalOperationSlices.reducer;

@@ -4,12 +4,10 @@ import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  authActions,
-  forgotPasswordResponse,
-  authResetPassword,
-} from "../../../slices/AuthenticationSlices/AuthSlice";
 import CircularProgress from "@mui/material/CircularProgress";
+import { authActions } from "../../../slices/AuthenticationSlices/AuthSlice";
+import { forgotPasswordResponse } from "../../../slices/AuthenticationSlices/forgotPassword";
+import { animalResetPassword } from "../../../slices/AuthenticationSlices/resetPassword";
 
 const validationObj = [
   { type: "mail", valid: false },
@@ -63,7 +61,7 @@ const ForgotPwdPage = () => {
     const token = getToken;
     const newPassword = getNewPassword;
     const confirmPassword = getConfirmNewPassword;
-    dispatch(authResetPassword({ token, newPassword, confirmPassword }));
+    dispatch(animalResetPassword({ token, newPassword, confirmPassword }));
   };
 
   const updateValidation = (type, valid) => {

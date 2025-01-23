@@ -8,9 +8,9 @@ import { PiPlantFill } from "react-icons/pi";
 import { TfiDrupal } from "react-icons/tfi";
 import { TbShieldStar } from "react-icons/tb";
 import { useDispatch, useSelector } from "react-redux";
-import { getInduvidual } from "../../slices/CRUDSlices/CrudOperationSlice";
 import { useParams } from "react-router-dom";
 import { Box, Typography, Paper } from "@mui/material";
+import { getAnimalById } from "../../slices/CRUDSlices/getAnimalById";
 
 const DetailItem = ({ icon, label, value }) => (
   <Box className="flex gap-2 items-center">
@@ -22,15 +22,15 @@ const DetailItem = ({ icon, label, value }) => (
 );
 
 const DetailsCard = () => {
-  const { getOneInduvidual } = useSelector((state) => state.crud);
+  const { getOneAnimalResponse } = useSelector((state) => state.crud);
   const dispatch = useDispatch();
   const { id } = useParams();
 
   useEffect(() => {
-    dispatch(getInduvidual(id));
+    dispatch(getAnimalById(id));
   }, [dispatch, id]);
 
-  const data = getOneInduvidual?.data;
+  const data = getOneAnimalResponse?.data;
 
   return (
     <Paper className="w-full h-auto bg-raddishpinklight shadow-2xl relative overflow-hidden p-4 border border-4 border-chestnut">

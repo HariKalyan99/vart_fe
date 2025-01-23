@@ -11,9 +11,10 @@ import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import Button from "@mui/material/Button";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { authActions, authLogin } from "../../../slices/AuthenticationSlices/AuthSlice";
 import Cookies from "js-cookie";
 import { CircularProgress } from "@mui/material";
+import { authActions } from "../../../slices/AuthenticationSlices/AuthSlice";
+import { animalLogin } from "../../../slices/AuthenticationSlices/loginAnimal";
 
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -46,7 +47,7 @@ const LoginPage = () => {
 
   const handleLoginSubmit = (e) => {
     e.preventDefault();
-    dispatch(authLogin(formData));
+    dispatch(animalLogin(formData));
   };
 
   return (

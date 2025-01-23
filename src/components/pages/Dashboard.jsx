@@ -13,16 +13,14 @@ import { FaHandPointer } from "react-icons/fa";
 import LightTooltip from "../utils/MUITooltip";
 import { Box, Skeleton, Stack } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  crudActions,
-  getList,
-} from "../../../slices/CRUDSlices/CrudOperationSlice";
-import { authActions } from "../../../slices/AuthenticationSlices/AuthSlice";
 import Cookies from "js-cookie";
 import { useNavigate } from "react-router-dom";
+import { crudActions } from "../../../slices/CRUDSlices/CrudOperationSlice";
+import { getAnimalList } from "../../../slices/CRUDSlices/getAnimalList";
+import { authActions } from "../../../slices/AuthenticationSlices/AuthSlice";
 
 const Dashboard = () => {
-  const { listOfInduviduals, listOfInduvidualsPending } = useSelector(
+  const { listOfAnimalsResponse, listOfAnimalsPendingResponse } = useSelector(
     (state) => state.crud
   );
   const loginInduvidual = JSON.parse(localStorage.getItem("data"))?.role || "";
@@ -62,8 +60,8 @@ const Dashboard = () => {
   // }, [dispatch]);
 
   useEffect(() => {
-    dispatch(getList());
-    dispatch(crudActions.resetEditInduvidualResponse());
+    dispatch(getAnimalList());
+    dispatch(crudActions.reseteditAnimalResponse());
     dispatch(crudActions.resetCreationResponse());
     dispatch(authActions.resetLogoutResponse());
   }, []);
@@ -94,11 +92,11 @@ const Dashboard = () => {
             Registered animals
           </span>
           <Box className="mt-[1rem] container w-full p-4 flex flex-wrap justify-center items-center gap-6">
-            {listOfInduviduals?.data?.length > 0
-              ? listOfInduviduals?.data.map((induvidual) => (
+            {listOfAnimalsResponse?.data?.length > 0
+              ? listOfAnimalsResponse?.data.map((induvidual) => (
                   <AnimalCard key={induvidual.id} induvidual={induvidual} />
                 ))
-              : listOfInduvidualsPending
+              : listOfAnimalsPendingResponse
               ? [1, 2, 3, 4, 5, 6].map((_, ind) => (
                   <Stack key={ind} spacing={1}>
                     <Skeleton variant="text" sx={{ fontSize: "1rem" }} />
@@ -107,7 +105,7 @@ const Dashboard = () => {
                     <Skeleton variant="rounded" width={210} height={60} />
                   </Stack>
                 ))
-              : listOfInduviduals?.data?.length === 0 && (
+              : listOfAnimalsResponse?.data?.length === 0 && (
                   <Box className="w-full h-[45rem] flex justify-center items-center mt-4 container">
                     <Box className="w-[50%] h-full flex justify-center items-start flex-col">
                       <span className="text-[4rem] font-bold text-nostalgicblue text-wrap">

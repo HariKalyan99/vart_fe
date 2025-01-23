@@ -11,12 +11,10 @@ import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import logo from "../../assets/Z.png";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  authActions,
-  authLogout,
-} from "../../../slices/AuthenticationSlices/AuthSlice";
 import { useEffect } from "react";
 import { Box } from "@mui/material";
+import { animalLogout } from "../../../slices/AuthenticationSlices/logoutAnimal";
+import { authActions } from "../../../slices/AuthenticationSlices/AuthSlice";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
@@ -56,7 +54,7 @@ export default function NavigationBar({ navStyle }) {
     }
   }, [logoutResponse]);
   const handleLogout = () => {
-    dispatch(authLogout());
+    dispatch(animalLogout());
   };
   return (
     <Disclosure

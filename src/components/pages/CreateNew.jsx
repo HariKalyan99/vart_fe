@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
 import NavigationBar from "../common-templates/NavigationBar";
 import FooterBar from "../common-templates/FooterBar";
-import { Box, CircularProgress } from "@mui/material";
+import { Box } from "@mui/material";
 
 import AnimalCard from "../common-templates/Card";
 import CreateCard from "../CreateCard";
 import { useDispatch, useSelector } from "react-redux";
-import { createOne } from "../../../slices/CRUDSlices/CrudOperationSlice";
 import { useNavigate } from "react-router-dom";
+import { createNewAnimal } from "../../../slices/CRUDSlices/createAnimal";
 
 const CreateNew = () => {
   const [getName, setName] = useState("");
@@ -23,19 +23,19 @@ const CreateNew = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const { createInduvidual } = useSelector((state) => state.crud);
+  const { createAnimalResponse } = useSelector((state) => state.crud);
   useEffect(() => {
-    if (createInduvidual?.status === "success" && createInduvidual) {
+    if (createAnimalResponse?.status === "success" && createAnimalResponse) {
       navigate("/dashboard");
     }
-  }, [createInduvidual]);
+  }, [createAnimalResponse]);
 
   useEffect(() => {
     if (
       creationDetails.animalname?.length > 0 &&
       creationDetails.animalRole?.length > 0
     ) {
-      dispatch(createOne(creationDetails));
+      dispatch(createNewAnimal(creationDetails));
     }
   }, [creationDetails]);
 

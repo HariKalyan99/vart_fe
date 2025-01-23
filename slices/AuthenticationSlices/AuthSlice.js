@@ -1,10 +1,10 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import axios from "axios";
-import { config } from "../../backend/config";
-import Cookies from "js-cookie";
-import { handleError, showToast } from "../../helpers/helperFunction";
+import {createSlice } from "@reduxjs/toolkit";
+import { registerNewAnimal } from "./signupNewAnimal";
+import { animalLogin } from "./loginAnimal";
+import { animalLogout } from "./logoutAnimal";
+import { forgotPasswordResponse } from "./forgotPassword";
+import { animalResetPassword } from "./resetPassword";
 
-const backendConfig = config.backend;
 const initialState = {
   registrationResponse: {},
   registrationPending: false,
@@ -18,126 +18,8 @@ const initialState = {
   resetPasswordPending: false,
 };
 
-export const authRegisterNew = createAsyncThunk(
-  "auth/register",
-  async (registerDetails) => {
-    try {
-      const { data } = await axios.post(
-        "/api/v1/auth/signup",
-        registerDetails,
-        {
-          headers: {
-            "Content-Type": "application/json",
-            appvalidationtoken: `${backendConfig.headercontract}`,
-          },
-        }
-      );
-      if (data.status === "success") {
-        showToast(data.message);
-      }
-      return data;
-    } catch (error) {
-      handleError(error);
-    }
-  }
-);
 
-
-export const authLogin = createAsyncThunk(
-  "auth/login",
-  async (loginDetails) => {
-    try {
-      const { data } = await axios.post("/api/v1/auth/login", loginDetails, {
-        headers: {
-          "Content-Type": "application/json",
-          appvalidationtoken: `${backendConfig.headercontract}`,
-        },
-      });
-      if (data.status === "success") {
-        localStorage.setItem("data", JSON.stringify(data));
-        showToast(data.message);
-      } else {
-        showToast(data.message, "warning");
-      }
-      return data;
-    } catch (error) {
-      handleError(error);
-    }
-  }
-);
-
-export const authLogout = createAsyncThunk("auth/logout", async () => {
-  try {
-    const token = Cookies.get("jwt");
-    const { data } = await axios.get("/api/v1/auth/logout", {
-      headers: {
-        "Content-Type": "application/json",
-        appvalidationtoken: `${backendConfig.headercontract}`,
-        Authorization: `Bearer ${token}`,
-      },
-    });
-    if (data.status === "success") {
-      showToast(data.message);
-      localStorage.clear();
-      Cookies.remove("jwt");
-    } else {
-      showToast(data.message, "warning");
-    }
-    return data;
-  } catch (error) {
-    handleError(error);
-  }
-});
-
-export const forgotPasswordResponse = createAsyncThunk(
-  "auth/forgotpwd",
-  async (email) => {
-    try {
-      const { data } = await axios.post(
-        "/api/v1/auth/forgotpassword",
-        { email },
-        {
-          headers: {
-            "Content-Type": "application/json",
-            appvalidationtoken: `${backendConfig.headercontract}`,
-          },
-        }
-      );
-      if (data.status === "success") {
-        showToast(data.message);
-      }
-      return data;
-    } catch (error) {
-      handleError(error);
-    }
-  }
-);
-
-export const authResetPassword = createAsyncThunk(
-  "auth/resetpwd",
-  async (resetDetails) => {
-    try {
-      const { data } = await axios.post(
-        "/api/v1/auth/resetpassword",
-        resetDetails,
-        {
-          headers: {
-            "Content-Type": "application/json",
-            appvalidationtoken: `${backendConfig.headercontract}`,
-          },
-        }
-      );
-      if (data.status === "success") {
-        showToast(data.message);
-      }
-      return data;
-    } catch (error) {
-      handleError(error);
-    }
-  }
-);
-
-const authSlice = createSlice({
+const animalSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
@@ -164,38 +46,38 @@ const authSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(authRegisterNew.pending, (state) => {
+      .addCase(registerNewAnimal.pending, (state) => {
         state.registrationPending = true;
       })
-      .addCase(authRegisterNew.fulfilled, (state, action) => {
+      .addCase(registerNewAnimal.fulfilled, (state, action) => {
         state.registrationResponse = action.payload;
         state.registrationPending = false;
       })
-      .addCase(authRegisterNew.rejected, (state) => {
+      .addCase(registerNewAnimal.rejected, (state) => {
         state.registrationPending = false;
       });
 
     builder
-      .addCase(authLogin.pending, (state) => {
+      .addCase(animalLogin.pending, (state) => {
         state.loginPending = true;
       })
-      .addCase(authLogin.fulfilled, (state, action) => {
+      .addCase(animalLogin.fulfilled, (state, action) => {
         state.loginResponse = action.payload;
         state.loginPending = false;
       })
-      .addCase(authLogin.rejected, (state) => {
+      .addCase(animalLogin.rejected, (state) => {
         state.loginPending = false;
       });
 
     builder
-      .addCase(authLogout.pending, (state) => {
+      .addCase(animalLogout.pending, (state) => {
         state.logoutPending = true;
       })
-      .addCase(authLogout.fulfilled, (state, action) => {
+      .addCase(animalLogout.fulfilled, (state, action) => {
         state.logoutResponse = action.payload;
         state.logoutPending = false;
       })
-      .addCase(authLogout.rejected, (state) => {
+      .addCase(animalLogout.rejected, (state) => {
         state.logoutPending = false;
       });
 
@@ -212,18 +94,18 @@ const authSlice = createSlice({
       });
 
     builder
-      .addCase(authResetPassword.pending, (state) => {
+      .addCase(animalResetPassword.pending, (state) => {
         state.resetPasswordPending = true;
       })
-      .addCase(authResetPassword.fulfilled, (state, action) => {
+      .addCase(animalResetPassword.fulfilled, (state, action) => {
         state.resetPasswordResponse = action.payload;
         state.resetPasswordPending = false;
       })
-      .addCase(authResetPassword.rejected, (state) => {
+      .addCase(animalResetPassword.rejected, (state) => {
         state.resetPasswordResponse = false;
       });
   },
 });
 
-export const authActions = authSlice.actions;
-export default authSlice.reducer;
+export const authActions = animalSlice.actions;
+export default animalSlice.reducer;

@@ -20,11 +20,9 @@ import MUIModal from "../utils/MUIModal";
 import { Link } from "react-router-dom";
 import { FcBinoculars } from "react-icons/fc";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  crudActions,
-  deleteOne,
-  getList,
-} from "../../../slices/CRUDSlices/CrudOperationSlice";
+import { crudActions } from "../../../slices/CRUDSlices/CrudOperationSlice";
+import { getAnimalList } from "../../../slices/CRUDSlices/getAnimalList";
+import { deleteAnimal } from "../../../slices/CRUDSlices/deleteAnimal";
 
 const AnimalCard = ({
   induvidual,
@@ -39,13 +37,13 @@ const AnimalCard = ({
   const [open, setOpen] = useState(false);
   const [requestAgree, setRequestAgree] = useState(false);
   const dispatch = useDispatch();
-  const { deleteInduvidual } = useSelector((state) => state.crud);
+  const { deleteAnimalResponse } = useSelector((state) => state.crud);
 
   useEffect(() => {
-    if (deleteInduvidual?.status === "success" && deleteInduvidual) {
-      dispatch(getList());
+    if (deleteAnimalResponse?.status === "success" && deleteAnimalResponse) {
+      dispatch(getAnimalList());
     }
-  }, [deleteInduvidual]);
+  }, [deleteAnimalResponse]);
 
   const handleRequestOpen = () => setRequestAgree(true);
   const handleRequestClose = () => setRequestAgree(false);
@@ -53,12 +51,12 @@ const AnimalCard = ({
     setOpen(true);
   };
   const handleClose = () => {
-    dispatch(crudActions.resetEditInduvidualResponse());
+    dispatch(crudActions.reseteditAnimalResponse());
     setOpen(false);
   };
 
   const handleDelete = (id) => {
-    dispatch(deleteOne(id));
+    dispatch(deleteAnimal(id));
   };
   return (
     <>
