@@ -20,19 +20,10 @@ import MUIModal from "../utils/MUIModal";
 import { Link } from "react-router-dom";
 import { FcBinoculars } from "react-icons/fc";
 import { useDispatch, useSelector } from "react-redux";
-import { crudActions } from "../../../slices/CRUDSlices/CrudOperationSlice";
 import { getAnimalList } from "../../../slices/CRUDSlices/getAnimalList";
 import { deleteAnimal } from "../../../slices/CRUDSlices/deleteAnimal";
 
-const AnimalCard = ({
-  induvidual,
-  copy,
-  getName,
-  getDepRole,
-  getCategory,
-  getEmail,
-  getPhone,
-}) => {
+const AnimalCard = ({ induvidual, copy, getName, getDepRole, getCategory, getEmail, getPhone }) => {
   const loginInduvidual = JSON.parse(localStorage.getItem("data")).role;
   const [open, setOpen] = useState(false);
   const [requestAgree, setRequestAgree] = useState(false);
@@ -40,257 +31,103 @@ const AnimalCard = ({
   const { deleteAnimalResponse } = useSelector((state) => state.crud);
 
   useEffect(() => {
-    if (deleteAnimalResponse?.status === "success" && deleteAnimalResponse) {
-      dispatch(getAnimalList());
-    }
+    if (deleteAnimalResponse?.status === "success") dispatch(getAnimalList());
   }, [deleteAnimalResponse]);
 
-  const handleRequestOpen = () => setRequestAgree(true);
-  const handleRequestClose = () => setRequestAgree(false);
-  const handleOpen = () => {
-    setOpen(true);
-  };
-  const handleClose = () => {
-    dispatch(crudActions.reseteditAnimalResponse());
-    setOpen(false);
-  };
-
+  const handleModalOpen = (setter) => setter(true);
+  const handleModalClose = (setter) => setter(false);
   const handleDelete = (id) => {
     dispatch(deleteAnimal(id));
   };
+
+  const roleIcons = {
+    kingofjungle: <FaChessKing />,
+    queenofjungle: <GiQueenCrown />,
+    zookeeper: <GiPikeman />,
+    default: <FcBinoculars size={25} />
+  };
+
+  const renderTooltip = (title, icon, action) => (
+    <LightTooltip title={title} placement="top">
+      <IconButton sx={{ color: "white" }} onClick={action}>
+        {icon}
+      </IconButton>
+    </LightTooltip>
+  );
+
   return (
     <>
-      <Card
-        className={`${
-          copy ? "w-full h-full" : "w-[450px] h-auto"
-        } border-4 border-nostalgicblue ${
-          !copy && induvidual.animalRole === "zookeeper" && "border-saffron"
-        } bg-raddishpinklight rounded-xl shadow-2xl relative p-2`}
-      >
-        <img
-          src={a}
-          alt="animal_photo"
-          className={`w-full h-[40%] object-cover ${
-            copy &&
-            `${
-              (getName && getName?.length > 0) ||
-              (getDepRole && getDepRole?.length > 0)
-                ? "opacity-100"
-                : "opacity-50"
-            }`
-          }`}
-        />
-
+      <Card className={`${copy ? "w-full h-full" : "w-[450px] h-auto"} border-4 border-nostalgicblue ${!copy && induvidual?.animalRole === "zookeeper" && "border-saffron"} bg-raddishpinklight rounded-xl shadow-2xl relative p-2`}>
+        {copy && <img src={a} alt="animal_photo" className={`w-full h-[45%] object-cover ${copy && (getName || getDepRole) ? "opacity-100" : "opacity-50"}`} />}
+        {!copy && <img src={a} alt="animal_photo" className={`w-full h-[45%] object-cover`} />}
+        
         <Box className="absolute top-4 left-4">
-          {!copy && induvidual.animalRole === "kingofjungle" ? (
-            <LightTooltip title="KING" placement="top">
-              <IconButton sx={{ color: "white" }}>
-                <FaChessKing className="text-raddishpinklight text-[2rem]" />
-              </IconButton>
-            </LightTooltip>
-          ) : !copy && induvidual.animalRole === "queenofjungle" ? (
-            <LightTooltip title="QUEEN" placement="top">
-              <IconButton sx={{ color: "white" }}>
-                <GiQueenCrown className="text-raddishpinklight text-[2rem]" />
-              </IconButton>
-            </LightTooltip>
-          ) : !copy && induvidual.animalRole === "zookeeper" ? (
-            <LightTooltip title="KEEPER" placement="top">
-              <IconButton sx={{ color: "white" }}>
-                <GiPikeman className="text-raddishpinklight text-[2.5rem]" />
-              </IconButton>
-            </LightTooltip>
-          ) : (
-            !copy && (
-              <LightTooltip title="ON BENCH" placement="top">
-                <IconButton sx={{ color: "white" }}>
-                  <FcBinoculars size={25} />
-                </IconButton>
-              </LightTooltip>
-            )
-          )}
+          {!copy && renderTooltip(induvidual?.animalRole.toUpperCase(), roleIcons[induvidual?.animalRole] || roleIcons.default, handleModalOpen)}
         </Box>
 
-        <CardContent
-          className={`w-full h-[55%] relative z-[10] flex justify-between gap-2 items-start flex-col mt-4 border-4 border-chestnut ${
-            copy &&
-            `${
-              (getName && getName?.length > 0) ||
-              (getDepRole && getDepRole?.length > 0)
-                ? "opacity-100"
-                : "opacity-50"
-            }`
-          }`}
-          sx={{ padding: "0.5rem" }}
-        >
+        <CardContent className="w-full h-[55%] relative z-[10] flex justify-between gap-2 items-start flex-col mt-4 border-4 border-chestnut" sx={{ padding: "0.5rem" }}>
           <Box className="w-full h-[40%] flex flex-col justify-between items-start">
-            <Box className="flex justify-center gap-2 items-center">
-              <TfiDrupal size={25} />
-              <Typography variant="h6" className="font-semibold text-black">
-                <span className="italic">Name:</span>{" "}
-                {!copy ? induvidual.animalname : getName}
-              </Typography>
-            </Box>
-            <Box className="flex justify-center gap-2 items-center">
-              <TbShieldStar size={25} />
-              <Typography variant="h6" className="font-semibold text-black">
-                <span className="italic">Role: </span>{" "}
-                {!copy ? induvidual.animalRole : getDepRole}
-              </Typography>
-            </Box>
-            <Box className="flex justify-center gap-2 items-center">
-              <PiPlantFill size={25} />
-              <Typography variant="h6" className="font-semibold text-black">
-                <span className="italic">Category: </span>{" "}
-                {!copy ? induvidual.category : getCategory.category}
-              </Typography>
-            </Box>
-            {/* feature need to be added */}
-            {true && (
+            {[
+              { label: "Name", value: copy ? getName : induvidual?.animalname, icon: <TfiDrupal size={25} /> },
+              { label: "Role", value: copy ? getDepRole : induvidual?.animalRole, icon: <TbShieldStar size={25} /> },
+              { label: "Category", value: copy ? getCategory.category : induvidual?.category, icon: <PiPlantFill size={25} /> },
+            ].map(({ label, value, icon }, index) => (
+              <Box key={index} className="flex justify-center gap-2 items-center">
+                {icon}
+                <Typography variant="h6" className="font-semibold text-black">
+                  <span className="italic">{label}:</span> {value}
+                </Typography>
+              </Box>
+            ))}
+            {false && (
               <Box className="flex justify-center gap-2 items-center">
                 <FaHandPointer size={25} />
                 <Typography variant="h6" className="font-semibold text-black">
                   <Box className="flex justify-center items-center">
                     <span className="italic">Role change request: </span>
-                    <IconButton
-                      sx={{ color: "white" }}
-                      onClick={handleRequestOpen}
-                    >
-                      <GiQueenCrown className="text-nostalgicblue text-[2rem]" />
-                    </IconButton>
+                    {renderTooltip("Role Change Request", <GiQueenCrown className="text-nostalgicblue text-[2rem]" />, () => handleModalOpen(setRequestAgree))}
                   </Box>
                 </Typography>
               </Box>
             )}
           </Box>
+
           <Box className="h-[40%] w-full flex gap-2 mt-4 items-start">
-            <Box className="flex justify-center gap-2 items-center">
-              <MdEmail size={25} />
-              <Typography className="font-semibold text-black text-base text-wrap">
-                {!copy ? induvidual.email : getEmail}
-              </Typography>
-            </Box>
-
-            <Box className="flex justify-center gap-2 items-center">
-              <IoMdPhonePortrait size={25} />
-              <Typography className="font-semibold text-black text-base text-wrap">
-                {!copy ? induvidual.phoneNumber : getPhone}
-              </Typography>
-            </Box>
+            {[{ icon: <MdEmail size={25} />, value: copy ? getEmail : induvidual?.email }, { icon: <IoMdPhonePortrait size={25} />, value: copy ? getPhone : induvidual?.phoneNumber }].map(({ icon, value }, index) => (
+              <Box key={index} className="flex justify-center gap-2 items-center">
+                {icon}
+                <Typography className="font-semibold text-black text-base text-wrap">{value}</Typography>
+              </Box>
+            ))}
           </Box>
+
           <Box className="flex justify-evenly items-center gap-6 bg-raddishpinklight w-full mb-4">
-            {loginInduvidual === "zookeeper" && (
-              <LightTooltip title="Edit" placement="top">
-                <IconButton
-                  sx={{ color: "white" }}
-                  onClick={handleOpen}
-                  disabled={copy}
-                >
-                  <FaEdit size={30} className="text-black" />
-                </IconButton>
-              </LightTooltip>
-            )}
-            {loginInduvidual === "queenofjungle" && (
-              <LightTooltip title="Edit" placement="top">
-                <IconButton
-                  sx={{ color: "white" }}
-                  onClick={handleOpen}
-                  disabled={copy}
-                >
-                  <FaEdit size={30} className="text-black" />
-                </IconButton>
-              </LightTooltip>
-            )}
-            {loginInduvidual === "zookeeper" && (
-              <LightTooltip title="Delete" placement="top">
-                <IconButton
-                  sx={{ color: "white" }}
-                  disabled={copy}
-                  onClick={() => handleDelete(induvidual.id)}
-                >
-                  <RiDeleteBin6Line size={30} className="text-black" />
-                </IconButton>
-              </LightTooltip>
-            )}
+            {(loginInduvidual === "zookeeper" || loginInduvidual === "queenofjungle") && renderTooltip("Edit", <FaEdit size={30} className="text-black"/>, () => handleModalOpen(setOpen))}
+            {loginInduvidual === "zookeeper" && renderTooltip("Delete", <RiDeleteBin6Line size={30} className="text-black"/>, () => handleDelete(induvidual?.id))}
             {copy ? (
-              <LightTooltip title="Read more" placement="top">
-                <IconButton sx={{ color: "white" }} disabled={copy}>
-                  <CiRead size={30} className="text-black" />
-                </IconButton>
-              </LightTooltip>
+              renderTooltip("Read more", <CiRead size={30} className="text-black"/>)
             ) : (
-              <Link to={`/details/${induvidual.id}`}>
-                <LightTooltip title="Read more" placement="top">
-                  <IconButton sx={{ color: "white" }} disabled={copy}>
-                    <CiRead size={30} className="text-black" />
-                  </IconButton>
-                </LightTooltip>
-              </Link>
+              <Link to={`/details/${induvidual?.id}`}>{renderTooltip("Read more", <CiRead size={30} className="text-black"/>)}</Link>
             )}
           </Box>
-          {copy ? (
-            <Box className="flex justify-between w-full bg-chestnut text-white p-2 absolute bottom-0 right-0">
-              <Typography variant="body2" className="font-bold">
-                Registered on: <span className="font-semibold">xx-xx-xxxx</span>
-              </Typography>
 
-              <Typography variant="body2" className="font-bold">
-                Edited on: <span className="font-semibold">xx-xx-xxxx</span>
-              </Typography>
-            </Box>
-          ) : (
-            <Box className="flex justify-center w-full bg-chestnut text-white p-2 absolute bottom-0 right-0">
-              <Typography className="text-[0.4rem]">
-                Registered on:{" "}
-                <span className="text-[0.8rem]">
-                  {new Date(induvidual.createdAt).toTimeString()}
-                </span>
-              </Typography>
-            </Box>
-          )}
+          <Box className="flex justify-center w-full bg-chestnut text-white p-2 absolute bottom-0 right-0">
+            <Typography className="text-[0.4rem]">
+              Registered on: <span className="text-[0.8rem]">{new Date(induvidual?.createdAt).toTimeString()}</span>
+            </Typography>
+          </Box>
         </CardContent>
       </Card>
-      <MUIModal
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="modal-edit"
-        aria-describedby="modal-edit-description"
-      >
-        <EditCard
-          handleClose={handleClose}
-          open={open}
-          id="modal-edit"
-          induvidual={induvidual}
-        />
+
+      <MUIModal open={open} onClose={() => handleModalClose(setOpen)} aria-labelledby="modal-edit" aria-describedby="modal-edit-description">
+        <EditCard handleClose={() => handleModalClose(setOpen)} open={open} id="modal-edit" induvidual={induvidual} />
       </MUIModal>
 
-      <MUIModal
-        open={requestAgree}
-        onClose={handleRequestClose}
-        aria-labelledby="modal-title"
-        aria-describedby="modal-request-description"
-      >
+      <MUIModal open={requestAgree} onClose={() => handleModalClose(setRequestAgree)} aria-labelledby="modal-title" aria-describedby="modal-request-description">
         <Box className="flex w-[200px] h-auto bg-white flex-col p-4 justify-center items-center absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 gap-2 rounded-xl">
-          <span className="inline-block text-center">
-            Animal has Requested for a role change?
-          </span>
-          <Button
-            variant="contained"
-            type="button"
-            sx={{ backgroundColor: "#70645C" }}
-            className="hover:bg-black mt-2"
-          >
-            Agree
-          </Button>
-          <Button
-            variant="contained"
-            type="button"
-            sx={{ backgroundColor: "#70645C" }}
-            className="hover:bg-black mt-2"
-            onClick={handleRequestClose}
-          >
-            DISAGREE
-          </Button>
+          <span className="inline-block text-center">Animal has Requested for a role change?</span>
+          <Button variant="contained" type="button" sx={{ backgroundColor: "#70645C" }} className="hover:bg-black mt-2">Agree</Button>
+          <Button variant="contained" type="button" sx={{ backgroundColor: "#70645C" }} className="hover:bg-black mt-2" onClick={() => handleModalClose(setRequestAgree)}>DISAGREE</Button>
         </Box>
       </MUIModal>
     </>
