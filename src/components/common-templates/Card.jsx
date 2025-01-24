@@ -62,7 +62,7 @@ const AnimalCard = ({ induvidual, copy, getName, getDepRole, getCategory, getEma
         {!copy && <img src={a} alt="animal_photo" className={`w-full h-[45%] object-cover`} />}
         
         <Box className="absolute top-4 left-4">
-          {!copy && renderTooltip(induvidual?.animalRole.toUpperCase(), roleIcons[induvidual?.animalRole] || roleIcons.default, handleModalOpen)}
+          {!copy && renderTooltip(induvidual?.animalRole?.toUpperCase(), roleIcons[induvidual?.animalRole] || roleIcons.default, handleModalOpen)}
         </Box>
 
         <CardContent className="w-full h-[55%] relative z-[10] flex justify-between gap-2 items-start flex-col mt-4 border-4 border-chestnut" sx={{ padding: "0.5rem" }}>
