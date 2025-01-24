@@ -113,7 +113,7 @@ const AnimalCard = ({ induvidual, copy, getName, getDepRole, getCategory, getEma
 
           <Box className="flex justify-center w-full bg-chestnut text-white p-2 absolute bottom-0 right-0">
             <Typography className="text-[0.4rem]">
-              Registered on: <span className="text-[0.8rem]">{new Date(induvidual?.createdAt).toTimeString()}</span>
+              Registered on: <span className="text-[0.8rem]">{new Date(induvidual?.createdAt)?.toTimeString() || "xx-xx-xxxx"}</span>
             </Typography>
           </Box>
         </CardContent>
