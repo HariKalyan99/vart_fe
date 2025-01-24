@@ -2,7 +2,7 @@ import { Slide, toast } from "react-toastify";
 
 export const handleError = (error) => {
     if(error.response.data?.error){
-      showToast("Unauthorized", "error");
+      showToast(JSON.stringify(error.response.data?.message) || "Unauthorized", "error");
     }else if (error.response) {
       const { message } = error.response.data;
       showToast(message, "error");

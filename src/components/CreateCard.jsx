@@ -228,7 +228,21 @@ const CreateCard = ({
                 Add
               </Button>
 
+              
+
               {createAnimalPendingResponse && <CircularProgress color="inherit" />}
+            </Box>
+            <Box className="flex gap-2">
+              <TextField
+                variant="standard"
+                color="black"
+                className="w-[80%]"
+                value={getPhone}
+                onChange={(e) => setPhone(e.target.value)}
+                required
+                type="file"
+                sx={{border: "1px solid", height: "5rem"}}
+              />
             </Box>
           </Box>
         </form>

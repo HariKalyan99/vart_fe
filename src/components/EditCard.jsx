@@ -134,7 +134,7 @@ const EditCard = ({ handleClose, induvidual }) => {
         <form onSubmit={handleEditDetails} className="w-full h-full flex flex-col gap-2">
           <Box className="w-full border h-full flex flex-col gap-2 p-2">
             <EditField icon={<TfiDrupal size={25} />} value={getName} onChange={(e) => setName(e.target.value)} placeholder="Enter name" />
-            {role !== "zookeeper" && JSON.parse(localStorage.getItem("data"))?.role !== "kingofjungle" && <EditField icon={<TbShieldStar size={25} />} value={role} onChange={handleRoleChange} isSelect options={[{ value: "", label: "Select Role", disabled: true }, { value: "kingofjungle", label: "KING OF JUNGLE" }, { value: "queenofjungle", label: "QUEEN OF JUNGLE" }]} />}
+            {role !== "kingofjungle" && JSON.parse(localStorage.getItem("data"))?.role !== "kingofjungle" && <EditField icon={<TbShieldStar size={25} />} value={role} onChange={handleRoleChange} isSelect options={[{ value: "", label: "Select Role", disabled: true }, { value: "kingofjungle", label: "KING OF JUNGLE" }, { value: "queenofjungle", label: "QUEEN OF JUNGLE" }]} />}
             <EditField icon={cat.icon || <FaCriticalRole size={25} />} value={cat.category} onChange={handleCatChange} isSelect options={[{ value: "", label: "Select Category", disabled: true }, ...categoryOptions]} />
             <EditField icon={<MdEmail size={25} />} value={getEmail} onChange={(e) => setEmail(e.target.value)} placeholder="Enter email" />
             <EditField icon={<IoMdPhonePortrait size={25} />} value={getPhone} onChange={(e) => setPhone(e.target.value)} placeholder="Enter phone number" />

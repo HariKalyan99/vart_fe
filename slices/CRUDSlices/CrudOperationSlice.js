@@ -4,6 +4,7 @@ import { createNewAnimal } from "./createAnimal";
 import { deleteAnimal } from "./deleteAnimal";
 import { editAnimal } from "./editAnimal";
 import { getAnimalById } from "./getAnimalById";
+import { uploadCsvAnimals } from "./createManyAnimal";
 
 const initialState = {
   listOfAnimalsResponse: {},
@@ -20,6 +21,10 @@ const initialState = {
 
   editAnimalResponse: {},
   editAnimalPendingResponse: false,
+
+  uploadCsvAnimalCreation: {},
+  uploadCsvAnimalCreationPending: false,
+
 };
 
 const animalOperationSlices = createSlice({
@@ -34,6 +39,10 @@ const animalOperationSlices = createSlice({
       state.editAnimalResponse = {};
       state.editAnimalPendingResponse = false;
     },
+    resetUploadCsvAnimalCreation: (state) => {
+      state.uploadCsvAnimalCreation = {};
+      state.uploadCsvAnimalCreationPending = false
+    }
   },
   extraReducers: (builder) => {
     builder
@@ -95,6 +104,19 @@ const animalOperationSlices = createSlice({
       .addCase(getAnimalById.rejected, (state) => {
         state.getOneAnimalResponsePending = false;
       });
+
+      builder
+      .addCase(uploadCsvAnimals.pending, (state) => {
+        state.uploadCsvAnimalCreationPending = true;
+      })
+      .addCase(uploadCsvAnimals.fulfilled, (state, { payload }) => {
+        state.uploadCsvAnimalCreation = payload;
+        state.uploadCsvAnimalCreationPending = false;
+      })
+      .addCase(uploadCsvAnimals.rejected, (state) => {
+        state.uploadCsvAnimalCreationPending = false;
+      });
+
   },
 });
 

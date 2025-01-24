@@ -32,6 +32,7 @@ export default function NavigationBar({ navStyle }) {
         current: false,
       },
       { name: "Register new", to: "/create", current: false },
+      { name: "Family arrived?", to: "/fileupload", current: false },
     ];
   } else {
     navigation = [

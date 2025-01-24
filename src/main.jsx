@@ -14,6 +14,7 @@ import ForgotPwdPage from "./components/pages/ForgotPwdPage.jsx";
 import { Provider } from "react-redux";
 import { zootopiaStore } from "../store/zootopiaStore.js";
 import { Slide, ToastContainer } from "react-toastify";
+import FileUpload from "./components/pages/FileUploadPage.jsx";
 
 const router = createBrowserRouter([
   {
@@ -28,6 +29,7 @@ const router = createBrowserRouter([
       { path: "/create", element: <CreateNew /> },
       { path: "/details/:id", element: <CardDetails /> },
       { path: "/profile/:id", element: <ProfilePage /> },
+      { path: "/fileupload", element: <FileUpload /> },
     ],
   },
 ]);
