@@ -46,10 +46,12 @@ const ProfileSource = () => {
 
   const handlePasswordChangeSubmit = (e) => {
     e.preventDefault();
-    dispatch(editAnimal({
-      body: { password: getNewPassword, confirmPassword: getNewConfirmPassword },
-      id: getOneAnimalResponse.data?.id,
-    }));
+    if(getNewPassword && getNewConfirmPassword){
+      dispatch(editAnimal({
+        body: { password: getNewPassword, confirmPassword: getNewConfirmPassword },
+        id: getOneAnimalResponse.data?.id,
+      }));
+    }
   };
 
   const handleRequestOpen = () => setChangePassword(true);

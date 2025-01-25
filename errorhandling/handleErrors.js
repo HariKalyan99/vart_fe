@@ -17,12 +17,12 @@ export const showToast = (message, type = "success") => {
     const toastOptions = {
       position: "top-center",
       autoClose: 3000,
-      hideProgressBar: true,
+      hideProgressBar: false,
       closeOnClick: false,
       pauseOnHover: true,
       draggable: true,
       progress: undefined,
-      theme: "light",
+      theme: "dark",
       transition: Slide,
     };
   
