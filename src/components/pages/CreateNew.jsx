@@ -85,7 +85,7 @@ const CreateNew = () => {
               setContributions={setContributions}
               handleCreateSubmit={handleCreateSubmit}
             />
-            <Box className="w-[50%] h-[100%] justify-center items-center flex">
+            {/* <Box className="w-[50%] h-[100%] justify-center items-center flex">
               <AnimalCard
                 copy={true}
                 getName={getName}
@@ -94,7 +94,7 @@ const CreateNew = () => {
                 getEmail={getEmail}
                 getPhone={getPhone}
               />
-            </Box>
+            </Box> */}
           </Box>
         </Box>
         <FooterBar create />
