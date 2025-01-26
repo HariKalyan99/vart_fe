@@ -15,15 +15,26 @@ import { TfiDrupal } from "react-icons/tfi";
 import { TbShieldStar } from "react-icons/tb";
 import { PiPlantFill } from "react-icons/pi";
 import { GiBossKey } from "react-icons/gi";
-import { GiReptileTail } from "react-icons/gi"; //reptile
-import { GiCrocJaws } from "react-icons/gi"; //amphi
-import { GiNeedleJaws } from "react-icons/gi"; //carnivores
-import { FaBirthdayCake, FaCrow, FaRoute } from "react-icons/fa"; //omni
+import { GiReptileTail } from "react-icons/gi"; // reptile
+import { GiCrocJaws } from "react-icons/gi"; // amphi
+import { GiNeedleJaws } from "react-icons/gi"; // carnivores
+import { FaBirthdayCake, FaCrow, FaRoute } from "react-icons/fa"; // omni
 import { MdEmail } from "react-icons/md";
 import { IoMdPhonePortrait } from "react-icons/io";
 import { Textarea } from "@headlessui/react";
 import { SiContributorcovenant } from "react-icons/si";
 import { useSelector } from "react-redux";
+
+const validationObj = [
+  { type: "name", valid: false },
+  { type: "role", valid: false },
+  { type: "category", valid: false },
+  { type: "email", valid: false },
+  { type: "phone", valid: false },
+  { type: "dob", valid: false },
+  { type: "address", valid: false },
+  { type: "contributions", valid: false },
+];
 
 const CreateCard = ({
   getName,
@@ -45,28 +56,39 @@ const CreateCard = ({
   handleCreateSubmit,
 }) => {
   const { createAnimalPendingResponse } = useSelector((state) => state.crud);
+  const [getValid, setValid] = useState(validationObj);
+
+  const updateValidation = (type, valid) => {
+    setValid((prevValid) =>
+      prevValid.map((item) => (item.type === type ? { ...item, valid } : item))
+    );
+  };
+
   const handleCatChange = (e) => {
-    if (e.target.value === "herbivores") {
-      setCategory({
-        category: e.target.value,
-        icon: <PiPlantFill size={25} />,
-      });
-    } else if (e.target.value === "reptiles") {
-      setCategory({
-        category: e.target.value,
-        icon: <GiReptileTail size={25} />,
-      });
-    } else if (e.target.value === "amphibian") {
-      setCategory({ category: e.target.value, icon: <GiCrocJaws size={25} /> });
-    } else if (e.target.value === "carnivores") {
-      setCategory({
-        category: e.target.value,
-        icon: <GiNeedleJaws size={25} />,
-      });
-    } else if (e.target.value === "omnivores") {
-      setCategory({ category: e.target.value, icon: <FaCrow size={25} /> });
+    const category = e.target.value;
+    setCategory({ category, icon: getCategoryIcon(category) });
+    updateValidation("category", !category);
+  };
+
+  const getCategoryIcon = (category) => {
+    switch (category) {
+      case "herbivores":
+        return <PiPlantFill size={25} />;
+      case "reptiles":
+        return <GiReptileTail size={25} />;
+      case "amphibian":
+        return <GiCrocJaws size={25} />;
+      case "carnivores":
+        return <GiNeedleJaws size={25} />;
+      case "omnivores":
+        return <FaCrow size={25} />;
+      default:
+        return <GiBossKey size={25} />;
     }
   };
+
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  const phoneRegex = /^\d{10}$/;
 
   return (
     <Card className="w-[50%] border-4 border-nostaligicblue h-[100%] flex flex-col gap-4 bg-raddishpinklight shadow-2xl relative p-2">
@@ -78,7 +100,8 @@ const CreateCard = ({
           className="w-full h-full flex gap-2"
           onSubmit={handleCreateSubmit}
         >
-          <Box className="w-[50%] border h-full flex flex-col gap-2 p-2">
+          <Box className="w-[50%] border h-full flex flex-col gap-4 p-2">
+            {/* Name */}
             <Box className="flex gap-2">
               <TfiDrupal size={25} />
               <TextField
@@ -87,17 +110,29 @@ const CreateCard = ({
                 color="black"
                 className="w-[80%]"
                 value={getName}
-                onChange={(e) => setName(e.target.value)}
+                onChange={(e) => {
+                  setName(e.target.value);
+                  updateValidation("name", e.target.value.length < 5);
+                }}
                 required
               />
             </Box>
+            {getValid.find((x) => x.type === "name")?.valid && (
+              <span className="text-red-500 text-sm">
+                Name should be at least 5 characters long!
+              </span>
+            )}
 
+            {/* Role */}
             <Box className="flex gap-2">
               <TbShieldStar size={25} />
               <FormControl className="w-[80%] mb-4" variant="standard">
                 <Select
                   value={getDepRole}
-                  onChange={(e) => setDepRole(e.target.value)}
+                  onChange={(e) => {
+                    setDepRole(e.target.value);
+                    updateValidation("role", !e.target.value);
+                  }}
                   displayEmpty
                   className="bg-transparent outline-none placeholder-[black] fs-2"
                   color="black"
@@ -114,9 +149,15 @@ const CreateCard = ({
                 </Select>
               </FormControl>
             </Box>
+            {getValid.find((x) => x.type === "role")?.valid && (
+              <span className="text-red-500 text-sm">
+                Role is required!
+              </span>
+            )}
 
+            {/* Category */}
             <Box className="flex gap-2">
-              {getCategory.icon ? getCategory.icon : <GiBossKey size={25} />}
+              {getCategory.icon || <GiBossKey size={25} />}
               <FormControl className="w-[80%] mb-4" variant="standard">
                 <Select
                   value={getCategory?.category}
@@ -129,24 +170,26 @@ const CreateCard = ({
                   }}
                   required
                 >
-                  <MenuItem value="Select your Category" disabled>
+                  <MenuItem value="" disabled>
                     Select your Category
                   </MenuItem>
-                  {[
-                    "herbivores",
-                    "reptiles",
-                    "amphibian",
-                    "carnivores",
-                    "omnivores",
-                  ].map((cat, ind) => (
-                    <MenuItem key={ind} value={cat}>
-                      {cat}
-                    </MenuItem>
-                  ))}
+                  {["herbivores", "reptiles", "amphibian", "carnivores", "omnivores"].map(
+                    (cat, ind) => (
+                      <MenuItem key={ind} value={cat}>
+                        {cat}
+                      </MenuItem>
+                    )
+                  )}
                 </Select>
               </FormControl>
             </Box>
+            {getValid.find((x) => x.type === "category")?.valid && (
+              <span className="text-red-500 text-sm">
+                Category is required!
+              </span>
+            )}
 
+            {/* Email */}
             <Box className="flex gap-2">
               <MdEmail size={25} />
               <TextField
@@ -155,24 +198,37 @@ const CreateCard = ({
                 color="black"
                 className="w-[80%]"
                 value={getEmail}
-                onChange={(e) => setEmail(e.target.value)}
+                onChange={(e) => {
+                  setEmail(e.target.value);
+                  updateValidation("email", !emailRegex.test(e.target.value));
+                }}
                 required
                 type="email"
               />
             </Box>
+            {getValid.find((x) => x.type === "email")?.valid && (
+              <span className="text-red-500 text-sm">Invalid email format!</span>
+            )}
 
             <Box className="flex gap-2">
               <IoMdPhonePortrait size={25} />
               <TextField
                 placeholder="Enter phone number"
+                type="number"
                 variant="standard"
                 color="black"
                 className="w-[80%]"
                 value={getPhone}
-                onChange={(e) => setPhone(e.target.value)}
+                onChange={(e) => {
+                  setPhone(e.target.value);
+                  updateValidation("phone", !phoneRegex.test(e.target.value));
+                }}
                 required
               />
             </Box>
+            {getValid.find((x) => x.type === "phone")?.valid && (
+              <span className="text-red-500 text-sm">Invalid phone number!</span>
+            )}
 
             <Box className="flex gap-2">
               <FaBirthdayCake size={25} />
@@ -191,7 +247,6 @@ const CreateCard = ({
               <FaRoute size={25} />
               <Textarea
                 type="text"
-                label="Outlined"
                 placeholder="Enter the Address"
                 color="black"
                 className="w-[80%] border p-2"
@@ -202,13 +257,11 @@ const CreateCard = ({
             </Box>
           </Box>
 
-          {/* 2nd extra info */}
           <Box className="w-[50%] border h-full flex flex-col gap-4 p-2">
             <Box className="flex gap-2">
               <SiContributorcovenant size={25} />
               <Textarea
                 type="text"
-                label="Outlined"
                 placeholder="What are the Contributions"
                 color="black"
                 className="w-[80%] border p-2"
@@ -227,8 +280,6 @@ const CreateCard = ({
               >
                 Add
               </Button>
-
-              
 
               {createAnimalPendingResponse && <CircularProgress color="inherit" />}
             </Box>
