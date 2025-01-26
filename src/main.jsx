@@ -15,6 +15,7 @@ import { Provider } from "react-redux";
 import { zootopiaStore } from "../store/zootopiaStore.js";
 import { Slide, ToastContainer } from "react-toastify";
 import FileUpload from "./components/pages/FileUploadPage.jsx";
+import TableDetailsPage from "./components/pages/TableDetailsPage.jsx";
 
 const router = createBrowserRouter([
   {
@@ -26,6 +27,7 @@ const router = createBrowserRouter([
       { path: "/login", element: <LoginPage /> },
       { path: "/forgot-pwd", element: <ForgotPwdPage /> },
       { path: "/dashboard", element: <Dashboard /> },
+      { path: "/tablelize", element: <TableDetailsPage /> },
       { path: "/create", element: <CreateNew /> },
       { path: "/details/:id", element: <CardDetails /> },
       { path: "/profile/:id", element: <ProfilePage /> },

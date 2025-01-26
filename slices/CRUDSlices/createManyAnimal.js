@@ -7,7 +7,7 @@ const backendConfig = config.backend;
 
 export const uploadCsvAnimals = createAsyncThunk(
   'animals/uploadCsv',
-  async (file, { rejectWithValue }) => {
+  async (file) => {
     const formData = new FormData();
     formData.append('csvfile', file);  
 

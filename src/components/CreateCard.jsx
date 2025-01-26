@@ -240,6 +240,7 @@ const CreateCard = ({
                 className="w-[80%]"
                 value={getDob}
                 onChange={(e) => setDob(e.target.value)}
+                required
               />
             </Box>
 

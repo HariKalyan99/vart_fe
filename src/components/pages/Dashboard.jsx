@@ -11,10 +11,10 @@ import { GiQueenCrown } from "react-icons/gi";
 import { GiPikeman } from "react-icons/gi";
 import { FaHandPointer } from "react-icons/fa";
 import LightTooltip from "../utils/MUITooltip";
-import { Box, Skeleton, Stack } from "@mui/material";
+import { Box, Button, Skeleton, Stack } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import Cookies from "js-cookie";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { crudActions } from "../../../slices/CRUDSlices/CrudOperationSlice";
 import { getAnimalList } from "../../../slices/CRUDSlices/getAnimalList";
 import { authActions } from "../../../slices/AuthenticationSlices/AuthSlice";
@@ -88,9 +88,14 @@ const Dashboard = () => {
             </Box>
           </Box>
           <Box className="border w-full container"></Box>
-          <span className="text-left w-full container text-[2rem] text-nostalgicblue">
+         <Box className="flex w-full container py-2 flex-between">
+         <span className="text-left container text-[2rem] text-nostalgicblue block">
             Registered animals
           </span>
+          <Link to={"/tablelize"} className="container flex justify-end w-full">
+          <Button variant="contained" type="submit" sx={{ backgroundColor: "#DD8457", width: "40%" }} className="hover:bg-black mt-2">Tabelize (tabular data)</Button>
+          </Link>
+         </Box>
           <Box className="mt-[1rem] container w-full p-4 flex flex-wrap justify-center items-center gap-6">
             {listOfAnimalsResponse?.data?.length > 0
               ? listOfAnimalsResponse?.data.map((induvidual) => (
