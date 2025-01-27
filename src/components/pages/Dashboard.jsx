@@ -18,6 +18,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { crudActions } from "../../../slices/CRUDSlices/CrudOperationSlice";
 import { getAnimalList } from "../../../slices/CRUDSlices/getAnimalList";
 import { authActions } from "../../../slices/AuthenticationSlices/AuthSlice";
+import { PiTableFill } from "react-icons/pi";
 
 const Dashboard = () => {
   const { listOfAnimalsResponse, listOfAnimalsPendingResponse } = useSelector(
@@ -93,7 +94,9 @@ const Dashboard = () => {
             Registered animals
           </span>
           <Link to={"/tablelize"} className="container flex justify-end w-full">
-          <Button variant="contained" type="submit" sx={{ backgroundColor: "#DD8457", width: "40%" }} className="hover:bg-black mt-2">Tabelize (tabular data)</Button>
+          <Button variant="contained" type="submit" sx={{ backgroundColor: "#DD8457", width: "30%" }} className="hover:bg-black mt-2">Tabular view
+            <span className="px-2"><PiTableFill /></span>
+          </Button>
           </Link>
          </Box>
           <Box className="mt-[1rem] container w-full p-4 flex flex-wrap justify-center items-center gap-6">

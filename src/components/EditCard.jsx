@@ -51,9 +51,18 @@ const EditField = ({
         {icon}
         {isSelect ? (
           <FormControl className="w-[80%] mb-4" variant="standard">
-            <Select value={value} onChange={onChange} displayEmpty className="bg-transparent outline-none">
+            <Select
+              value={value}
+              onChange={onChange}
+              displayEmpty
+              className="bg-transparent outline-none"
+            >
               {options.map((option, index) => (
-                <MenuItem key={index} value={option.value} disabled={option.disabled}>
+                <MenuItem
+                  key={index}
+                  value={option.value}
+                  disabled={option.disabled}
+                >
                   {option.label}
                 </MenuItem>
               ))}
@@ -86,15 +95,18 @@ const EditCard = ({ handleClose, induvidual }) => {
   const [getPhone, setPhone] = useState(induvidual.phoneNumber);
   const [getDob, setDob] = useState(induvidual.dob);
   const [getAddress, setAddress] = useState(induvidual.address);
-  const [getContributions, setContributions] = useState(induvidual.contributions);
+  const [getContributions, setContributions] = useState(
+    induvidual.contributions
+  );
   const [role, setRole] = useState(induvidual.animalRole || "");
   const [cat, setCat] = useState("");
   const [getValid, setValid] = useState(validationObj);
 
   const dispatch = useDispatch();
-  const { editAnimalResponse, editAnimalPendingResponse } = useSelector(state => state.crud);
+  const { editAnimalResponse, editAnimalPendingResponse } = useSelector(
+    (state) => state.crud
+  );
 
-  // Validation functions
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   const phoneRegex = /^\d{10}$/;
 
@@ -140,11 +152,13 @@ const EditCard = ({ handleClose, induvidual }) => {
   useEffect(() => {
     if (editAnimalResponse?.status === "success" && editAnimalResponse) {
       if (
-        JSON.parse(localStorage.getItem("data")).id === editAnimalResponse?.data.id
+        JSON.parse(localStorage.getItem("data")).id ===
+        editAnimalResponse?.data.id
       ) {
         let newLocal = {
           ...JSON.parse(localStorage.getItem("data")),
-          role: editAnimalResponse?.data.animalRole, name: editAnimalResponse?.data.animalname,
+          role: editAnimalResponse?.data.animalRole,
+          name: editAnimalResponse?.data.animalname,
         };
         localStorage.setItem("data", JSON.stringify(newLocal));
       }
@@ -169,38 +183,104 @@ const EditCard = ({ handleClose, induvidual }) => {
     { value: "carnivores", label: "Carnivores" },
     { value: "omnivores", label: "Omnivores" },
   ];
+  const roleOptions = [
+    { value: "kingofjungle", label: "KING OF JUNGLE" },
+    { value: "queenofjungle", label: "QUEEN OF JUNGLE" },
+  ];
 
   return (
     <Card className="w-[40%] border-4 border-nostaligicblue min-h-[70%] flex gap-4 bg-raddishpinklight shadow-2xl relative p-2 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
       <CardContent className="w-full border-4 border-chestnut h-[auto]">
-        {editAnimalPendingResponse && <CircularProgress className="text-center" color="inherit" />}
-        <form onSubmit={handleEditDetails} className="w-full h-full flex flex-col gap-2">
+        {editAnimalPendingResponse && (
+          <CircularProgress className="text-center" color="inherit" />
+        )}
+        <form
+          onSubmit={handleEditDetails}
+          className="w-full h-full flex flex-col gap-2"
+        >
           <Box className="w-full border h-full flex flex-col gap-2 p-2">
             <EditField
               icon={<TfiDrupal size={25} />}
               value={getName}
-              onChange={(e) => handleFieldChange(setName, (name) => name.length >= 5, "name", e)}
+              onChange={(e) =>
+                handleFieldChange(
+                  setName,
+                  (name) => name.length >= 5,
+                  "name",
+                  e
+                )
+              }
               placeholder="Enter name"
               validationError={
-                getValid.find((x) => x.type === "name")?.valid && "Name should be at least 5 characters long"
+                getValid.find((x) => x.type === "name")?.valid &&
+                "Name should be at least 5 characters long"
               }
             />
+            {JSON.parse(localStorage.getItem("data"))?.role === "zookeeper" && (
+              <EditField
+                icon={<TbShieldStar size={25} />}
+                value={role}
+                onChange={handleRoleChange}
+                isSelect
+                options={roleOptions}
+              />
+            )}
+
+            {JSON.parse(localStorage.getItem("data"))?.role ===
+              "queenofjungle" &&
+              induvidual?.animalRole !== "zookeeper" && (
+                <EditField
+                  icon={<TbShieldStar size={25} />}
+                  value={role}
+                  onChange={handleRoleChange}
+                  isSelect
+                  options={roleOptions}
+                />
+              )}
+
+            <EditField
+              icon={cat.icon || <FaCriticalRole size={25} />}
+              value={cat.category}
+              onChange={handleCatChange}
+              isSelect
+              options={[
+                { value: "", label: "Select Category", disabled: true },
+                ...categoryOptions,
+              ]}
+            />
+
             <EditField
               icon={<MdEmail size={25} />}
               value={getEmail}
-              onChange={(e) => handleFieldChange(setEmail, (email) => emailRegex.test(email), "email", e)}
+              onChange={(e) =>
+                handleFieldChange(
+                  setEmail,
+                  (email) => emailRegex.test(email),
+                  "email",
+                  e
+                )
+              }
               placeholder="Enter email"
               validationError={
-                getValid.find((x) => x.type === "email")?.valid && "Invalid email format"
+                getValid.find((x) => x.type === "email")?.valid &&
+                "Invalid email format"
               }
             />
             <EditField
               icon={<IoMdPhonePortrait size={25} />}
               value={getPhone}
-              onChange={(e) => handleFieldChange(setPhone, (phone) => phoneRegex.test(phone), "phone", e)}
+              onChange={(e) =>
+                handleFieldChange(
+                  setPhone,
+                  (phone) => phoneRegex.test(phone),
+                  "phone",
+                  e
+                )
+              }
               placeholder="Enter phone number"
               validationError={
-                getValid.find((x) => x.type === "phone")?.valid && "Phone number should be 10 digits"
+                getValid.find((x) => x.type === "phone")?.valid &&
+                "Phone number should be 10 digits"
               }
             />
             <EditField

@@ -1,26 +1,22 @@
 import React, { useEffect, useState } from "react";
-import { MdEmail } from "react-icons/md";
-import { IoMdPhonePortrait } from "react-icons/io";
 import { FaEdit } from "react-icons/fa";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { CiRead } from "react-icons/ci";
+import { FaChessKing } from "react-icons/fa";
+import { GiQueenCrown } from "react-icons/gi";
+import { GiPikeman } from "react-icons/gi";
+
 import {
-  Table,
-  TableBody,
   TableCell,
-  TableContainer,
-  TableHead,
   TableRow,
   IconButton,
   Button,
-  Paper,
-  Typography,
   Box,
 } from "@mui/material";
 import LightTooltip from "../utils/MUITooltip";
 import MUIModal from "../utils/MUIModal";
 import EditCard from "../EditCard";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { FcBinoculars } from "react-icons/fc";
 import { useDispatch, useSelector } from "react-redux";
 import { getAnimalList } from "../../../slices/CRUDSlices/getAnimalList";
@@ -53,9 +49,9 @@ const AnimalTable = ({
 
   const roleIcons = {
     kingofjungle: <FcBinoculars size={25} />,
-    queenofjungle: <FcBinoculars size={25} />,
-    zookeeper: <FcBinoculars size={25} />,
-    default: <FcBinoculars size={25} />,
+    queenofjungle: <GiQueenCrown size={25} />,
+    zookeeper: <GiPikeman size={25} />,
+    default: <FaChessKing size={25} />,
   };
 
   const renderTooltip = (title, icon, action) => (
@@ -68,32 +64,52 @@ const AnimalTable = ({
 
   return (
     <>
-      <TableRow key={induvidual?.id} className="bg-saffron border-2 hover:border-b-4">
-        <TableCell>{copy ? getName : induvidual?.animalname}</TableCell>
+      <TableRow
+        key={induvidual?.id}
+        className="bg-saffron border-2 hover:border-b-8 hover:border hover:border-black hover:border-l-0 hover:border-r-0 hover:drop-shadow-2xl"
+      >
+        <TableCell>
+          <span className="text-white text-lg">
+            {copy ? getName : induvidual?.animalname}
+          </span>
+        </TableCell>
         <TableCell>
           <Box className="flex gap-2">
-            {roleIcons[induvidual?.animalRole] || roleIcons.default}
-            {copy ? getDepRole : induvidual?.animalRole}
+            <span className="text-white text-lg">
+              {roleIcons[induvidual?.animalRole] || roleIcons.default}
+            </span>
           </Box>
         </TableCell>
         <TableCell>
-          {copy ? getCategory.category : induvidual?.category}
+          <span className="text-white text-lg">
+            {copy ? getCategory.category : induvidual?.category}
+          </span>
         </TableCell>
-        <TableCell>{copy ? getEmail : induvidual?.email}</TableCell>
-        <TableCell>{copy ? getPhone : induvidual?.phoneNumber}</TableCell>
+        <TableCell>
+          <span className="text-white text-lg">
+            {copy ? getEmail : induvidual?.email}
+          </span>
+        </TableCell>
+        <TableCell>
+          <span className="text-white text-lg">
+            {copy ? getPhone : induvidual?.phoneNumber}
+          </span>
+        </TableCell>
         <TableCell>
           <Box className="flex gap-2">
             {(loginInduvidual === "zookeeper" ||
               loginInduvidual === "queenofjungle") &&
-              renderTooltip("Edit", <FaEdit size={20} />, () =>
+              renderTooltip("Edit", <FaEdit size={25} color="white" />, () =>
                 handleModalOpen(setOpen)
               )}
             {loginInduvidual === "zookeeper" &&
-              renderTooltip("Delete", <RiDeleteBin6Line size={20} />, () =>
-                handleDelete(induvidual?.id)
+              renderTooltip(
+                "Delete",
+                <RiDeleteBin6Line size={25} color="white" />,
+                () => handleDelete(induvidual?.id)
               )}
             <Link to={`/details/${induvidual?.id}`}>
-              {renderTooltip("Read more", <CiRead size={20} />)}
+              {renderTooltip("Read more", <CiRead size={25} color="white" />)}
             </Link>
           </Box>
         </TableCell>

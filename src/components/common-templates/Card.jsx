@@ -4,11 +4,11 @@ import { MdEmail } from "react-icons/md";
 import { IoMdPhonePortrait } from "react-icons/io";
 import { FaChessKing } from "react-icons/fa";
 import { GiQueenCrown } from "react-icons/gi";
+import { GiPikeman } from "react-icons/gi";
 import { FaEdit } from "react-icons/fa";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { CiRead } from "react-icons/ci";
 import IconButton from "@mui/material/IconButton";
-import { GiPikeman } from "react-icons/gi";
 import { PiPlantFill } from "react-icons/pi";
 import { TfiDrupal } from "react-icons/tfi";
 import { TbShieldStar } from "react-icons/tb";
@@ -40,12 +40,12 @@ const AnimalCard = ({ induvidual, copy, getName, getDepRole, getCategory, getEma
     dispatch(deleteAnimal(id));
   };
 
-  const roleIcons = {
-    kingofjungle: <FaChessKing />,
-    queenofjungle: <GiQueenCrown />,
-    zookeeper: <GiPikeman />,
-    default: <FcBinoculars size={25} />
-  };
+    const roleIcons = {
+      kingofjungle: <FcBinoculars size={25} />,
+      queenofjungle: <GiQueenCrown size={25} />,
+      zookeeper: <GiPikeman size={25} />,
+      default: <FaChessKing size={25} />,
+    };
 
   const renderTooltip = (title, icon, action) => (
     <LightTooltip title={title} placement="top">

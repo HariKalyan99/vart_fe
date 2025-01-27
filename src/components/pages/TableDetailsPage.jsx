@@ -1,8 +1,6 @@
 import React, { useEffect } from "react";
 import hero from "../../assets/logo.gif";
-import nohero from "../../assets/mon.gif";
 import NavigationBar from "../common-templates/NavigationBar";
-import AnimalCard from "../common-templates/Card";
 import FooterBar from "../common-templates/FooterBar";
 import SpeedDial from "@mui/material/SpeedDial";
 import SpeedDialAction from "@mui/material/SpeedDialAction";
@@ -11,6 +9,7 @@ import { GiQueenCrown } from "react-icons/gi";
 import { GiPikeman } from "react-icons/gi";
 import { FaHandPointer } from "react-icons/fa";
 import LightTooltip from "../utils/MUITooltip";
+import { FaIdCard } from "react-icons/fa";
 import {
   Box,
   Button,
@@ -112,10 +111,11 @@ const TableDetailsPage = () => {
               <Button
                 variant="contained"
                 type="submit"
-                sx={{ backgroundColor: "#DD8457", width: "40%" }}
+                sx={{ backgroundColor: "#DD8457", width: "30%" }}
                 className="hover:bg-black mt-2"
               >
-                Animal Cards
+                Card view {" "}
+                <span className="px-2"><FaIdCard /></span>
               </Button>
             </Link>
           </Box>
@@ -143,7 +143,7 @@ const TableDetailsPage = () => {
                   </TableCell>
                 </TableRow>
               </TableHead>
-              <TableBody>
+              <TableBody >
                 {listOfAnimalsResponse?.data?.length > 0
                   ? listOfAnimalsResponse?.data.map((induvidual) => (
                       <AnimalTable
@@ -164,23 +164,7 @@ const TableDetailsPage = () => {
                         <Skeleton variant="rounded" width={210} height={60} />
                       </Stack>
                     ))
-                  : listOfAnimalsResponse?.data?.length === 0 && (
-                      <Box className="w-full h-[45rem] flex justify-center items-center mt-4 container">
-                        <Box className="w-[50%] h-full flex justify-center items-start flex-col">
-                          <span className="text-[4rem] font-bold text-nostalgicblue text-wrap">
-                            We are recruiting soon!
-                          </span>
-                          <span className="text-[2rem] font-bold text-white text-wrap inline-block ">
-                            Be patient...
-                          </span>
-                        </Box>
-                        <img
-                          src={nohero}
-                          alt="hero_img"
-                          className="w-[50%] h-[90%] object-contain"
-                        />
-                      </Box>
-                    )}
+                  : null}
               </TableBody>
             </Table>
           </TableContainer>
