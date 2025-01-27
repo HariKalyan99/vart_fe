@@ -2,8 +2,8 @@ import React, { useEffect, useState } from "react";
 import a from "../../assets/dash.gif";
 import { MdEmail } from "react-icons/md";
 import { IoMdPhonePortrait } from "react-icons/io";
-import { FaChessKing } from "react-icons/fa";
-import { GiQueenCrown } from "react-icons/gi";
+import { FaChessKing, FaCrow } from "react-icons/fa";
+import { GiCrocJaws, GiNeedleJaws, GiQueenCrown, GiReptileTail } from "react-icons/gi";
 import { GiPikeman } from "react-icons/gi";
 import { FaEdit } from "react-icons/fa";
 import { RiDeleteBin6Line } from "react-icons/ri";
@@ -39,6 +39,16 @@ const AnimalCard = ({ induvidual, copy, getName, getDepRole, getCategory, getEma
   const handleDelete = (id) => {
     dispatch(deleteAnimal(id));
   };
+  
+  const icons = {
+        herbivores: <PiPlantFill size={25} />,
+        reptiles: <GiReptileTail size={25} />,
+        amphibian: <GiCrocJaws size={25} />,
+        carnivores: <GiNeedleJaws size={25} />,
+        omnivores: <FaCrow size={25} />,
+      };
+
+
 
     const roleIcons = {
       kingofjungle: <FcBinoculars size={25} />,
@@ -70,7 +80,7 @@ const AnimalCard = ({ induvidual, copy, getName, getDepRole, getCategory, getEma
             {[
               { label: "Name", value: copy ? getName : induvidual?.animalname, icon: <TfiDrupal size={25} /> },
               { label: "Role", value: copy ? getDepRole : induvidual?.animalRole, icon: <TbShieldStar size={25} /> },
-              { label: "Category", value: copy ? getCategory.category : induvidual?.category, icon: <PiPlantFill size={25} /> },
+              { label: "Category", value: copy ? getCategory.category : induvidual?.category, icon: icons[induvidual?.category] },
             ].map(({ label, value, icon }, index) => (
               <Box key={index} className="flex justify-center gap-2 items-center">
                 {icon}
