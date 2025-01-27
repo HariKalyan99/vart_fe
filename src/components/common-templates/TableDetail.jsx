@@ -66,7 +66,7 @@ const AnimalTable = ({
     <>
       <TableRow
         key={induvidual?.id}
-        className="bg-saffron border-2 hover:border-b-8 hover:border hover:border-black hover:border-l-0 hover:border-r-0 hover:drop-shadow-2xl"
+        className="bg-saffron border-2 hover:border-b-8 hover:border hover:border-white hover:border-l-0 hover:border-r-0 hover:drop-shadow-2xl"
       >
         <TableCell>
           <span className="text-white text-lg">

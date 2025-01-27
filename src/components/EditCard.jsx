@@ -268,6 +268,7 @@ const EditCard = ({ handleClose, induvidual }) => {
             />
             <EditField
               icon={<IoMdPhonePortrait size={25} />}
+              type="number"
               value={getPhone}
               onChange={(e) =>
                 handleFieldChange(
